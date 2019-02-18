@@ -1,0 +1,77 @@
+﻿@model TRPR.Models.ReviewAssign
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>ReviewAssign</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PaperID" class="control-label"></label>
+                <input asp-for="PaperID" class="form-control" />
+                <span asp-validation-for="PaperID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ResID" class="control-label"></label>
+                <input asp-for="ResID" class="form-control" />
+                <span asp-validation-for="ResID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoleID" class="control-label"></label>
+                <select asp-for="RoleID" class ="form-control" asp-items="ViewBag.RoleID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="RevContentReview" class="control-label"></label>
+                <input asp-for="RevContentReview" class="form-control" />
+                <span asp-validation-for="RevContentReview" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RevKeywordReview" class="control-label"></label>
+                <input asp-for="RevKeywordReview" class="form-control" />
+                <span asp-validation-for="RevKeywordReview" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RevLengthReview" class="control-label"></label>
+                <input asp-for="RevLengthReview" class="form-control" />
+                <span asp-validation-for="RevLengthReview" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RevFormatReview" class="control-label"></label>
+                <input asp-for="RevFormatReview" class="form-control" />
+                <span asp-validation-for="RevFormatReview" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RevCitationReview" class="control-label"></label>
+                <input asp-for="RevCitationReview" class="form-control" />
+                <span asp-validation-for="RevCitationReview" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RecID" class="control-label"></label>
+                <input asp-for="RecID" class="form-control" />
+                <span asp-validation-for="RecID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReRevID" class="control-label"></label>
+                <input asp-for="ReRevID" class="form-control" />
+                <span asp-validation-for="ReRevID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<TRPR.Models.Researcher>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ResTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ResFirst)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ResMiddle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ResLast)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ResEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ResBio)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ResTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ResFirst)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ResMiddle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ResLast)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ResEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ResBio)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
