@@ -15,17 +15,23 @@
             <input type="hidden" asp-for="ID" />
             <div class="form-group">
                 <label asp-for="PaperID" class="control-label"></label>
-                <input asp-for="PaperID" class="form-control" />
+                <select asp-for="PaperID" class="form-control" asp-items="ViewBag.PaperID">
+                    <option>Select a Paper</option>
+                </select>
                 <span asp-validation-for="PaperID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ResID" class="control-label"></label>
-                <input asp-for="ResID" class="form-control" />
+                <select asp-for="ResID" class="form-control" asp-items="ViewBag.ResID">
+                    <option>Select a Researcher</option>
+                </select>
                 <span asp-validation-for="ResID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="RoleID" class="control-label"></label>
-                <select asp-for="RoleID" class="form-control" asp-items="ViewBag.RoleID"></select>
+                <select asp-for="RoleID" class="form-control" asp-items="ViewBag.RoleID">
+                    <option>Select a Role</option>
+                </select>
                 <span asp-validation-for="RoleID" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -55,12 +61,16 @@
             </div>
             <div class="form-group">
                 <label asp-for="RecID" class="control-label"></label>
-                <input asp-for="RecID" class="form-control" />
+                <select asp-for="RecID" class="form-control" asp-items="ViewBag.RecID">
+                    <option>Select an option</option>
+                </select>
                 <span asp-validation-for="RecID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ReRevID" class="control-label"></label>
-                <input asp-for="ReRevID" class="form-control" />
+                <select asp-for="ReRevID" class="form-control" asp-items="ViewBag.ReRevID">
+                    <option>Select an option</option>
+                </select>
                 <span asp-validation-for="ReRevID" class="text-danger"></span>
             </div>
             <div class="form-group">
