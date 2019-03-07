@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using TRPR.Data;
 using TRPR.Models;
 
@@ -41,6 +42,10 @@ namespace TRPR.Controllers
 
             var reviewAssign = await _context.ReviewAssigns
                 .Include(r => r.Roles)
+                .Include(ra => ra.Researcher)
+                .ThenInclude(r => r.ResearchExpertises)
+                .ThenInclude(re => re.Expertise)
+                .Include(r => r.PaperInfo)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (reviewAssign == null)
             {
@@ -73,7 +78,7 @@ namespace TRPR.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-            catch (DbUpdateException dex)
+            catch (DbUpdateException)
             {
                  ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
@@ -89,7 +94,13 @@ namespace TRPR.Controllers
                 return NotFound();
             }
 
-            var reviewAssign = await _context.ReviewAssigns.FindAsync(id);
+            var reviewAssign = await _context.ReviewAssigns
+                .Include(r => r.Roles)
+                .Include(ra => ra.Researcher)
+                .ThenInclude(r => r.ResearchExpertises)
+                .ThenInclude(re => re.Expertise)
+                .Include(r => r.PaperInfo)
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (reviewAssign == null)
             {
                 return NotFound();
@@ -103,23 +114,36 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,PaperID,ResID,RoleID,RevContentReview,RevKeywordReview,RevLengthReview,RevFormatReview,RevCitationReview,RecID,ReRevID")] ReviewAssign reviewAssign)
+        public async Task<IActionResult> Edit(int id)//, [Bind("ID,PaperID,ResID,RoleID,RevContentReview,RevKeywordReview,RevLengthReview,RevFormatReview,RevCitationReview,RecID,ReRevID")] ReviewAssign reviewAssign)
         {
-            if (id != reviewAssign.ID)
+            var reviewToUpdate = await _context.ReviewAssigns
+                .Include(r => r.Roles)
+                .Include(ra => ra.Researcher)
+                .ThenInclude(r => r.ResearchExpertises)
+                .ThenInclude(re => re.Expertise)
+                .Include(r => r.PaperInfo)
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (reviewToUpdate == null)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (await TryUpdateModelAsync<ReviewAssign>(reviewToUpdate, "",
+                s => s.PaperID, s => s.ResID, s => s.RoleID, s => s.RevContentReview, s => s.RevKeywordReview, s => s.RevLengthReview, 
+                s => s.RevFormatReview, s => s.RevCitationReview, s => s.RecID, s => s.ReRevID))
             {
                 try
                 {
-                    _context.Update(reviewAssign);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (RetryLimitExceededException /* dex */)
+                {
+                    ModelState.AddModelError("", "Unable to save changes after multiple attempts. Try again, and if the problem persists, see your system administrator.");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ReviewAssignExists(reviewAssign.ID))
+                    if (!ReviewAssignExists(reviewToUpdate.ID))
                     {
                         return NotFound();
                     }
@@ -128,10 +152,13 @@ namespace TRPR.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                catch (DbUpdateException)
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                }
             }
             PopulateDropDownLists();
-            return View(reviewAssign);
+            return View(reviewToUpdate);
         }
 
         // GET: ReviewAssigns/Delete/5
@@ -144,6 +171,10 @@ namespace TRPR.Controllers
 
             var reviewAssign = await _context.ReviewAssigns
                 .Include(r => r.Roles)
+                .Include(ra => ra.Researcher)
+                .ThenInclude(r => r.ResearchExpertises)
+                .ThenInclude(re => re.Expertise)
+                .Include(r => r.PaperInfo)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (reviewAssign == null)
             {
@@ -158,10 +189,25 @@ namespace TRPR.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var reviewAssign = await _context.ReviewAssigns.FindAsync(id);
-            _context.ReviewAssigns.Remove(reviewAssign);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var reviewAssign = await _context.ReviewAssigns
+                .Include(r => r.Roles)
+                .Include(ra => ra.Researcher)
+                .ThenInclude(r => r.ResearchExpertises)
+                .ThenInclude(re => re.Expertise)
+                .Include(r => r.PaperInfo)
+                .FirstOrDefaultAsync(m => m.ID == id);
+
+            try
+            {
+                _context.ReviewAssigns.Remove(reviewAssign);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+            }
+            return View(reviewAssign);
         }
 
 
