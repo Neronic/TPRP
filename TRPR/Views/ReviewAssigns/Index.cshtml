@@ -13,10 +13,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.PaperID)
+                @Html.DisplayNameFor(model => model.PaperInfo.PaperTitle)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ResID)
+                @Html.DisplayNameFor(model => model.Researcher.FullName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Roles)
@@ -37,10 +37,10 @@
                 @Html.DisplayNameFor(model => model.RevCitationReview)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RecID)
+                @Html.DisplayNameFor(model => model.Recommend.RecTitle)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ReRevID)
+                @Html.DisplayNameFor(model => model.ReviewAgain.ReSponse)
             </th>
             <th></th>
         </tr>
@@ -49,10 +49,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.PaperID)
+                @Html.DisplayFor(modelItem => item.PaperInfo.PaperTitle)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ResID)
+                @Html.DisplayFor(modelItem => item.Researcher.FullName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Roles.RoleTitle)
@@ -73,10 +73,10 @@
                 @Html.DisplayFor(modelItem => item.RevCitationReview)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RecID)
+                @Html.DisplayFor(modelItem => item.Recommend.RecTitle)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ReRevID)
+                @Html.DisplayFor(modelItem => item.ReviewAgain.ReSponse)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using TRPR.Data;
 using TRPR.Models;
 
@@ -20,10 +21,15 @@ namespace TRPR.Controllers
         }
 
         // GET: ReviewAssigns
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? PaperID, int? ResID, int? RoleID)
         {
-            var tRPRContext = _context.ReviewAssigns.Include(r => r.Roles);
-            return View(await tRPRContext.ToListAsync());
+            var reviewAssigns = _context.ReviewAssigns
+                .Include(ra => ra.Roles)
+                .Include(ra => ra.Researcher)
+                .ThenInclude(r => r.ResearchExpertises)
+                .ThenInclude(re => re.Expertise)
+                .Include(r => r.PaperInfo);
+            return View(await reviewAssigns.ToListAsync());
         }
 
         // GET: ReviewAssigns/Details/5
@@ -36,6 +42,10 @@ namespace TRPR.Controllers
 
             var reviewAssign = await _context.ReviewAssigns
                 .Include(r => r.Roles)
+                .Include(ra => ra.Researcher)
+                .ThenInclude(r => r.ResearchExpertises)
+                .ThenInclude(re => re.Expertise)
+                .Include(r => r.PaperInfo)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (reviewAssign == null)
             {
@@ -48,7 +58,7 @@ namespace TRPR.Controllers
         // GET: ReviewAssigns/Create
         public IActionResult Create()
         {
-            ViewData["RoleID"] = new SelectList(_context.Roles, "ID", "RoleTitle");
+            PopulateDropDownLists();
             return View();
         }
 
@@ -59,13 +69,20 @@ namespace TRPR.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,PaperID,ResID,RoleID,RevContentReview,RevKeywordReview,RevLengthReview,RevFormatReview,RevCitationReview,RecID,ReRevID")] ReviewAssign reviewAssign)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(reviewAssign);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(reviewAssign);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            ViewData["RoleID"] = new SelectList(_context.Roles, "ID", "RoleTitle", reviewAssign.RoleID);
+            catch (DbUpdateException)
+            {
+                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+            }
+            PopulateDropDownLists();
             return View(reviewAssign);
         }
 
@@ -77,12 +94,18 @@ namespace TRPR.Controllers
                 return NotFound();
             }
 
-            var reviewAssign = await _context.ReviewAssigns.FindAsync(id);
+            var reviewAssign = await _context.ReviewAssigns
+                .Include(r => r.Roles)
+                .Include(ra => ra.Researcher)
+                .ThenInclude(r => r.ResearchExpertises)
+                .ThenInclude(re => re.Expertise)
+                .Include(r => r.PaperInfo)
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (reviewAssign == null)
             {
                 return NotFound();
             }
-            ViewData["RoleID"] = new SelectList(_context.Roles, "ID", "RoleTitle", reviewAssign.RoleID);
+            PopulateDropDownLists();
             return View(reviewAssign);
         }
 
@@ -91,23 +114,36 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,PaperID,ResID,RoleID,RevContentReview,RevKeywordReview,RevLengthReview,RevFormatReview,RevCitationReview,RecID,ReRevID")] ReviewAssign reviewAssign)
+        public async Task<IActionResult> Edit(int id)//, [Bind("ID,PaperID,ResID,RoleID,RevContentReview,RevKeywordReview,RevLengthReview,RevFormatReview,RevCitationReview,RecID,ReRevID")] ReviewAssign reviewAssign)
         {
-            if (id != reviewAssign.ID)
+            var reviewToUpdate = await _context.ReviewAssigns
+                .Include(r => r.Roles)
+                .Include(ra => ra.Researcher)
+                .ThenInclude(r => r.ResearchExpertises)
+                .ThenInclude(re => re.Expertise)
+                .Include(r => r.PaperInfo)
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (reviewToUpdate == null)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (await TryUpdateModelAsync<ReviewAssign>(reviewToUpdate, "",
+                s => s.PaperID, s => s.ResID, s => s.RoleID, s => s.RevContentReview, s => s.RevKeywordReview, s => s.RevLengthReview, 
+                s => s.RevFormatReview, s => s.RevCitationReview, s => s.RecID, s => s.ReRevID))
             {
                 try
                 {
-                    _context.Update(reviewAssign);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (RetryLimitExceededException /* dex */)
+                {
+                    ModelState.AddModelError("", "Unable to save changes after multiple attempts. Try again, and if the problem persists, see your system administrator.");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ReviewAssignExists(reviewAssign.ID))
+                    if (!ReviewAssignExists(reviewToUpdate.ID))
                     {
                         return NotFound();
                     }
@@ -116,10 +152,13 @@ namespace TRPR.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                catch (DbUpdateException)
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                }
             }
-            ViewData["RoleID"] = new SelectList(_context.Roles, "ID", "RoleTitle", reviewAssign.RoleID);
-            return View(reviewAssign);
+            PopulateDropDownLists();
+            return View(reviewToUpdate);
         }
 
         // GET: ReviewAssigns/Delete/5
@@ -132,6 +171,10 @@ namespace TRPR.Controllers
 
             var reviewAssign = await _context.ReviewAssigns
                 .Include(r => r.Roles)
+                .Include(ra => ra.Researcher)
+                .ThenInclude(r => r.ResearchExpertises)
+                .ThenInclude(re => re.Expertise)
+                .Include(r => r.PaperInfo)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (reviewAssign == null)
             {
@@ -146,11 +189,84 @@ namespace TRPR.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var reviewAssign = await _context.ReviewAssigns.FindAsync(id);
-            _context.ReviewAssigns.Remove(reviewAssign);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var reviewAssign = await _context.ReviewAssigns
+                .Include(r => r.Roles)
+                .Include(ra => ra.Researcher)
+                .ThenInclude(r => r.ResearchExpertises)
+                .ThenInclude(re => re.Expertise)
+                .Include(r => r.PaperInfo)
+                .FirstOrDefaultAsync(m => m.ID == id);
+
+            try
+            {
+                _context.ReviewAssigns.Remove(reviewAssign);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+            }
+            return View(reviewAssign);
         }
+
+
+
+
+
+        private SelectList RoleSelectList(int? id)
+        {
+            var dQuery = from d in _context.Roles
+                         orderby d.RoleTitle
+                         select d;
+            return new SelectList(dQuery, "ID", "RoleTitle", id);
+        }
+
+        private SelectList ResearcherSelectList(int? id)
+        {
+            var dQuery = from d in _context.Researchers
+                         orderby d.ResLast, d.ResFirst
+                         select d;
+            return new SelectList(dQuery, "ID", "FullName", id);
+        }
+
+        private SelectList PaperSelectList(int? id)
+        {
+            var dQuery = from d in _context.PaperInfos
+                         orderby d.PaperTitle
+                         select d;
+            return new SelectList(dQuery, "ID", "PaperTitle", id);
+        }
+
+        private SelectList AgainSelectList(int? id)
+        {
+            var dQuery = from d in _context.ReviewAgains
+                         orderby d.ReSponse
+                         select d;
+            return new SelectList(dQuery, "ID", "ReSponse", id);
+        }
+
+        private SelectList RecSelectList(int? id)
+        {
+            var dQuery = from d in _context.Recommends
+                         orderby d.RecTitle
+                         select d;
+            return new SelectList(dQuery, "ID", "RecTitle", id);
+        }
+
+        private void PopulateDropDownLists(ReviewAssign reviewAssign = null)
+        {
+            ViewData["RoleID"] = RoleSelectList(reviewAssign?.RoleID);
+            ViewData["ResID"] = ResearcherSelectList(reviewAssign?.ResID);
+            ViewData["PaperID"] = PaperSelectList(reviewAssign?.PaperID);
+            ViewData["RecID"] = RecSelectList(reviewAssign?.RecID);
+            ViewData["ReRevID"] = AgainSelectList(reviewAssign?.ReRevID);
+        }
+        //[HttpGet]
+        //public JsonResult GetDoctors(int? id)
+        //{
+        //    return Json(RoleSelectList(id));
+        //}
 
         private bool ReviewAssignExists(int id)
         {

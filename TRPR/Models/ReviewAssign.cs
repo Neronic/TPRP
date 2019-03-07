@@ -52,5 +52,6 @@ namespace TRPR.Models
 
         [Display(Name = "Files")]
         public ICollection<ReviewFile> ReviewFiles { get; set; }
+
     }
 }
