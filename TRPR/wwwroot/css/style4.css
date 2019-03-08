@@ -56,6 +56,10 @@ i,
 span {
     display: inline-block;
 }
+#btnNotification {
+background: none;
+border: none;
+}
 
 /* ---------------------------------------------------
     SIDEBAR STYLE
