@@ -20,9 +20,13 @@
                 <span asp-validation-for="PaperID" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label class="control-label">Filter Associate Editors by Expertise:</label>
+                @Html.DropDownList("ExpID", null, "All Expertises", htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="form-group">
                 <label asp-for="ResID" class="control-label"></label>
                 <select asp-for="ResID" class="form-control" asp-items="ViewBag.ResID">
-                    <option>Select a Researcher</option>
+                    <option>Select an Associate Editor</option>
                 </select>
                 <span asp-validation-for="ResID" class="text-danger"></span>
             </div>
@@ -32,45 +36,6 @@
                     <option>Select a Role</option>
                 </select>
                 <span asp-validation-for="RoleID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RevContentReview" class="control-label"></label>
-                <input asp-for="RevContentReview" class="form-control" />
-                <span asp-validation-for="RevContentReview" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RevKeywordReview" class="control-label"></label>
-                <input asp-for="RevKeywordReview" class="form-control" />
-                <span asp-validation-for="RevKeywordReview" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RevLengthReview" class="control-label"></label>
-                <input asp-for="RevLengthReview" class="form-control" />
-                <span asp-validation-for="RevLengthReview" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RevFormatReview" class="control-label"></label>
-                <input asp-for="RevFormatReview" class="form-control" />
-                <span asp-validation-for="RevFormatReview" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RevCitationReview" class="control-label"></label>
-                <input asp-for="RevCitationReview" class="form-control" />
-                <span asp-validation-for="RevCitationReview" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RecID" class="control-label"></label>
-                <select asp-for="RecID" class="form-control" asp-items="ViewBag.RecID">
-                    <option>Select an option</option>
-                </select>
-                <span asp-validation-for="RecID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReRevID" class="control-label"></label>
-                <select asp-for="ReRevID" class="form-control" asp-items="ViewBag.ReRevID">
-                    <option>Select an option</option>
-                </select>
-                <span asp-validation-for="ReRevID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -85,4 +50,35 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    {
+        <script src="~/js/refreshDDL.js"></script>
+        <script type="text/javascript">
+            $('#ExpID').change(function () {
+                var selectedExpertise = $("#ExpID").val();
+                var theDDL = $("#ResID");
+                theDDL.empty();
+                var URL = "/ReviewAssigns/GetResearcherByExpertise/" + selectedExpertise;
+                $(function () {
+                    $.getJSON(URL, function (data) {
+                        if (data !== null && !jQuery.isEmptyObject(data)) {
+                            theDDL.append($('<option/>', {
+                                value: null,
+                                text: 'Select an Associate Editor'
+                            }));
+                            $.each(data, function (index, item) {
+                                theDDL.append($('<option/>', {
+                                    value: item.value,
+                                    text: item.text
+                                }));
+                            });
+                            theDDL.trigger("chosen:updated");
+                        }
+                    });
+                });
+                theDDL.fadeToggle(400, function () {
+                    theDDL.fadeToggle(400);
+                });
+            });
+        </script>
+    }
 }
