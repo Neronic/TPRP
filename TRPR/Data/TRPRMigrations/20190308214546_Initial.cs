@@ -263,7 +263,6 @@ namespace TRPR.Data.TRPRMigrations
                 columns: table => new
                 {
                     ResID = table.Column<int>(nullable: false),
-                    ResearcherID = table.Column<int>(nullable: true),
                     PaperID = table.Column<int>(nullable: false),
                     PaperInfoID = table.Column<int>(nullable: true),
                     AuthPapLevel = table.Column<string>(nullable: true)
@@ -279,8 +278,8 @@ namespace TRPR.Data.TRPRMigrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AuthoredPapers_Researchers_ResearcherID",
-                        column: x => x.ResearcherID,
+                        name: "FK_AuthoredPapers_Researchers_ResID",
+                        column: x => x.ResID,
                         principalSchema: "TRPR",
                         principalTable: "Researchers",
                         principalColumn: "ID",
@@ -467,12 +466,6 @@ namespace TRPR.Data.TRPRMigrations
                 schema: "TRPR",
                 table: "AuthoredPapers",
                 column: "PaperInfoID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AuthoredPapers_ResearcherID",
-                schema: "TRPR",
-                table: "AuthoredPapers",
-                column: "ResearcherID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_ReviewAssignID",

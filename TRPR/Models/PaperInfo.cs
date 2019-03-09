@@ -45,5 +45,8 @@ namespace TRPR.Models
 
         [Display(Name = "Files")]
         public ICollection<PaperFile> PaperFiles { get; set; }
+
+        [Display(Name = "Authored Papers")]
+        public ICollection<AuthoredPaper> AuthoredPapers { get; set; }
     }
 }
