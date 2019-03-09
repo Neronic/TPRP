@@ -41,12 +41,10 @@ namespace TRPR.Models
         public string RevCitationReview { get; set; }
 
         [Display(Name = "Recommendation")]
-        [Range(1, int.MaxValue, ErrorMessage = "You must select your recommendation.")]
         public int RecID { get; set; }
         public Recommend Recommend { get; set; }
 
         [Display(Name = "Review Again")]
-        [Range(1, int.MaxValue, ErrorMessage = "You must select if you will review again.")]
         public int ReRevID { get; set; }
         public ReviewAgain ReviewAgain { get; set; }
 
