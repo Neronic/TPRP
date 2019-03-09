@@ -10,10 +10,10 @@ namespace TRPR.Models
     {
         public Researcher()
         {
-            ResearchExpertises = new HashSet<ResearchExpertise>();
-            ResearchInstitutes = new HashSet<ResearchInstitute>();
-            AuthoredPapers = new HashSet<AuthoredPaper>();
-            ReviewAssigns = new HashSet<ReviewAssign>();
+            this.ResearchExpertises = new HashSet<ResearchExpertise>();
+            this.ResearchInstitutes = new HashSet<ResearchInstitute>();
+            this.AuthoredPapers = new HashSet<AuthoredPaper>();
+            this.ReviewAssigns = new HashSet<ReviewAssign>();
         }
 
         [Display(Name = "Researcher")]
@@ -60,15 +60,15 @@ namespace TRPR.Models
         public string ResBio { get; set; }
 
         [Display(Name = "Expertises")]
-        public ICollection<ResearchExpertise> ResearchExpertises { get; set; }
+        public virtual ICollection<ResearchExpertise> ResearchExpertises { get; set; }
 
         [Display(Name = "Institute")]
-        public ICollection<ResearchInstitute> ResearchInstitutes { get; set; }
+        public virtual ICollection<ResearchInstitute> ResearchInstitutes { get; set; }
 
         [Display(Name = "Authored Papers")]
-        public ICollection<AuthoredPaper> AuthoredPapers { get; set; }
+        public virtual ICollection<AuthoredPaper> AuthoredPapers { get; set; }
 
         [Display(Name = "Reviews")]
-        public ICollection<ReviewAssign> ReviewAssigns { get; set; }
+        public virtual ICollection<ReviewAssign> ReviewAssigns { get; set; }
     }
 }

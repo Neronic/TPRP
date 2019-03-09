@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +23,11 @@ namespace TRPR.Controllers
         // GET: PaperInfo
         public async Task<IActionResult> Index()
         {
-            return View(await _context.PaperInfos.ToListAsync());
+            var papers = _context.PaperInfos                
+                .Include(p => p.AuthoredPapers)
+                .ThenInclude(pc => pc.Researcher);
+            return View(await papers.ToListAsync());
+
         }
 
         // GET: PaperInfo/Details/5
@@ -54,15 +59,46 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,PaperTitle,PaperAbstract,PaperType,PaperLength,StatID")] PaperInfo paperInfo)
+        public async Task<IActionResult> Create([Bind("ID,PaperTitle,PaperAbstract,PaperType,PaperLength,StatID")] PaperInfo paperInfo, IEnumerable<IFormFile> theFiles)
         {
             if (ModelState.IsValid)
             {
+                await AddDocuments(paperInfo, theFiles);
                 _context.Add(paperInfo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(paperInfo);
+        }
+
+        private async Task AddDocuments(PaperInfo paperInfo, IEnumerable<IFormFile> theFiles)
+        {
+            foreach (var f in theFiles)
+            {
+                if (f != null)
+                {
+                    string mimeType = f.ContentType;
+                    long fileLength = f.Length;
+                    if (!(mimeType == "" || fileLength == 0))//Looks like we have a file!!!
+                    {
+                        using (var memoryStream = new System.IO.MemoryStream())
+                        {
+                            await f.CopyToAsync(memoryStream);
+                            PaperFile newFile = new PaperFile
+                            {
+                                File = new File
+                                {
+                                    FileContent = memoryStream.ToArray(),
+                                    FileMimeType = mimeType,
+                                    FileName = f.FileName
+                                }
+                                
+                            };
+                            paperInfo.PaperFiles.Add(newFile);
+                        }
+                    };
+                }
+            }
         }
 
         // GET: PaperInfo/Edit/5
@@ -148,6 +184,12 @@ namespace TRPR.Controllers
         private bool PaperInfoExists(int id)
         {
             return _context.PaperInfos.Any(e => e.ID == id);
+        }
+
+        public FileContentResult Download(int id)
+        {
+            var theFile = _context.PaperFiles.Include(f => f.File.FileContent).Where(f => f.File.ID == id).SingleOrDefault();
+            return File(theFile.File.FileContent, theFile.File.FileMimeType, theFile.File.FileName);
         }
     }
 }

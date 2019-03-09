@@ -30,13 +30,9 @@ namespace TRPR.Data.TRPRMigrations
 
                     b.Property<int?>("PaperInfoID");
 
-                    b.Property<int?>("ResearcherID");
-
                     b.HasKey("ResID", "PaperID");
 
                     b.HasIndex("PaperInfoID");
-
-                    b.HasIndex("ResearcherID");
 
                     b.ToTable("AuthoredPapers");
                 });
@@ -443,12 +439,13 @@ namespace TRPR.Data.TRPRMigrations
             modelBuilder.Entity("TRPR.Models.AuthoredPaper", b =>
                 {
                     b.HasOne("TRPR.Models.PaperInfo", "PaperInfo")
-                        .WithMany()
+                        .WithMany("AuthoredPapers")
                         .HasForeignKey("PaperInfoID");
 
                     b.HasOne("TRPR.Models.Researcher", "Researcher")
                         .WithMany("AuthoredPapers")
-                        .HasForeignKey("ResearcherID");
+                        .HasForeignKey("ResID")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("TRPR.Models.Comment", b =>

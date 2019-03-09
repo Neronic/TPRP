@@ -69,6 +69,13 @@ namespace TRPR.Data
             //Many to Many Paper - Keyword
             modelBuilder.Entity<PaperKeyword>()
             .HasKey(t => new { t.PaperID, t.KeyID });
+
+            //No Cascade Delete for Author - Paper
+            modelBuilder.Entity<AuthoredPaper>()
+                .HasOne(pc => pc.Researcher)
+                .WithMany(c => c.AuthoredPapers)
+                .HasForeignKey(pc => pc.ResID)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -14,19 +14,26 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ID" />
             <div class="form-group">
-                <label asp-for="PaperID" class="control-label"></label>
-                <input asp-for="PaperID" class="form-control" />
-                <span asp-validation-for="PaperID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ResID" class="control-label"></label>
-                <input asp-for="ResID" class="form-control" />
-                <span asp-validation-for="ResID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RoleID" class="control-label"></label>
-                <select asp-for="RoleID" class="form-control" asp-items="ViewBag.RoleID"></select>
-                <span asp-validation-for="RoleID" class="text-danger"></span>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.PaperInfo)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PaperInfo.PaperTitle)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Researcher)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Researcher.FullName)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Roles)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Roles.RoleTitle)
+                    </dd>
+                </dl>
             </div>
             <div class="form-group">
                 <label asp-for="RevContentReview" class="control-label"></label>
@@ -55,12 +62,16 @@
             </div>
             <div class="form-group">
                 <label asp-for="RecID" class="control-label"></label>
-                <input asp-for="RecID" class="form-control" />
+                <select asp-for="RecID" class="form-control" asp-items="ViewBag.RecID">
+                    <option>Select an option</option>
+                </select>
                 <span asp-validation-for="RecID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ReRevID" class="control-label"></label>
-                <input asp-for="ReRevID" class="form-control" />
+                <select asp-for="ReRevID" class="form-control" asp-items="ViewBag.ReRevID">
+                    <option>Select an option</option>
+                </select>
                 <span asp-validation-for="ReRevID" class="text-danger"></span>
             </div>
             <div class="form-group">
