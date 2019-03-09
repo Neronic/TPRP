@@ -10,7 +10,7 @@ using TRPR.Data;
 namespace TRPR.Data.TRPRMigrations
 {
     [DbContext(typeof(TRPRContext))]
-    [Migration("20190216012150_Initial")]
+    [Migration("20190308214546_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,13 +32,9 @@ namespace TRPR.Data.TRPRMigrations
 
                     b.Property<int?>("PaperInfoID");
 
-                    b.Property<int?>("ResearcherID");
-
                     b.HasKey("ResID", "PaperID");
 
                     b.HasIndex("PaperInfoID");
-
-                    b.HasIndex("ResearcherID");
 
                     b.ToTable("AuthoredPapers");
                 });
@@ -445,12 +441,13 @@ namespace TRPR.Data.TRPRMigrations
             modelBuilder.Entity("TRPR.Models.AuthoredPaper", b =>
                 {
                     b.HasOne("TRPR.Models.PaperInfo", "PaperInfo")
-                        .WithMany()
+                        .WithMany("AuthoredPapers")
                         .HasForeignKey("PaperInfoID");
 
                     b.HasOne("TRPR.Models.Researcher", "Researcher")
                         .WithMany("AuthoredPapers")
-                        .HasForeignKey("ResearcherID");
+                        .HasForeignKey("ResID")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("TRPR.Models.Comment", b =>

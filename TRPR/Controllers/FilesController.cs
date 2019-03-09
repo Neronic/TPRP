@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TRPR.Data;
 using TRPR.Models;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+
 
 namespace TRPR.Controllers
 {
@@ -54,16 +59,19 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,FileName,TypeID")] File file)
+        public async Task<IActionResult> Create([Bind("ID,FileName,TypeID")] TRPR.Models.File file)
         {
             if (ModelState.IsValid)
             {
+                
                 _context.Add(file);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(file);
         }
+
+        
 
         // GET: Files/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -86,7 +94,7 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,FileName,TypeID")] File file)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,FileName,TypeID")] TRPR.Models.File file)
         {
             if (id != file.ID)
             {
@@ -149,5 +157,8 @@ namespace TRPR.Controllers
         {
             return _context.Files.Any(e => e.ID == id);
         }
+
+        
+        
     }
 }
