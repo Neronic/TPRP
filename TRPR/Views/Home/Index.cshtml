@@ -4,9 +4,9 @@
 
 
 
-@*@section Scripts {
+@section Scripts {
         <partial name="_ValidationScriptsPartial" />
-    }*@
+    }
 
 @{
     ViewData["Title"] = "Dashboard";
@@ -14,5 +14,47 @@
 <h2>@ViewData["Title"]</h2>
 <h3>@ViewData["Message"]</h3>
 <div>
-    <a asp-area="" asp-controller="PaperInfo" asp-action="Create" class="bg-success">New Submission</a>
+    <a asp-area="" asp-controller="PaperInfo" asp-action="Create" class="btnMed">New Submission</a>
+    <div>
+        <div>
+            <a asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLg">Papers Submitted</a>
+            <a asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLg">Reviewed</a>
+            <a asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLg">Drafts</a>
+        </div>
+        <div>
+            <h3>Most Recent</h3>
+            <table style="width:100%">
+                <tr>
+                    <th>Paper</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Delete</th>
+                </tr>
+                <tr>
+                    <td>Multisensory Environments</td>
+                    <td>6th May 2018</td>
+                    <td>Accepted</td>
+                    <td><i class="far fa-trash-alt"></i></td>
+                </tr>
+                <tr>
+                    <td>Multisensory Environments</td>
+                    <td>6th May 2018</td>
+                    <td>Accepted</td>
+                    <td><i class="far fa-trash-alt"></i></td>
+                </tr>
+                <tr>
+                    <td>Multisensory Environments</td>
+                    <td>6th May 2018</td>
+                    <td>Accepted</td>
+                    <td><i class="far fa-trash-alt"></i></td>
+                </tr>
+                <tr>
+                    <td>Multisensory Environments</td>
+                    <td>6th May 2018</td>
+                    <td>Accepted</td>
+                    <td><i class="far fa-trash-alt"></i></td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>
