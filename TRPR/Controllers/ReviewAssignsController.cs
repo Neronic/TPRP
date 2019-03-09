@@ -59,6 +59,7 @@ namespace TRPR.Controllers
         public IActionResult Create()
         {
             PopulateDropDownLists();
+            PopulateExpertiseDropDownList();
             return View();
         }
 
@@ -83,6 +84,7 @@ namespace TRPR.Controllers
                  ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
             PopulateDropDownLists();
+            PopulateExpertiseDropDownList();
             return View(reviewAssign);
         }
 
@@ -262,11 +264,28 @@ namespace TRPR.Controllers
             ViewData["RecID"] = RecSelectList(reviewAssign?.RecID);
             ViewData["ReRevID"] = AgainSelectList(reviewAssign?.ReRevID);
         }
-        //[HttpGet]
-        //public JsonResult GetDoctors(int? id)
-        //{
-        //    return Json(RoleSelectList(id));
-        //}
+
+        private void PopulateExpertiseDropDownList()
+        {
+            var dQuery = from d in _context.Expertises
+                         orderby d.ExpName
+                         select d;
+            ViewData["ExpID"] = new SelectList(dQuery, "ID", "ExpName");
+        }
+
+        [HttpGet]
+        public JsonResult GetResearcherByExpertise(int? id)
+        {
+            var dQuery = from d in _context.Researchers.Include(z => z.ResearchExpertises)
+                         select d;
+            if (id.HasValue)
+            {
+                dQuery = dQuery.Where(d => d.ResearchExpertises.Any(s => s.ExpID == id));
+            }
+            return Json(new SelectList(dQuery
+                .OrderBy(d => d.ResLast)
+                .ThenBy(d => d.ResFirst), "ID", "FullName"));
+        }
 
         private bool ReviewAssignExists(int id)
         {
