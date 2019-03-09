@@ -26,19 +26,147 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+
 </head>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".add-row").click(function () {
+            var name = $("#lstItem").val();
+            //var email = $("#email").val();
+            var markup = "<tr><td><input type='checkbox' name='record'></td><td>" + name + "</td><td><input type= 'text' class='form-control'></td><td><input type='text' class='form-control'></td></tr>";
+            $("table tbody").append(markup);
+        });
+
+        // Find and remove selected table rows
+        $(".delete-row").click(function () {
+            $("table tbody").find('input[name="record"]').each(function () {
+                if ($(this).is(":checked")) {
+                    $(this).parents("tr").remove();
+                }
+            });
+        });
+        $(function () {
+            $("#btnShowModal").click(function () {
+                $('#basicExampleModal').modal('show');
+            });
+        });
+    });
+</script>
+<!--------------------- Modal------------------------------->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add Customer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <fieldset class="form-group">
+                                <label id="lblNewCust">NEW CUSTOMER</label>
+                                <div class="row row-centered">
+                                    <div class="col col-centered">
+                                        <label class="col-form-label text-md-right" id="lblCustFirst">First Name:</label>
+                                        <asp:TextBox class="form-control" ID="txtCustFirst" runat="server"></asp:TextBox>
+                                    </div>
+                                    <div class="col">
+                                        <label class="col-form-label text-md-right" id="lblCustLast">Last Name:</label>
+                                        <asp:TextBox class="form-control" ID="txtCustLast" runat="server"></asp:TextBox>
+                                    </div>
+                                    <div class="col">
+                                        <label class="col-form-label text-md-right" id="lblPhone">Phone Number:</label>
+                                        <asp:TextBox class="form-control" ID="txtPhone" runat="server"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="row row-centered">
+                                    <div class="col col-centered">
+                                        <label class="col-form-label text-md-right" id="lblAddress">Address:</label>
+                                        <asp:TextBox class="form-control" ID="txtAddress" runat="server"></asp:TextBox>
+                                    </div>
+                                    <div class="col">
+                                        <label class="col-form-label text-md-right" id="lblCity">City:</label>
+                                        <asp:TextBox class="form-control" ID="txtCity" runat="server"></asp:TextBox>
+                                    </div>
+                                    <div class="col">
+                                        <label class="col-form-label text-md-right" id="lblPostal">Postal Code:</label>
+                                        <asp:TextBox class="form-control" ID="txtPostal" runat="server"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label class="col-form-label text-md-right" id="lblEmail">Email:</label>
+                                        <asp:TextBox class="form-control" ID="txtEmail" runat="server"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-md btn-outline-info" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-md btn-outline-info">Save</button>
+                </div>
+            </div>
+        </div>
+    </div><!-----modal-------->
+</div>
 <nav class="navbar navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <partial name="_LoginPartial" />
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Journals</a></li>
+                <li><a href="https://www.trontario.org/education-research/trpr--journal-of-tro/index.html#v15-call-for-papers"> Call for Papers </a></li>
+                <li><a href="#">Resources</a></li>
+                <li><a href="https://www.trontario.org/contact/index.html">Contact</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a asp-area="Identity" asp-page="/Account/Register">Register</a></li>
+
+            </ul>
+            <button id="btnShowModal">Register</button>
         </div>
     </div>
 </nav>
+
 <div class="row">
+    <div class="col-md-6 col-md-offset-2">
+        <section>
+            @*<h4>Use another service to log in.</h4>
+                <hr />
+                @{
+                    if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                    {
+                        <div>
+                            <p>
+                                There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                                for details on setting up this ASP.NET application to support logging in via external services.
+                            </p>
+                        </div>
+                    }
+                    else
+                    {
+                        <form asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                            <div>
+                                <p>
+                                    @foreach (var provider in Model.ExternalLogins)
+                                    {
+                                        <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                    }
+                                </p>
+                            </div>
+                        </form>
+                    }
+                }*@
+        </section>
+    </div>
     <div class="col-md-4">
         <section>
             <form method="post">
-                <h4>Use a local account to log in.</h4>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
@@ -73,36 +201,7 @@
             </form>
         </section>
     </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h4>Use another service to log in.</h4>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                            for details on setting up this ASP.NET application to support logging in via external services.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins)
-                                {
-                                    <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
-    </div>
+
 </div>
 
 @section Scripts {
