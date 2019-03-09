@@ -51,7 +51,6 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     {
-        <script src="~/js/refreshDDL.js"></script>
         <script type="text/javascript">
             $('#ExpID').change(function () {
                 var selectedExpertise = $("#ExpID").val();
@@ -72,7 +71,12 @@
                                 }));
                             });
                             theDDL.trigger("chosen:updated");
-                        }
+                        } else {
+                            theDDL.append($('<option/>', {
+                                value: null,
+                                text: 'No Associate Editors with that Expertise'
+                            }));
+                        };
                     });
                 });
                 theDDL.fadeToggle(400, function () {
