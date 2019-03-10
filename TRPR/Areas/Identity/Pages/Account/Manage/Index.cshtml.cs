@@ -8,18 +8,21 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using TRPR.Models;
 
 namespace TRPR.Areas.Identity.Pages.Account.Manage
 {
     public partial class IndexModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        
+
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
 
         public IndexModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
             IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -46,6 +49,41 @@ namespace TRPR.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Display(Name = "Full Name")]
+            public string Name { get { return Name; }set
+                {
+                    Name = FirstName +
+                        (string.IsNullOrEmpty(MiddleName) ? " " :
+                        (" " + (char?)MiddleName[0] + ". ").ToUpper()) +
+                        LastName;
+                }
+            }
+
+            [Required]
+            [Display(Name = "Date of Birth")]
+            [DataType(DataType.Date)]
+            public DateTime DateOfBirth { get; set; }
+
+           [Required]
+           [Display(Name = "Prefered Prefix")]
+           public string Prefix { get; set; }
+
+            [Display(Name = "First Name")]
+            [Required(ErrorMessage = "You need a first name.")]
+            [StringLength(30, ErrorMessage = "First name cannot exceed 30 characters.")]
+            public string FirstName { get; set; }
+
+            [Display(Name = "Middle Name")]
+            [StringLength(30, ErrorMessage = "Middle name cannot exceed 30 characters.")]
+            public string MiddleName { get; set; }
+
+            [Display(Name = "Last Name")]
+            [Required(ErrorMessage = "You need a last name.")]
+            [StringLength(30, ErrorMessage = "Last name cannot exceed 30 characters.")]
+            public string LastName { get; set; }
+
+
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -64,8 +102,15 @@ namespace TRPR.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                Email = email,
-                PhoneNumber = phoneNumber
+                Name = user.UserFullName,
+                FirstName = user.UserFirstName,
+                MiddleName = user.UserMiddleName,
+                LastName = user.UserLastName,
+                DateOfBirth = user.UserDateOfBirth,
+                Email = user.UserEmail,
+                PhoneNumber = user.UserPhoneNumber,
+                Prefix = user.UserPrefix,
+
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
@@ -86,8 +131,21 @@ namespace TRPR.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
+            if(Input.Name != user.UserFullName)
+            {
+                user.UserFullName = Input.Name;
+                user.UserFirstName = Input.FirstName;
+                user.UserMiddleName = Input.MiddleName;
+                user.UserLastName = Input.LastName;
+            }
+
+           if(Input.DateOfBirth != user.UserDateOfBirth)
+            {
+                user.UserDateOfBirth = Input.DateOfBirth;
+            }
+
             var email = await _userManager.GetEmailAsync(user);
-            if (Input.Email != email)
+            if (Input.Email != user.UserEmail)
             {
                 var setEmailResult = await _userManager.SetEmailAsync(user, Input.Email);
                 if (!setEmailResult.Succeeded)
@@ -98,7 +156,7 @@ namespace TRPR.Areas.Identity.Pages.Account.Manage
             }
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
+            if (Input.PhoneNumber != user.PhoneNumber)
             {
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
                 if (!setPhoneResult.Succeeded)
@@ -107,6 +165,13 @@ namespace TRPR.Areas.Identity.Pages.Account.Manage
                     throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
                 }
             }
+
+            if(Input.Prefix != user.UserPrefix)
+            {
+                user.UserPrefix = Input.Prefix;
+            }
+
+            await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

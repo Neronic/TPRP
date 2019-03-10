@@ -31,13 +31,14 @@ namespace TRPR.Data
         public DbSet<ResearchExpertise> ResearchExpertises { get; set; }
         public DbSet<AuthoredPaper> AuthoredPapers { get; set; }
         public DbSet<PaperKeyword> PaperKeywords { get; set; }
-
+        public DbSet<User> Users { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("TRPR");
 
+            
 
             //Add a unique index to the researchers email
             modelBuilder.Entity<Researcher>()
