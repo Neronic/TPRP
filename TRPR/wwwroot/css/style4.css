@@ -11,7 +11,12 @@
 /*@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";*/
 body {
     font-family: 'Frutiger LT Std', sans-serif;
-    background: #fafafa;
+    background: #fafafa; 
+}
+
+.page {
+border: 1px solid black;
+width:100%;
 }
 
 p {
@@ -31,7 +36,6 @@ a:focus {
 }
 
 .navbar {
-    padding: 15px 10px;
     background: #fff;
     border: none;
     border-radius: 0;
@@ -39,32 +43,67 @@ a:focus {
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.navbar-btn {
+/*.navbar-btn {
     box-shadow: none;
     outline: none !important;
     border: none;
-}
+}*/
 
-.line {
+/*.line {
     width: 100%;
     height: 1px;
     border-bottom: 1px dashed #ddd;
     margin: 40px 0;
-}
+}*/
 
 i,
 span {
     display: inline-block;
 }
+
 #btnNotification {
 background: none;
 border: none;
 }
 
+
+/* ---------------------------------------------------
+    BUTTON STYLE
+----------------------------------------------------- */
+
+.btnMed {
+    background: #8181AE;
+    width: 8em;
+    height: 4em;
+    color: #F2F2F2;
+    font-size: 16px;
+    border: none;
+}
+
+.btnLgMd,
+.btnLgDk,
+.btnLgLt{
+    width: 12em;
+    height: 12em;
+    color: #F2F2F2;
+    font-size: 13px;
+    border: none;
+}
+
+.btnLgDk {
+    background: #8181AE;
+}
+
+.btnLgMd {
+    background: #9190B8;
+}
+.btnLgLt {
+    background: #A1A0C2;   
+}
+
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
-
 .wrapper {
     display: flex;
     align-items: stretch;
@@ -73,6 +112,7 @@ border: none;
 #sidebar {
     min-width: 150px;
     max-width: 150px;
+    height:100%;
     background: #A1A0C2;
     color: #fff;
     transition: all 0.3s;
@@ -212,7 +252,23 @@ a.article:hover {
 }
 
 /* ---------------------------------------------------
+    PAGES STYLE
+----------------------------------------------------- */
+#AuthorDash {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    margin-top: 35px;
+}
+
+#AD1 {
+
+}
+
+/* ---------------------------------------------------
     MEDIAQUERIES
+----------------------------------------------------- */
+/* ---------------------------------------------------
+    SIDEBAR STYLE
 ----------------------------------------------------- */
 
 @media (max-width: 768px) {

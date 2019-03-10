@@ -1,17 +1,20 @@
 ﻿@model TRPR.Models.PaperInfo
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "New Submission";
 }
 
-<h2>Create</h2>
-
-<h4>PaperInfo</h4>
+<h4>New Submission</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PaperType" class="control-label"></label>
+                <input asp-for="PaperType" class="form-control" />
+                <span asp-validation-for="PaperType" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="PaperTitle" class="control-label"></label>
                 <input asp-for="PaperTitle" class="form-control" />
@@ -22,11 +25,7 @@
                 <input asp-for="PaperAbstract" class="form-control" />
                 <span asp-validation-for="PaperAbstract" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PaperType" class="control-label"></label>
-                <input asp-for="PaperType" class="form-control" />
-                <span asp-validation-for="PaperType" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <label asp-for="PaperLength" class="control-label"></label>
                 <input asp-for="PaperLength" class="form-control" />
