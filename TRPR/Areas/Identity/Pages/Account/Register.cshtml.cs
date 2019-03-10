@@ -9,20 +9,21 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using TRPR.Models;
 
 namespace TRPR.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -42,6 +43,7 @@ namespace TRPR.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
+            [StringLength(256, ErrorMessage ="Your email address cannot exceed the maximum number of characters.")]
             public string Email { get; set; }
 
             [Required]
@@ -54,6 +56,48 @@ namespace TRPR.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Display(Name = "Name")]
+            public string FullName
+            {
+                get
+                {
+                    return FirstName +
+                        (string.IsNullOrEmpty(MiddleName) ? " " :
+                        (" " + (char?)MiddleName[0] + ". ").ToUpper()) +
+                        LastName;
+                }
+            }
+
+            [Display(Name = "First Name")]
+            [Required(ErrorMessage = "You need a first name.")]
+            [StringLength(30, ErrorMessage = "First name cannot exceed 30 characters.")]
+            public string FirstName { get; set; }
+
+            [Display(Name = "Middle Name")]
+            [StringLength(30, ErrorMessage = "Middle name cannot exceed 30 characters.")]
+            public string MiddleName { get; set; }
+
+            [Display(Name = "Last Name")]
+            [Required(ErrorMessage = "You need a last name.")]
+            [StringLength(30, ErrorMessage = "Last name cannot exceed 30 characters.")]
+            public string LastName { get; set; }
+
+            public DateTime? DateCreated { get; set; }
+
+            [Display(Name = "Prefered Prefix")]
+            [Required(ErrorMessage = "Please tell us how you'd like to be identified.")]
+            public string Prefix { get; set; }
+
+            [Display(Name = "Date of Birth")]
+            [Required(ErrorMessage = "Please enter your DOB.")]
+            [DataType(DataType.Date)]
+            public DateTime DateOfBirth { get; set; }
+
+            [Phone]
+            [Display(Name = "Phone Number")]
+            public string PhoneNumber { get; set; }
+
         }
 
         public void OnGet(string returnUrl = null)
@@ -66,7 +110,14 @@ namespace TRPR.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new User { UserName = Input.Email,
+                    UserEmail = Input.Email,
+                    UserPhoneNumber = Input.PhoneNumber,
+                    UserFullName = Input.FullName,
+                    UserDateOfBirth = Input.DateOfBirth,
+                    UserPrefix = Input.Prefix
+                    
+                    };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

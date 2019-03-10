@@ -8,6 +8,30 @@ namespace TRPR.Models
     {
         public int UserID { get; set; }
 
+        [PersonalData]
+        public string UserFullName { get; set; }
+
+        [PersonalData]
+        public string UserFirstName { get; set; }
+        [PersonalData]
+        public string UserMiddleName { get; set; }
+        [PersonalData]
+        public string UserLastName { get; set; }
+
+        [PersonalData]
+        public string UserEmail { get; set; }
+
+        [PersonalData]
+        public DateTime UserDateOfBirth { get; set; }
+
+        [PersonalData]
+        public string UserPrefix { get; set; }
+
+        [PersonalData]
+        public string UserPhoneNumber { get; set; }
+
+
+        /*
             [Display(Name = "Email Address")]
             [Required(ErrorMessage = "You must enter a valid email address.")]
             [StringLength(256, ErrorMessage = "Your email address cannot exceed the allowed number of characters.")]
@@ -19,11 +43,6 @@ namespace TRPR.Models
             [StringLength(25, MinimumLength = 8, ErrorMessage = "Your password must be between 8 and 25 characters long.")]
             [DataType(DataType.Password)]
             public string UserPassword { get; set; }
-
-            [Display(Name = "Confirm Password")]
-            [DataType(DataType.Password)]
-            [Compare("UserPassword", ErrorMessage = "Your passwords must match.")]
-
 
             public DateTime? UserDateCreated { get; set; }
 
@@ -61,11 +80,15 @@ namespace TRPR.Models
             [Required(ErrorMessage = "Please enter your DOB.")]
             [DataType(DataType.Date)]
             public DateTime UserDateOfBirth { get; set; }
+        
+        [Phone]
+        [Display(Name = "Phone Number")]
+        public string UserPhoneNumber { get; set; }
 
      //work on later UserRole {admin, researcher, etc}
      // work on later public string VerificationCode { get; set; }
     //work on later public bool Verified { get; set; } 
-        
+        */
 
     }
 }
