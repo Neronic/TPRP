@@ -4,45 +4,48 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<div class="page" id="details">
+    <div id="paperDetail">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.PaperTitle)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PaperTitle)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PaperAbstract)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PaperAbstract)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PaperType)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PaperType)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PaperLength)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PaperLength)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.StatID)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.StatID)
+            </dd>
+        </dl>
 
-<div>
-    <h4>PaperInfo</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.PaperTitle)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PaperTitle)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PaperAbstract)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PaperAbstract)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PaperType)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PaperType)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PaperLength)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PaperLength)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.StatID)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.StatID)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    </div>
+    <div id="navbar2">
+        @Html.RenderPartialAsync("_navbar");
+    </div>
+    <div id="assign"></div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>
 </div>
