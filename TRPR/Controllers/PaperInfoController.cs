@@ -84,17 +84,16 @@ namespace TRPR.Controllers
                         using (var memoryStream = new System.IO.MemoryStream())
                         {
                             await f.CopyToAsync(memoryStream);
-                            PaperFile newFile = new PaperFile
+                            File newFile = new File
                             {
-                                File = new File
-                                {
+                                
                                     FileContent = memoryStream.ToArray(),
                                     FileMimeType = mimeType,
                                     FileName = f.FileName
-                                }
+                                
                                 
                             };
-                            paperInfo.PaperFiles.Add(newFile);
+                            paperInfo.Files.Add(newFile);
                         }
                     };
                 }
@@ -188,8 +187,8 @@ namespace TRPR.Controllers
 
         public FileContentResult Download(int id)
         {
-            var theFile = _context.PaperFiles.Include(f => f.File.FileContent).Where(f => f.File.ID == id).SingleOrDefault();
-            return File(theFile.File.FileContent, theFile.File.FileMimeType, theFile.File.FileName);
+            var theFile = _context.Files.Include(f => f.FileContent).Where(f => f.ID == id).SingleOrDefault();
+            return File(theFile.FileContent, theFile.FileMimeType, theFile.FileName);
         }
     }
 }
