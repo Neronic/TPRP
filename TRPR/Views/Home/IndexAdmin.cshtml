@@ -16,19 +16,23 @@
             <h4 style="display: inline">@ViewData["Title"]</h4>
                 <input type="button" id="btnSubmission" class="btnMed" value="New Submission" onclick="location.href='@Url.Action("Create", "PaperInfo")'" />
             </div>
-            <div id="AuthorDash">
+            <div id="AdminDash">
                 <div id="AD3">
-                    <button onclick="" asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLgLt">
-                        <span class="label" style="color: #F2F2F2;"> Papers Submitted </span>
-                        <span class="label" style="color: #F2F2F2; font-size:6em;"> 3 </span>
-                    </button>
-                    <button asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLgMd">
+                    <button asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLgLt">
                         <span class="label" style="color: #F2F2F2;"> Reviewed </span><br />
                         <span class="label" style="color: #F2F2F2; font-size:6em;"> 5 </span>
                     </button>
-                    <button asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLgDk">
-                        <span class="label" style="color: #F2F2F2;"> Drafts </span><br/>
+                    <button asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLgMd">
+                        <span class="label" style="color: #F2F2F2;"> Drafts </span><br />
                         <span class="label" style="color: #F2F2F2; font-size:6em;"> 2 </span>
+                    </button>
+                    <button asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLgDk">
+                        <span class="label" style="color: #F2F2F2;"> Drafts </span><br />
+                        <span class="label" style="color: #F2F2F2; font-size:6em;"> 2 </span>
+                    </button>
+                    <button onclick="" asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLgXDk">
+                        <span class="label" style="color: #F2F2F2;"> Papers Submitted </span>
+                        <span class="label" style="color: #F2F2F2; font-size:6em;"> 3 </span>
                     </button>
                 </div>
 

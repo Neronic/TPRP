@@ -16,7 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\Shared\_LayoutEditor.cshtml">
+    <Content Update="Views\Home\IndexAdmin.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\_LayoutAdmin.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
   </ItemGroup>
