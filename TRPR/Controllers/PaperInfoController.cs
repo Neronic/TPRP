@@ -53,8 +53,7 @@ namespace TRPR.Controllers
         // GET: PaperInfo/Create
         public IActionResult Create()
         {
-            var paperInfo = new PaperInfo();
-            paperInfo.AuthoredPapers = new List<AuthoredPaper>();
+            
             PopulateDropDownLists();
             return View();
         }
@@ -65,11 +64,9 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,PaperTitle,PaperAbstract,PaperType,PaperLength,StatusID")] PaperInfo paperInfo, IEnumerable<IFormFile> theFiles, string bio)
+        public async Task<IActionResult> Create([Bind("ID,PaperTitle,PaperAbstract,PaperType,PaperLength,StatusID")] PaperInfo paperInfo, IEnumerable<IFormFile> theFiles)
         {
-            paperInfo.AuthoredPapers = new List<AuthoredPaper>();
-            var bioAdd = new AuthoredPaper { PaperInfoID = paperInfo.ID, ResearcherID = int.Parse(bio) };
-            paperInfo.AuthoredPapers.Add(bioAdd);
+            
             if (ModelState.IsValid)
             {
                 await AddDocuments(paperInfo, theFiles);
