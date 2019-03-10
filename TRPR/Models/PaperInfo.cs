@@ -37,7 +37,7 @@ namespace TRPR.Models
 
         [Display(Name = "Status")]
         [Range(1, int.MaxValue, ErrorMessage = "You must select the status of the Paper.")]
-        public int StatID { get; set; }
+        public int StatusID { get; set; }
         public Status Status { get; set; }
 
         [Display(Name = "Keywords")]
