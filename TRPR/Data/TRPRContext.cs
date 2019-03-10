@@ -27,9 +27,7 @@ namespace TRPR.Data
         public DbSet<ReviewAssign> ReviewAssigns { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Status> Statuses { get; set; }
-        public DbSet<ReviewFile> ReviewFiles { get; set; }
         public DbSet<ResearchInstitute> ResearchInstitutes { get; set; }
-        public DbSet<PaperFile> PaperFiles { get; set; }
         public DbSet<ResearchExpertise> ResearchExpertises { get; set; }
         public DbSet<AuthoredPaper> AuthoredPapers { get; set; }
         public DbSet<PaperKeyword> PaperKeywords { get; set; }
@@ -57,14 +55,6 @@ namespace TRPR.Data
             //Many to Many Researcher - Institute
             modelBuilder.Entity<ResearchInstitute>()
             .HasKey(t => new { t.ResID, t.InstID });
-
-            //Many to Many Review - File
-            modelBuilder.Entity<ReviewFile>()
-            .HasKey(t => new { t.RevID, t.FileID });
-
-            //Many to Many Paper - File
-            modelBuilder.Entity<PaperFile>()
-            .HasKey(t => new { t.PaperID, t.FileID });
 
             //Many to Many Paper - Keyword
             modelBuilder.Entity<PaperKeyword>()
