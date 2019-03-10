@@ -108,6 +108,14 @@ namespace TRPR.Data.TRPRMigrations
 
                     b.Property<int?>("FileTypeID");
 
+                    b.Property<int?>("PaperID");
+
+                    b.Property<int?>("PaperInfoID");
+
+                    b.Property<int?>("RevID");
+
+                    b.Property<int?>("ReviewAssignID");
+
                     b.Property<int>("TypeID");
 
                     b.Property<string>("UpdatedBy")
@@ -118,6 +126,10 @@ namespace TRPR.Data.TRPRMigrations
                     b.HasKey("ID");
 
                     b.HasIndex("FileTypeID");
+
+                    b.HasIndex("PaperInfoID");
+
+                    b.HasIndex("ReviewAssignID");
 
                     b.ToTable("Files");
                 });
@@ -165,23 +177,6 @@ namespace TRPR.Data.TRPRMigrations
                     b.HasKey("ID");
 
                     b.ToTable("Keywords");
-                });
-
-            modelBuilder.Entity("TRPR.Models.PaperFile", b =>
-                {
-                    b.Property<int>("PaperID");
-
-                    b.Property<int>("FileID");
-
-                    b.Property<int?>("PaperInfoID");
-
-                    b.HasKey("PaperID", "FileID");
-
-                    b.HasIndex("FileID");
-
-                    b.HasIndex("PaperInfoID");
-
-                    b.ToTable("PaperFiles");
                 });
 
             modelBuilder.Entity("TRPR.Models.PaperInfo", b =>
@@ -389,23 +384,6 @@ namespace TRPR.Data.TRPRMigrations
                     b.ToTable("ReviewAssigns");
                 });
 
-            modelBuilder.Entity("TRPR.Models.ReviewFile", b =>
-                {
-                    b.Property<int>("RevID");
-
-                    b.Property<int>("FileID");
-
-                    b.Property<int?>("ReviewAssignID");
-
-                    b.HasKey("RevID", "FileID");
-
-                    b.HasIndex("FileID");
-
-                    b.HasIndex("ReviewAssignID");
-
-                    b.ToTable("ReviewFiles");
-                });
-
             modelBuilder.Entity("TRPR.Models.Role", b =>
                 {
                     b.Property<int>("ID")
@@ -460,18 +438,14 @@ namespace TRPR.Data.TRPRMigrations
                     b.HasOne("TRPR.Models.FileType", "FileType")
                         .WithMany()
                         .HasForeignKey("FileTypeID");
-                });
-
-            modelBuilder.Entity("TRPR.Models.PaperFile", b =>
-                {
-                    b.HasOne("TRPR.Models.File", "File")
-                        .WithMany()
-                        .HasForeignKey("FileID")
-                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TRPR.Models.PaperInfo", "PaperInfo")
-                        .WithMany("PaperFiles")
+                        .WithMany("Files")
                         .HasForeignKey("PaperInfoID");
+
+                    b.HasOne("TRPR.Models.ReviewAssign", "ReviewAssign")
+                        .WithMany("Files")
+                        .HasForeignKey("ReviewAssignID");
                 });
 
             modelBuilder.Entity("TRPR.Models.PaperInfo", b =>
@@ -536,18 +510,6 @@ namespace TRPR.Data.TRPRMigrations
                         .WithMany()
                         .HasForeignKey("RoleID")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("TRPR.Models.ReviewFile", b =>
-                {
-                    b.HasOne("TRPR.Models.File", "File")
-                        .WithMany()
-                        .HasForeignKey("FileID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("TRPR.Models.ReviewAssign", "ReviewAssign")
-                        .WithMany("ReviewFiles")
-                        .HasForeignKey("ReviewAssignID");
                 });
 #pragma warning restore 612, 618
         }
