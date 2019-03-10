@@ -21,7 +21,7 @@ namespace TRPR.Controllers
         }
 
         // GET: ReviewAssigns
-        public async Task<IActionResult> Index(int? PaperID, int? ResID, int? RoleID)
+        public async Task<IActionResult> Index(int? PaperInfoID, int? ResearcherID, int? RoleID)
         {
             var reviewAssigns = _context.ReviewAssigns
                 .Include(ra => ra.Roles)
@@ -68,7 +68,7 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,PaperID,ResID,RoleID,RevContentReview,RevKeywordReview,RevLengthReview,RevFormatReview,RevCitationReview,RecID,ReRevID")] ReviewAssign reviewAssign)
+        public async Task<IActionResult> Create([Bind("ID,PaperInfoID,ResearcherID,RoleID,RevContentReview,RevKeywordReview,RevLengthReview,RevFormatReview,RevCitationReview,RecommendID,ReviewAgainID")] ReviewAssign reviewAssign)
         {
             try
             {
@@ -116,7 +116,7 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id)//, [Bind("ID,PaperID,ResID,RoleID,RevContentReview,RevKeywordReview,RevLengthReview,RevFormatReview,RevCitationReview,RecID,ReRevID")] ReviewAssign reviewAssign)
+        public async Task<IActionResult> Edit(int id)//, [Bind("ID,PaperInfoID,ResearcherID,RoleID,RevContentReview,RevKeywordReview,RevLengthReview,RevFormatReview,RevCitationReview,RecommendID,ReviewAgainID")] ReviewAssign reviewAssign)
         {
             var reviewToUpdate = await _context.ReviewAssigns
                 .Include(r => r.Roles)
@@ -131,8 +131,8 @@ namespace TRPR.Controllers
             }
 
             if (await TryUpdateModelAsync<ReviewAssign>(reviewToUpdate, "",
-                s => s.PaperID, s => s.ResID, s => s.RoleID, s => s.RevContentReview, s => s.RevKeywordReview, s => s.RevLengthReview, 
-                s => s.RevFormatReview, s => s.RevCitationReview, s => s.RecID, s => s.ReRevID))
+                s => s.PaperInfoID, s => s.ResearcherID, s => s.RoleID, s => s.RevContentReview, s => s.RevKeywordReview, s => s.RevLengthReview, 
+                s => s.RevFormatReview, s => s.RevCitationReview, s => s.RecommendID, s => s.ReviewAgainID))
             {
                 try
                 {
@@ -259,10 +259,10 @@ namespace TRPR.Controllers
         private void PopulateDropDownLists(ReviewAssign reviewAssign = null)
         {
             ViewData["RoleID"] = RoleSelectList(reviewAssign?.RoleID);
-            ViewData["ResID"] = ResearcherSelectList(reviewAssign?.ResID);
-            ViewData["PaperID"] = PaperSelectList(reviewAssign?.PaperID);
-            ViewData["RecID"] = RecSelectList(reviewAssign?.RecID);
-            ViewData["ReRevID"] = AgainSelectList(reviewAssign?.ReRevID);
+            ViewData["ResearcherID"] = ResearcherSelectList(reviewAssign?.ResearcherID);
+            ViewData["PaperInfoID"] = PaperSelectList(reviewAssign?.PaperInfoID);
+            ViewData["RecommendID"] = RecSelectList(reviewAssign?.RecommendID);
+            ViewData["ReviewAgainID"] = AgainSelectList(reviewAssign?.ReviewAgainID);
         }
 
         private void PopulateExpertiseDropDownList()
@@ -270,7 +270,7 @@ namespace TRPR.Controllers
             var dQuery = from d in _context.Expertises
                          orderby d.ExpName
                          select d;
-            ViewData["ExpID"] = new SelectList(dQuery, "ID", "ExpName");
+            ViewData["ExpertiseID"] = new SelectList(dQuery, "ID", "ExpName");
         }
 
         [HttpGet]
@@ -280,7 +280,7 @@ namespace TRPR.Controllers
                          select d;
             if (id.HasValue)
             {
-                dQuery = dQuery.Where(d => d.ResearchExpertises.Any(s => s.ExpID == id));
+                dQuery = dQuery.Where(d => d.ResearchExpertises.Any(s => s.ExpertiseID == id));
             }
             return Json(new SelectList(dQuery
                 .OrderBy(d => d.ResLast)

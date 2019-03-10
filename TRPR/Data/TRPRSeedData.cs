@@ -566,108 +566,108 @@ namespace TRPR.Data
                     context.ResearchExpertises.AddRange(
                     new ResearchExpertise
                     {
-                        ResID = 1,
-                        ExpID = 20
+                        ResearcherID = 1,
+                        ExpertiseID = 20
                     },
                     new ResearchExpertise
                     {
-                        ResID = 2,
-                        ExpID = 19
+                        ResearcherID = 2,
+                        ExpertiseID = 19
                     },
                     new ResearchExpertise
                     {
-                        ResID = 3,
-                        ExpID = 18
+                        ResearcherID = 3,
+                        ExpertiseID = 18
                     },
                     new ResearchExpertise
                     {
-                        ResID = 4,
-                        ExpID = 17
+                        ResearcherID = 4,
+                        ExpertiseID = 17
                     },
                     new ResearchExpertise
                     {
-                        ResID = 5,
-                        ExpID = 16
+                        ResearcherID = 5,
+                        ExpertiseID = 16
                     },
                     new ResearchExpertise
                     {
-                        ResID = 6,
-                        ExpID = 15
+                        ResearcherID = 6,
+                        ExpertiseID = 15
                     },
                     new ResearchExpertise
                     {
-                        ResID = 7,
-                        ExpID = 14
+                        ResearcherID = 7,
+                        ExpertiseID = 14
                     },
                     new ResearchExpertise
                     {
-                        ResID = 8,
-                        ExpID = 13
+                        ResearcherID = 8,
+                        ExpertiseID = 13
                     },
                     new ResearchExpertise
                     {
-                        ResID = 9,
-                        ExpID = 12
+                        ResearcherID = 9,
+                        ExpertiseID = 12
                     },
                     new ResearchExpertise
                     {
-                        ResID = 10,
-                        ExpID = 11
+                        ResearcherID = 10,
+                        ExpertiseID = 11
                     },
                     new ResearchExpertise
                     {
-                        ResID = 9,
-                        ExpID = 10
+                        ResearcherID = 9,
+                        ExpertiseID = 10
                     },
                     new ResearchExpertise
                     {
-                        ResID = 10,
-                        ExpID = 9
+                        ResearcherID = 10,
+                        ExpertiseID = 9
                     },
                     new ResearchExpertise
                     {
-                        ResID = 11,
-                        ExpID = 8
+                        ResearcherID = 11,
+                        ExpertiseID = 8
                     },
                     new ResearchExpertise
                     {
-                        ResID = 12,
-                        ExpID = 7
+                        ResearcherID = 12,
+                        ExpertiseID = 7
                     },
                     new ResearchExpertise
                     {
-                        ResID = 13,
-                        ExpID = 6
+                        ResearcherID = 13,
+                        ExpertiseID = 6
                     },
                     new ResearchExpertise
                     {
-                        ResID = 14,
-                        ExpID = 5
+                        ResearcherID = 14,
+                        ExpertiseID = 5
                     },
                     new ResearchExpertise
                     {
-                        ResID = 15,
-                        ExpID = 4
+                        ResearcherID = 15,
+                        ExpertiseID = 4
                     },
                     new ResearchExpertise
                     {
-                        ResID = 16,
-                        ExpID = 3
+                        ResearcherID = 16,
+                        ExpertiseID = 3
                     },
                     new ResearchExpertise
                     {
-                        ResID = 17,
-                        ExpID = 2
+                        ResearcherID = 17,
+                        ExpertiseID = 2
                     },
                     new ResearchExpertise
                     {
-                        ResID = 18,
-                        ExpID = 1
+                        ResearcherID = 18,
+                        ExpertiseID = 1
                     },
                     new ResearchExpertise
                     {
-                        ResID = 19,
-                        ExpID = 1
+                        ResearcherID = 19,
+                        ExpertiseID = 1
                     }
                 );
                     context.SaveChanges();
@@ -680,108 +680,108 @@ namespace TRPR.Data
                     context.ResearchInstitutes.AddRange(
                     new ResearchInstitute
                     {
-                        ResID = 1,
-                        InstID = 20
+                        ResearcherID = 1,
+                        InstituteID = 20
                     },
                     new ResearchInstitute
                     {
-                        ResID = 2,
-                        InstID = 19
+                        ResearcherID = 2,
+                        InstituteID = 19
                     },
                     new ResearchInstitute
                     {
-                        ResID = 3,
-                        InstID = 18
+                        ResearcherID = 3,
+                        InstituteID = 18
                     },
                     new ResearchInstitute
                     {
-                        ResID = 4,
-                        InstID = 17
+                        ResearcherID = 4,
+                        InstituteID = 17
                     },
                     new ResearchInstitute
                     {
-                        ResID = 5,
-                        InstID = 16
+                        ResearcherID = 5,
+                        InstituteID = 16
                     },
                     new ResearchInstitute
                     {
-                        ResID = 6,
-                        InstID = 15
+                        ResearcherID = 6,
+                        InstituteID = 15
                     },
                     new ResearchInstitute
                     {
-                        ResID = 7,
-                        InstID = 14
+                        ResearcherID = 7,
+                        InstituteID = 14
                     },
                     new ResearchInstitute
                     {
-                        ResID = 8,
-                        InstID = 13
+                        ResearcherID = 8,
+                        InstituteID = 13
                     },
                     new ResearchInstitute
                     {
-                        ResID = 9,
-                        InstID = 12
+                        ResearcherID = 9,
+                        InstituteID = 12
                     },
                     new ResearchInstitute
                     {
-                        ResID = 10,
-                        InstID = 11
+                        ResearcherID = 10,
+                        InstituteID = 11
                     },
                     new ResearchInstitute
                     {
-                        ResID = 9,
-                        InstID = 10
+                        ResearcherID = 9,
+                        InstituteID = 10
                     },
                     new ResearchInstitute
                     {
-                        ResID = 10,
-                        InstID = 9
+                        ResearcherID = 10,
+                        InstituteID = 9
                     },
                     new ResearchInstitute
                     {
-                        ResID = 11,
-                        InstID = 8
+                        ResearcherID = 11,
+                        InstituteID = 8
                     },
                     new ResearchInstitute
                     {
-                        ResID = 12,
-                        InstID = 7
+                        ResearcherID = 12,
+                        InstituteID = 7
                     },
                     new ResearchInstitute
                     {
-                        ResID = 13,
-                        InstID = 6
+                        ResearcherID = 13,
+                        InstituteID = 6
                     },
                     new ResearchInstitute
                     {
-                        ResID = 14,
-                        InstID = 5
+                        ResearcherID = 14,
+                        InstituteID = 5
                     },
                     new ResearchInstitute
                     {
-                        ResID = 15,
-                        InstID = 4
+                        ResearcherID = 15,
+                        InstituteID = 4
                     },
                     new ResearchInstitute
                     {
-                        ResID = 16,
-                        InstID = 3
+                        ResearcherID = 16,
+                        InstituteID = 3
                     },
                     new ResearchInstitute
                     {
-                        ResID = 17,
-                        InstID = 1
+                        ResearcherID = 17,
+                        InstituteID = 1
                     },
                     new ResearchInstitute
                     {
-                        ResID = 18,
-                        InstID = 1
+                        ResearcherID = 18,
+                        InstituteID = 1
                     },
                     new ResearchInstitute
                     {
-                        ResID = 19,
-                        InstID = 1
+                        ResearcherID = 19,
+                        InstituteID = 1
                     }
                 );
                     context.SaveChanges();
@@ -796,7 +796,7 @@ namespace TRPR.Data
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
                         PaperType = "Clinical case study",
                         PaperLength = 10,
-                        StatID = 3
+                        SttusID = 3
                     },
                     new PaperInfo
                     {
@@ -804,7 +804,7 @@ namespace TRPR.Data
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
                         PaperType = "Clinical trial",
                         PaperLength = 7,
-                        StatID = 3
+                        StatusID = 3
                     },
                     new PaperInfo
                     {
@@ -812,7 +812,7 @@ namespace TRPR.Data
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
                         PaperType = "Opinion",
                         PaperLength = 15,
-                        StatID = 3
+                        StatusID = 3
                     },
                     new PaperInfo
                     {
@@ -820,7 +820,7 @@ namespace TRPR.Data
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
                         PaperType = "Original research",
                         PaperLength = 27,
-                        StatID = 3
+                        StatusID = 3
                     },
                     new PaperInfo
                     {
@@ -828,7 +828,7 @@ namespace TRPR.Data
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
                         PaperType = "Clinical case study",
                         PaperLength = 15,
-                        StatID = 3
+                        StatusID = 3
                     },
                     new PaperInfo
                     {
@@ -836,7 +836,7 @@ namespace TRPR.Data
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
                         PaperType = "Clinical trial",
                         PaperLength = 22,
-                        StatID = 3
+                        StatusID = 3
                     },
                     new PaperInfo
                     {
@@ -844,7 +844,7 @@ namespace TRPR.Data
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
                         PaperType = "Original research",
                         PaperLength = 9,
-                        StatID = 3
+                        StatusID = 3
                     },
                     new PaperInfo
                     {
@@ -852,7 +852,7 @@ namespace TRPR.Data
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
                         PaperType = "Opinion",
                         PaperLength = 8,
-                        StatID = 3
+                        StatusID = 3
                     },
                     new PaperInfo
                     {
@@ -860,7 +860,7 @@ namespace TRPR.Data
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
                         PaperType = "Clinical trial",
                         PaperLength = 4,
-                        StatID = 3
+                        StatusID = 3
                     },
                     new PaperInfo
                     {
@@ -868,7 +868,7 @@ namespace TRPR.Data
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
                         PaperType = "Original research",
                         PaperLength = 19,
-                        StatID = 2
+                        StatusID = 2
                     },
                     new PaperInfo
                     {
@@ -876,7 +876,7 @@ namespace TRPR.Data
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
                         PaperType = "Perspective",
                         PaperLength = 18,
-                        StatID = 3
+                        StatusID = 3
                     },
                     new PaperInfo
                     {
@@ -884,7 +884,7 @@ namespace TRPR.Data
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
                         PaperType = "Clinical case study",
                         PaperLength = 7,
-                        StatID = 3
+                        StatusID = 3
                     },
                     new PaperInfo
                     {
@@ -892,7 +892,7 @@ namespace TRPR.Data
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
                         PaperType = "Original research",
                         PaperLength = 21,
-                        StatID = 2
+                        StatusID = 2
                     },
                     new PaperInfo
                     {
@@ -900,7 +900,7 @@ namespace TRPR.Data
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
                         PaperType = "Clinical trial",
                         PaperLength = 24,
-                        StatID = 3
+                        StatusID = 3
                     },
                     new PaperInfo
                     {
@@ -908,7 +908,7 @@ namespace TRPR.Data
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
                         PaperType = "Commentary",
                         PaperLength = 8,
-                        StatID = 3
+                        StatusID = 3
                     },
                     new PaperInfo
                     {
@@ -916,7 +916,7 @@ namespace TRPR.Data
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
                         PaperType = "Clinical case study",
                         PaperLength = 10,
-                        StatID = 1
+                        StatusID = 1
                     },
                     new PaperInfo
                     {
@@ -924,7 +924,7 @@ namespace TRPR.Data
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
                         PaperType = "Original research",
                         PaperLength = 16,
-                        StatID = 3
+                        StatusID = 3
                     },
                     new PaperInfo
                     {
@@ -932,7 +932,7 @@ namespace TRPR.Data
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
                         PaperType = "Clinical trial",
                         PaperLength = 14,
-                        StatID = 1
+                        StatusID = 1
                     },
                     new PaperInfo
                     {
@@ -940,7 +940,7 @@ namespace TRPR.Data
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
                         PaperType = "Perspective",
                         PaperLength = 6,
-                        StatID = 3
+                        StatusID = 3
                     },
                     new PaperInfo
                     {
@@ -948,7 +948,7 @@ namespace TRPR.Data
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
                         PaperType = "Original research",
                         PaperLength = 4,
-                        StatID = 3
+                        StatusID = 3
                     }
                 );
                     context.SaveChanges();
@@ -959,163 +959,163 @@ namespace TRPR.Data
                     context.ReviewAssigns.AddRange(
                     new ReviewAssign
                     {
-                        PaperID = 1,
-                        ResID = 1,
+                        PaperInfoID = 1,
+                        ResearcherID = 1,
                         RoleID = 4,
-                        RecID = 1,
-                        ReRevID = 1
+                        RecommendID = 1,
+                        ReviewAgainID = 1
                     },
                     new ReviewAssign
                     {
-                        PaperID = 1,
-                        ResID = 11,
+                        PaperInfoID = 1,
+                        ResearcherID = 11,
                         RoleID = 5,
-                        RecID = 2,
-                        ReRevID = 1
+                        RecommendID = 2,
+                        ReviewAgainID = 1
                     },
                     new ReviewAssign
                     {
-                        PaperID = 10,
-                        ResID = 7,
+                        PaperInfoID = 10,
+                        ResearcherID = 7,
                         RoleID = 4,
-                        RecID = 1,
-                        ReRevID = 1
+                        RecommendID = 1,
+                        ReviewAgainID = 1
                     },
                     new ReviewAssign
                     {
-                        PaperID = 10,
-                        ResID = 4,
+                        PaperInfoID = 10,
+                        ResearcherID = 4,
                         RoleID = 5,
-                        RecID = 4,
-                        ReRevID = 2
+                        RecommendID = 4,
+                        ReviewAgainID = 2
                     },
                     new ReviewAssign
                     {
-                        PaperID = 5,
-                        ResID = 2,
+                        PaperInfoID = 5,
+                        ResearcherID = 2,
                         RoleID = 4,
-                        RecID = 3,
-                        ReRevID = 1
+                        RecommendID = 3,
+                        ReviewAgainID = 1
                     },
                     new ReviewAssign
                     {
-                        PaperID = 5,
-                        ResID = 17,
+                        PaperInfoID = 5,
+                        ResearcherID = 17,
                         RoleID = 5,
-                        RecID = 1,
-                        ReRevID = 1
+                        RecommendID = 1,
+                        ReviewAgainID = 1
                     },
                     new ReviewAssign
                     {
-                        PaperID = 8,
-                        ResID = 6,
+                        PaperInfoID = 8,
+                        ResearcherID = 6,
                         RoleID = 4,
-                        RecID = 1,
-                        ReRevID = 1
+                        RecommendID = 1,
+                        ReviewAgainID = 1
                     },
                     new ReviewAssign
                     {
-                        PaperID = 8,
-                        ResID = 11,
+                        PaperInfoID = 8,
+                        ResearcherID = 11,
                         RoleID = 5,
-                        RecID = 2,
-                        ReRevID = 1
+                        RecommendID = 2,
+                        ReviewAgainID = 1
                     },
                     new ReviewAssign
                     {
-                        PaperID = 12,
-                        ResID = 20,
+                        PaperInfoID = 12,
+                        ResearcherID = 20,
                         RoleID = 4,
-                        RecID = 1,
-                        ReRevID = 1
+                        RecommendID = 1,
+                        ReviewAgainID = 1
                     },
                     new ReviewAssign
                     {
-                        PaperID = 12,
-                        ResID = 13,
+                        PaperInfoID = 12,
+                        ResearcherID = 13,
                         RoleID = 5,
-                        RecID = 1,
-                        ReRevID = 1
+                        RecommendID = 1,
+                        ReviewAgainID = 1
                     },
                     new ReviewAssign
                     {
-                        PaperID = 15,
-                        ResID = 12,
+                        PaperInfoID = 15,
+                        ResearcherID = 12,
                         RoleID = 4,
-                        RecID = 1,
-                        ReRevID = 1
+                        RecommendID = 1,
+                        ReviewAgainID = 1
                     },
                     new ReviewAssign
                     {
-                        PaperID = 15,
-                        ResID = 18,
+                        PaperInfoID = 15,
+                        ResearcherID = 18,
                         RoleID = 5,
-                        RecID = 1,
-                        ReRevID = 1
+                        RecommendID = 1,
+                        ReviewAgainID = 1
                     },
                     new ReviewAssign
                     {
-                        PaperID = 4,
-                        ResID = 12,
+                        PaperInfoID = 4,
+                        ResearcherID = 12,
                         RoleID = 4,
-                        RecID = 1,
-                        ReRevID = 1
+                        RecommendID = 1,
+                        ReviewAgainID = 1
                     },
                     new ReviewAssign
                     {
-                        PaperID = 4,
-                        ResID = 1,
+                        PaperInfoID = 4,
+                        ResearcherID = 1,
                         RoleID = 4,
-                        RecID = 1,
-                        ReRevID = 1
+                        RecommendID = 1,
+                        ReviewAgainID = 1
                     },
                     new ReviewAssign
                     {
-                        PaperID = 20,
-                        ResID = 13,
+                        PaperInfoID = 20,
+                        ResearcherID = 13,
                         RoleID = 4,
-                        RecID = 1,
-                        ReRevID = 1
+                        RecommendID = 1,
+                        ReviewAgainID = 1
                     },
                     new ReviewAssign
                     {
-                        PaperID = 20,
-                        ResID = 8,
+                        PaperInfoID = 20,
+                        ResearcherID = 8,
                         RoleID = 5,
-                        RecID = 1,
-                        ReRevID = 1
+                        RecommendID = 1,
+                        ReviewAgainID = 1
                     },
                     new ReviewAssign
                     {
-                        PaperID = 16,
-                        ResID = 14,
+                        PaperInfoID = 16,
+                        ResearcherID = 14,
                         RoleID = 4,
-                        RecID = 1,
-                        ReRevID = 1
+                        RecommendID = 1,
+                        ReviewAgainID = 1
                     },
                     new ReviewAssign
                     {
-                        PaperID = 16,
-                        ResID = 4,
+                        PaperInfoID = 16,
+                        ResearcherID = 4,
                         RoleID = 5,
-                        RecID = 1,
-                        ReRevID = 1
+                        RecommendID = 1,
+                        ReviewAgainID = 1
                     },
                     new ReviewAssign
                     {
-                        PaperID = 7,
-                        ResID = 20,
+                        PaperInfoID = 7,
+                        ResearcherID = 20,
                         RoleID = 4,
-                        RecID = 1,
-                        ReRevID = 1
+                        RecommendID = 1,
+                        ReviewAgainID = 1
                     },
                     new ReviewAssign
                     {
-                        PaperID = 7,
-                        ResID = 17,
+                        PaperInfoID = 7,
+                        ResearcherID = 17,
                         RoleID = 5,
-                        RecID = 1,
-                        ReRevID = 1
+                        RecommendID = 1,
+                        ReviewAgainID = 1
                     }
                 );
                     context.SaveChanges();
@@ -1253,164 +1253,164 @@ namespace TRPR.Data
                     context.AuthoredPapers.AddRange(
                     new AuthoredPaper
                     {
-                        PaperID = 1,
-                        ResID = 4,
+                        PaperInfoID = 1,
+                        ResearcherID = 4,
                         AuthPapLevel = "Author"
 
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 2,
-                        ResID = 7,
+                        PaperInfoID = 2,
+                        ResearcherID = 7,
                         AuthPapLevel = "Author"
 
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 3,
-                        ResID = 9,
+                        PaperInfoID = 3,
+                        ResearcherID = 9,
                         AuthPapLevel = "Author"
 
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 4,
-                        ResID = 20,
+                        PaperInfoID = 4,
+                        ResearcherID = 20,
                         AuthPapLevel = "Author"
 
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 5,
-                        ResID = 19,
+                        PaperInfoID = 5,
+                        ResearcherID = 19,
                         AuthPapLevel = "Author"
 
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 5,
-                        ResID = 1,
+                        PaperInfoID = 5,
+                        ResearcherID = 1,
                         AuthPapLevel = "Co-Author"
 
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 6,
-                        ResID = 2,
+                        PaperInfoID = 6,
+                        ResearcherID = 2,
                         AuthPapLevel = "Author"
 
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 7,
-                        ResID = 1,
+                        PaperInfoID = 7,
+                        ResearcherID = 1,
                         AuthPapLevel = "Author"
 
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 8,
-                        ResID = 15,
+                        PaperInfoID = 8,
+                        ResearcherID = 15,
                         AuthPapLevel = "Author"
 
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 8,
-                        ResID = 7,
+                        PaperInfoID = 8,
+                        ResearcherID = 7,
                         AuthPapLevel = "Co-Author"
 
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 9,
-                        ResID = 10,
+                        PaperInfoID = 9,
+                        ResearcherID = 10,
                         AuthPapLevel = "Author"
 
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 10,
-                        ResID = 11,
+                        PaperInfoID = 10,
+                        ResearcherID = 11,
                         AuthPapLevel = "Author"
 
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 12,
-                        ResID = 2,
+                        PaperInfoID = 12,
+                        ResearcherID = 2,
                         AuthPapLevel = "Author"
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 13,
-                        ResID = 15,
+                        PaperInfoID = 13,
+                        ResearcherID = 15,
                         AuthPapLevel = "Author"
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 14,
-                        ResID = 5,
+                        PaperInfoID = 14,
+                        ResearcherID = 5,
                         AuthPapLevel = "Author"
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 15,
-                        ResID = 9,
+                        PaperInfoID = 15,
+                        ResearcherID = 9,
                         AuthPapLevel = "Author"
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 11,
-                        ResID = 3,
+                        PaperInfoID = 11,
+                        ResearcherID = 3,
                         AuthPapLevel = "Author"
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 11,
-                        ResID = 7,
+                        PaperInfoID = 11,
+                        ResearcherID = 7,
                         AuthPapLevel = "Co-Author"
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 11,
-                        ResID = 8,
+                        PaperInfoID = 11,
+                        ResearcherID = 8,
                         AuthPapLevel = "Co-Author"
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 18,
-                        ResID = 7,
+                        PaperInfoID = 18,
+                        ResearcherID = 7,
                         AuthPapLevel = "Author"
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 19,
-                        ResID = 12,
+                        PaperInfoID = 19,
+                        ResearcherID = 12,
                         AuthPapLevel = "Author" 
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 20,
-                        ResID = 4,
+                        PaperInfoID = 20,
+                        ResearcherID = 4,
                         AuthPapLevel = "Author"
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 16,
-                        ResID = 3,
+                        PaperInfoID = 16,
+                        ResearcherID = 3,
                         AuthPapLevel = "Author"
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 17,
-                        ResID = 4,
+                        PaperInfoID = 17,
+                        ResearcherID = 4,
                         AuthPapLevel = "Co-Author"
                     },
                     new AuthoredPaper
                     {
-                        PaperID = 17,
-                        ResID = 1,
+                        PaperInfoID = 17,
+                        ResearcherID = 1,
                         AuthPapLevel = "Author"
                     }
                 );
@@ -1481,52 +1481,52 @@ namespace TRPR.Data
                 //    context.PaperFiles.AddRange(
                 //new PaperFile
                 //{
-                //    PaperID = 1,
+                //    PaperInfoID = 1,
                 //    FileID = 19
                 //},
                 //new PaperFile
                 //{
-                //    PaperID = 2,
+                //    PaperInfoID = 2,
                 //    FileID = 18
                 //},
                 //new PaperFile
                 //{
-                //    PaperID = 3,
+                //    PaperInfoID = 3,
                 //    FileID = 16
                 //},
                 //new PaperFile
                 //{
-                //    PaperID = 4,
+                //    PaperInfoID = 4,
                 //    FileID = 15
                 //},
                 //new PaperFile
                 //{
-                //    PaperID = 5,
+                //    PaperInfoID = 5,
                 //    FileID = 13
                 //},
                 //new PaperFile
                 //{
-                //    PaperID = 6,
+                //    PaperInfoID = 6,
                 //    FileID = 10
                 //},
                 //new PaperFile
                 //{
-                //    PaperID = 7,
+                //    PaperInfoID = 7,
                 //    FileID = 9
                 //},
                 //new PaperFile
                 //{
-                //    PaperID = 8,
+                //    PaperInfoID = 8,
                 //    FileID = 6
                 //},
                 //new PaperFile
                 //{
-                //    PaperID = 9,
+                //    PaperInfoID = 9,
                 //    FileID = 3
                 //},
                 //new PaperFile
                 //{
-                //    PaperID = 10,
+                //    PaperInfoID = 10,
                 //    FileID = 1
                 //}
                 //);
@@ -1538,158 +1538,158 @@ namespace TRPR.Data
                     context.PaperKeywords.AddRange(
                     new PaperKeyword
                     {
-                        PaperID = 1,
-                        KeyID = 1
+                        PaperInfoID = 1,
+                        KeywordID = 1
                     },
                     new PaperKeyword
                     {
-                        PaperID = 1,
-                        KeyID = 2
+                        PaperInfoID = 1,
+                        KeywordID = 2
                     },
                     new PaperKeyword
                     {
-                        PaperID = 1,
-                        KeyID = 3
+                        PaperInfoID = 1,
+                        KeywordID = 3
                     },
                     new PaperKeyword
                     {
-                        PaperID = 2,
-                        KeyID = 1
+                        PaperInfoID = 2,
+                        KeywordID = 1
                     },
                     new PaperKeyword
                     {
-                        PaperID = 2,
-                        KeyID = 3
+                        PaperInfoID = 2,
+                        KeywordID = 3
                     },
                     new PaperKeyword
                     {
-                        PaperID = 2,
-                        KeyID = 7
+                        PaperInfoID = 2,
+                        KeywordID = 7
                     },
                     new PaperKeyword
                     {
-                        PaperID = 3,
-                        KeyID = 5
+                        PaperInfoID = 3,
+                        KeywordID = 5
                     },
                     new PaperKeyword
                     {   
-                        PaperID = 3,
-                        KeyID = 7
+                        PaperInfoID = 3,
+                        KeywordID = 7
                     },
                     new PaperKeyword
                     {   
-                        PaperID = 3,
-                        KeyID = 9
+                        PaperInfoID = 3,
+                        KeywordID = 9
                     },
                     new PaperKeyword
                     {
-                        PaperID = 4,
-                        KeyID = 8
+                        PaperInfoID = 4,
+                        KeywordID = 8
                     },
                     new PaperKeyword
                     {
-                        PaperID = 4,
-                        KeyID = 2
+                        PaperInfoID = 4,
+                        KeywordID = 2
                     },
                     new PaperKeyword
                     {
-                        PaperID = 4,
-                        KeyID = 19
+                        PaperInfoID = 4,
+                        KeywordID = 19
                     },
                     new PaperKeyword
                     {
-                        PaperID = 1,
-                        KeyID = 1
+                        PaperInfoID = 1,
+                        KeywordID = 1
                     },
                     new PaperKeyword
                     {
-                        PaperID = 5,
-                        KeyID = 1
+                        PaperInfoID = 5,
+                        KeywordID = 1
                     },
                     new PaperKeyword
                     {
-                        PaperID = 5,
-                        KeyID = 11
+                        PaperInfoID = 5,
+                        KeywordID = 11
                     },
                     new PaperKeyword
                     {
-                        PaperID = 5,
-                        KeyID = 19
+                        PaperInfoID = 5,
+                        KeywordID = 19
                     },
                     new PaperKeyword
                    {
-                        PaperID = 6,
-                        KeyID = 14
+                        PaperInfoID = 6,
+                        KeywordID = 14
                     },
                     new PaperKeyword
                     {
-                        PaperID = 6,
-                        KeyID = 2
+                        PaperInfoID = 6,
+                        KeywordID = 2
                     },
                     new PaperKeyword
                     {
-                        PaperID = 6,
-                        KeyID = 1
+                        PaperInfoID = 6,
+                        KeywordID = 1
                     },
                     new PaperKeyword
                    {
-                        PaperID = 7,
-                        KeyID = 18
+                        PaperInfoID = 7,
+                        KeywordID = 18
                     },
                     new PaperKeyword
                    {
-                        PaperID = 7,
-                        KeyID = 7
+                        PaperInfoID = 7,
+                        KeywordID = 7
                     },
                     new PaperKeyword
                     {
-                        PaperID = 7,
-                        KeyID = 2
+                        PaperInfoID = 7,
+                        KeywordID = 2
                     },
                     new PaperKeyword
                     {
-                        PaperID = 8,
-                        KeyID = 4
+                        PaperInfoID = 8,
+                        KeywordID = 4
                     },
                     new PaperKeyword
                     {
-                        PaperID = 8,
-                        KeyID = 8
+                        PaperInfoID = 8,
+                        KeywordID = 8
                     },
                     new PaperKeyword
                     {
-                        PaperID = 8,
-                        KeyID = 11
+                        PaperInfoID = 8,
+                        KeywordID = 11
                     },
                     new PaperKeyword
                     {
-                        PaperID = 9,
-                        KeyID = 12
+                        PaperInfoID = 9,
+                        KeywordID = 12
                     },
                     new PaperKeyword
                     {
-                        PaperID = 9,
-                        KeyID = 4
+                        PaperInfoID = 9,
+                        KeywordID = 4
                     },
                     new PaperKeyword
                     {
-                        PaperID = 9,
-                        KeyID = 6
+                        PaperInfoID = 9,
+                        KeywordID = 6
                     },
                     new PaperKeyword
                     {
-                        PaperID = 10,
-                        KeyID = 1
+                        PaperInfoID = 10,
+                        KeywordID = 1
                     },
                     new PaperKeyword
                     {
-                        PaperID = 10,
-                        KeyID = 14
+                        PaperInfoID = 10,
+                        KeywordID = 14
                     },
                     new PaperKeyword
                     {
-                        PaperID = 10,
-                        KeyID = 12
+                        PaperInfoID = 10,
+                        KeywordID = 12
                     }
                 );
                     context.SaveChanges();

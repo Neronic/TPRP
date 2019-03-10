@@ -12,16 +12,16 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.PaperID)
+            @Html.DisplayNameFor(model => model.PaperInfo.PaperTitle)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.PaperID)
+            @Html.DisplayFor(model => model.PaperInfo.PaperTitle)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ResID)
+            @Html.DisplayNameFor(model => model.Researcher.FullName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ResID)
+            @Html.DisplayFor(model => model.Researcher.FullName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Roles)
@@ -60,16 +60,16 @@
             @Html.DisplayFor(model => model.RevCitationReview)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.RecID)
+            @Html.DisplayNameFor(model => model.Recommend.RecTitle)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.RecID)
+            @Html.DisplayFor(model => model.Recommend.RecTitle)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ReRevID)
+            @Html.DisplayNameFor(model => model.ReviewAgain.ReSponse)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ReRevID)
+            @Html.DisplayFor(model => model.ReviewAgain.ReSponse)
         </dd>
     </dl>
     

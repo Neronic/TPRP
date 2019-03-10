@@ -10,8 +10,8 @@ using TRPR.Data;
 namespace TRPR.Data.TRPRMigrations
 {
     [DbContext(typeof(TRPRContext))]
-    [Migration("20190310035019_New")]
-    partial class New
+    [Migration("20190310155606_ForeignKeyFix")]
+    partial class ForeignKeyFix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,15 +24,13 @@ namespace TRPR.Data.TRPRMigrations
 
             modelBuilder.Entity("TRPR.Models.AuthoredPaper", b =>
                 {
-                    b.Property<int>("ResID");
+                    b.Property<int>("ResearcherID");
 
-                    b.Property<int>("PaperID");
+                    b.Property<int>("PaperInfoID");
 
                     b.Property<string>("AuthPapLevel");
 
-                    b.Property<int?>("PaperInfoID");
-
-                    b.HasKey("ResID", "PaperID");
+                    b.HasKey("ResearcherID", "PaperInfoID");
 
                     b.HasIndex("PaperInfoID");
 
@@ -110,11 +108,9 @@ namespace TRPR.Data.TRPRMigrations
 
                     b.Property<int?>("FileTypeID");
 
-                    b.Property<int?>("PaperID");
-
                     b.Property<int?>("PaperInfoID");
 
-                    b.Property<int?>("RevID");
+                    b.Property<int?>("ReveiwAssignID");
 
                     b.Property<int?>("ReviewAssignID");
 
@@ -201,9 +197,7 @@ namespace TRPR.Data.TRPRMigrations
                         .IsRequired()
                         .HasMaxLength(30);
 
-                    b.Property<int>("StatID");
-
-                    b.Property<int?>("StatusID");
+                    b.Property<int>("StatusID");
 
                     b.HasKey("ID");
 
@@ -214,19 +208,13 @@ namespace TRPR.Data.TRPRMigrations
 
             modelBuilder.Entity("TRPR.Models.PaperKeyword", b =>
                 {
-                    b.Property<int>("PaperID");
+                    b.Property<int>("PaperInfoID");
 
-                    b.Property<int>("KeyID");
+                    b.Property<int>("KeywordID");
 
-                    b.Property<int?>("KeywordID");
-
-                    b.Property<int?>("PaperInfoID");
-
-                    b.HasKey("PaperID", "KeyID");
+                    b.HasKey("PaperInfoID", "KeywordID");
 
                     b.HasIndex("KeywordID");
-
-                    b.HasIndex("PaperInfoID");
 
                     b.ToTable("PaperKeywords");
                 });
@@ -284,42 +272,30 @@ namespace TRPR.Data.TRPRMigrations
 
             modelBuilder.Entity("TRPR.Models.ResearchExpertise", b =>
                 {
-                    b.Property<int>("ResID");
+                    b.Property<int>("ResearcherID");
 
-                    b.Property<int>("ExpID");
+                    b.Property<int>("ExpertiseID");
 
-                    b.Property<int?>("ExpertiseID");
-
-                    b.Property<int?>("ResearcherID");
-
-                    b.HasKey("ResID", "ExpID");
+                    b.HasKey("ResearcherID", "ExpertiseID");
 
                     b.HasIndex("ExpertiseID");
-
-                    b.HasIndex("ResearcherID");
 
                     b.ToTable("ResearchExpertises");
                 });
 
             modelBuilder.Entity("TRPR.Models.ResearchInstitute", b =>
                 {
-                    b.Property<int>("ResID");
+                    b.Property<int>("ResearcherID");
 
-                    b.Property<int>("InstID");
-
-                    b.Property<int?>("InstituteID");
+                    b.Property<int>("InstituteID");
 
                     b.Property<DateTime?>("ResInstEndDate");
 
                     b.Property<DateTime?>("ResInstStartDate");
 
-                    b.Property<int?>("ResearcherID");
-
-                    b.HasKey("ResID", "InstID");
+                    b.HasKey("ResearcherID", "InstituteID");
 
                     b.HasIndex("InstituteID");
-
-                    b.HasIndex("ResearcherID");
 
                     b.ToTable("ResearchInstitutes");
                 });
@@ -343,19 +319,11 @@ namespace TRPR.Data.TRPRMigrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("PaperID");
+                    b.Property<int>("PaperInfoID");
 
-                    b.Property<int?>("PaperInfoID");
+                    b.Property<int>("RecommendID");
 
-                    b.Property<int>("ReRevID");
-
-                    b.Property<int>("RecID");
-
-                    b.Property<int?>("RecommendID");
-
-                    b.Property<int>("ResID");
-
-                    b.Property<int?>("ResearcherID");
+                    b.Property<int>("ResearcherID");
 
                     b.Property<string>("RevCitationReview");
 
@@ -367,7 +335,7 @@ namespace TRPR.Data.TRPRMigrations
 
                     b.Property<string>("RevLengthReview");
 
-                    b.Property<int?>("ReviewAgainID");
+                    b.Property<int>("ReviewAgainID");
 
                     b.Property<int>("RoleID");
 
@@ -420,11 +388,12 @@ namespace TRPR.Data.TRPRMigrations
                 {
                     b.HasOne("TRPR.Models.PaperInfo", "PaperInfo")
                         .WithMany("AuthoredPapers")
-                        .HasForeignKey("PaperInfoID");
+                        .HasForeignKey("PaperInfoID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TRPR.Models.Researcher", "Researcher")
                         .WithMany("AuthoredPapers")
-                        .HasForeignKey("ResID")
+                        .HasForeignKey("ResearcherID")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -454,59 +423,70 @@ namespace TRPR.Data.TRPRMigrations
                 {
                     b.HasOne("TRPR.Models.Status", "Status")
                         .WithMany()
-                        .HasForeignKey("StatusID");
+                        .HasForeignKey("StatusID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TRPR.Models.PaperKeyword", b =>
                 {
                     b.HasOne("TRPR.Models.Keyword", "Keyword")
                         .WithMany("PaperKeywords")
-                        .HasForeignKey("KeywordID");
+                        .HasForeignKey("KeywordID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TRPR.Models.PaperInfo", "PaperInfo")
                         .WithMany("PaperKeywords")
-                        .HasForeignKey("PaperInfoID");
+                        .HasForeignKey("PaperInfoID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TRPR.Models.ResearchExpertise", b =>
                 {
                     b.HasOne("TRPR.Models.Expertise", "Expertise")
                         .WithMany("ResearchExpertises")
-                        .HasForeignKey("ExpertiseID");
+                        .HasForeignKey("ExpertiseID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TRPR.Models.Researcher", "Researcher")
                         .WithMany("ResearchExpertises")
-                        .HasForeignKey("ResearcherID");
+                        .HasForeignKey("ResearcherID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TRPR.Models.ResearchInstitute", b =>
                 {
                     b.HasOne("TRPR.Models.Institute", "Institute")
                         .WithMany("ResearchInstitutes")
-                        .HasForeignKey("InstituteID");
+                        .HasForeignKey("InstituteID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TRPR.Models.Researcher", "Researcher")
                         .WithMany("ResearchInstitutes")
-                        .HasForeignKey("ResearcherID");
+                        .HasForeignKey("ResearcherID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TRPR.Models.ReviewAssign", b =>
                 {
                     b.HasOne("TRPR.Models.PaperInfo", "PaperInfo")
                         .WithMany()
-                        .HasForeignKey("PaperInfoID");
+                        .HasForeignKey("PaperInfoID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TRPR.Models.Recommend", "Recommend")
                         .WithMany()
-                        .HasForeignKey("RecommendID");
+                        .HasForeignKey("RecommendID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TRPR.Models.Researcher", "Researcher")
                         .WithMany("ReviewAssigns")
-                        .HasForeignKey("ResearcherID");
+                        .HasForeignKey("ResearcherID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TRPR.Models.ReviewAgain", "ReviewAgain")
                         .WithMany()
-                        .HasForeignKey("ReviewAgainID");
+                        .HasForeignKey("ReviewAgainID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TRPR.Models.Role", "Roles")
                         .WithMany()

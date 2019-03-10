@@ -7,10 +7,10 @@ namespace TRPR.Models
 {
     public class PaperKeyword
     {
-        public int PaperID { get; set; }
+        public int PaperInfoID { get; set; }
         public PaperInfo PaperInfo { get; set; }
 
-        public int KeyID { get; set; }
+        public int KeywordID { get; set; }
         public Keyword Keyword { get; set; }
     }
 }

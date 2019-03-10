@@ -8,10 +8,10 @@ namespace TRPR.Models
 {
     public class ResearchInstitute
     {
-        public int InstID { get; set; }
+        public int InstituteID { get; set; }
         public Institute Institute { get; set; }
 
-        public int ResID { get; set; }
+        public int ResearcherID { get; set; }
         public Researcher Researcher { get; set; }
 
         [Display(Name = "Start Date")]
