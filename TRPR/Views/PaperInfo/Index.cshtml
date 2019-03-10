@@ -62,9 +62,9 @@
             </td>
             <td>
                 @{
-                    foreach (var f in item.PaperFiles)
+                    foreach (var f in item.Files)
                     {
-                        <a asp-action="Download" title="@f.File.FileName" asp-route-id="@f.File.ID">@f.File.FileName</a>
+                        <a asp-action="Download" title="@f.FileName" asp-route-id="@f.ID">@f.FileName</a>
                         <br />
                     }
                 }

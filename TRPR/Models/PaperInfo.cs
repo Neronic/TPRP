@@ -11,7 +11,7 @@ namespace TRPR.Models
         public PaperInfo()
         {
             PaperKeywords = new HashSet<PaperKeyword>();
-            PaperFiles = new HashSet<PaperFile>();
+            Files = new HashSet<File>();
         }
 
         public int ID { get; set; }
@@ -44,7 +44,7 @@ namespace TRPR.Models
         public ICollection<PaperKeyword> PaperKeywords { get; set; }
 
         [Display(Name = "Files")]
-        public ICollection<PaperFile> PaperFiles { get; set; }
+        public ICollection<File> Files { get; set; }
 
         [Display(Name = "Authored Papers")]
         public ICollection<AuthoredPaper> AuthoredPapers { get; set; }
