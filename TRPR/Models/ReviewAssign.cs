@@ -8,6 +8,11 @@ namespace TRPR.Models
 {
     public class ReviewAssign
     {
+        public ReviewAssign()
+        {
+            Files = new HashSet<File>();
+        }
+
         public int ID { get; set; }
 
         [Display(Name = "Main Paper")]
@@ -49,7 +54,7 @@ namespace TRPR.Models
         public ReviewAgain ReviewAgain { get; set; }
 
         [Display(Name = "Files")]
-        public ICollection<ReviewFile> ReviewFiles { get; set; }
+        public ICollection<File> Files { get; set; }
 
     }
 }
