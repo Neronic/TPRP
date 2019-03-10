@@ -41,9 +41,14 @@
 
     </div>
     <div id="navbar2">
-        @Html.RenderPartialAsync("_navbar");
+ 
+        <partial name="~/Views/Shared/_navbar.cshtml" />
+        <partial name="/Views/Shared/_navbar.cshtml" />
     </div>
-    <div id="assign"></div>
+    <div id="assign">
+        <input type="button" id="btnAssign" class="btnMed" value="Assign" onclick="location.href='@Url.Action("Create", "ReviewAssigns")'" />
+
+    </div>
     <div>
         <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
         <a asp-action="Index">Back to List</a>
