@@ -15,8 +15,8 @@ body {
 }
 
 .page {
-border: 1px solid black;
 width:100%;
+margin-top:2em;
 }
 
 p {
@@ -61,23 +61,23 @@ span {
     display: inline-block;
 }
 
-#btnNotification {
-background: none;
-border: none;
-}
-
 
 /* ---------------------------------------------------
     BUTTON STYLE
 ----------------------------------------------------- */
-
+.btnLgDk,
+.btnLgLt,
+.btnLgMd,
+.btnMed {
+    color: #F2F2F2;
+    border: none;
+    border-radius: 4px;
+}
 .btnMed {
     background: #8181AE;
-    width: 8em;
+    width: 7em;
     height: 4em;
-    color: #F2F2F2;
-    font-size: 16px;
-    border: none;
+    font-size: 1em;   
 }
 
 .btnLgMd,
@@ -105,17 +105,20 @@ border: none;
     SIDEBAR STYLE
 ----------------------------------------------------- */
 .wrapper {
-    display: flex;
     align-items: stretch;
+    display:flex;
+    height:100%;
+    
 }
 
 #sidebar {
-    min-width: 150px;
-    max-width: 150px;
-    height:100%;
+    min-width: 135px;
+    max-width: 135px;
     background: #A1A0C2;
-    color: #fff;
+    color: #F2F2F2;
     transition: all 0.3s;
+    display: grid;
+
 }
 
 #sidebar.active {
@@ -137,10 +140,16 @@ border: none;
     text-align: left;
 }
 
+    #sidebar ul li a span{
+        text-align: left;
+        padding-left:10px;
+    }
+
+
 #sidebar.active ul li a {
     padding: 20px 10px;
     text-align: center;
-    font-size: 0.85em;
+    font-size: 0.3em;
 }
 
 #sidebar.active ul li a i {
@@ -175,7 +184,6 @@ border: none;
 
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 1px solid #47748b;
 }
 
 #sidebar ul li a {
@@ -190,7 +198,8 @@ border: none;
     }
 
 #sidebar ul li a i {
-    margin-right: 10px;
+    /*margin-right: 10px;*/
+    text-align: right;
 }
 
     #sidebar ul li.active > a,
@@ -217,16 +226,17 @@ ul ul a {
     background: #D0D0E1;
 }
 
-ul.CTAs {
-    padding: 20px;
+#socialLinks {
+    padding: 0 10px 20px 10px;
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    align-self:flex-end;
 }
 
-ul.CTAs a {
-    text-align: center;
+#socialLinks a {
     font-size: 0.9em !important;
-    display: block;
-    border-radius: 5px;
-    margin-bottom: 5px;
+
 }
 
 a.download {
@@ -254,14 +264,19 @@ a.article:hover {
 /* ---------------------------------------------------
     PAGES STYLE
 ----------------------------------------------------- */
+#dashHead {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
 #AuthorDash {
     display: grid;
     grid-template-columns: 1fr 3fr;
-    margin-top: 35px;
+    margin-top: 15px;
 }
 
-#AD1 {
-
+#AD3 {
+    display: grid;
+    grid-row-gap: 5px;
 }
 
 /* ---------------------------------------------------

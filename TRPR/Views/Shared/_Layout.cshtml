@@ -34,14 +34,13 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">
-                    <img src="~/images/logo.png" style="height:inherit; padding:0; border: 1px solid black;" alt="logo" >
+                    <img src="~/images/logo.png" style="height:inherit;" alt="logo">
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <a href="javascript:void(0)" data-toggle="search">
-                        @*<i class="fas fa-search"></i>*@
-                        <input type="text" placeholder="Search" class="form-control" style="width:250px; display:inline; margin-top:8px;">
-                    </a>
+                <a href="javascript:void(0)" data-toggle="search">
+                    <input type="text" placeholder="Search" class="form-control" style="width:250px; display:inline; margin-top:8px;">
+                </a>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a href="#">
@@ -74,39 +73,27 @@
         </div><!-- /.container-fluid -->
     </nav>
     <!--  end navbar -->
-    @*<nav class="navbar navbar-fixed-top">
-        <div class="container" style="width: 100%">
-            <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">
-                <img src="~/images/logo.png" style="width: 80px; " alt="logo">
-            </a>
-            <div class="nav-item"><input type="text" placeholder="Search" class="form-control" style="width:250px;"></div>
-            <div class="nav-item"><a asp-area="" asp-controller="PaperInfo" asp-action="Index" class="nav-link"><i class="fa fa-bell"></i></a></div>
-            <div class="nav-item"><partial name="_LoginPartial" /></div>
-        </div>
-    </nav>*@
     <div class="wrapper">
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h3>Authors Menu</h3>
-
-                <button type="button" id="sidebarCollapse" class="btn btn-info">
+                <button type="button" id="sidebarCollapse" class="btn d-none">
                     <i class="fas fa-align-justify"></i>
                 </button>
                 <strong>TRPR</strong>
+                <h3>Author</h3>
             </div>
 
             <ul class="list-unstyled components">
                 <li>
-                    <a href="#">
-                        <i class="fas fa-home"></i>
-                        Home
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="btnLg">
+                        <i class="fas fa-home"></i><span>Home</span>
                     </a>
                 </li>
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-copy"></i>
-                        My Papers
+                        <span>My Papers</span>
                     </a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
@@ -127,7 +114,7 @@
 
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-book"></i>
-                        Journals
+                        <span>Journals</span>
                     </a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
@@ -144,30 +131,30 @@
                 <li>
                     <a href="https://www.trontario.org/education-research/trpr--journal-of-tro/index.html#v15-call-for-papers">
                         <i class="fas fa-info"></i>
-                        Call for Papers
+                        <span>Call for Papers</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <i class="fas fa-briefcase"></i>
-                        Resources
+                        <span>Resources</span>
                     </a>
                 </li>
                 <li>
                     <a href="https://www.trontario.org/contact/index.html">
                         <i class="fas fa-paper-plane"></i>
-                        Contact
+                        <span>Contact</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <i class="fas fa-question"></i>
-                        FAQ
+                        <span>FAQ</span>
                     </a>
                 </li>
             </ul>
 
-            <div class="list-unstyled CTAs">
+            <div id="socialLinks">
 
                 <a href="https://www.facebook.com/TROntario/"><i class="fab fa-facebook-f"></i></a>
 
@@ -178,40 +165,6 @@
                 <a href="https://www.instagram.com/trontario/"><i class="fab fa-instagram"></i></a>
             </div>
         </nav>
-
-        <!-- Page Content  -->
-        @*<div id="content">
-
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <div class="container-fluid">
-
-                        <button type="button" id="sidebarCollapse" class="btn btn-info">
-                            <i class="fas fa-align-left"></i>
-                            <span>Toggle Sidebar</span>
-                        </button>
-                        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <i class="fas fa-align-justify"></i>
-                        </button>
-
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="nav navbar-nav ml-auto">
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="#">Page</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Page</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Page</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Page</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-            </div>*@
 
         <div class="container body-content">
             @RenderBody()
