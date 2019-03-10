@@ -10,15 +10,15 @@ using TRPR.Data;
 namespace TRPR.Data.TRPRMigrations
 {
     [DbContext(typeof(TRPRContext))]
-    [Migration("20190309034501_Test")]
-    partial class Test
+    [Migration("20190310224642_initia")]
+    partial class initia
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("TRPR")
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -32,13 +32,9 @@ namespace TRPR.Data.TRPRMigrations
 
                     b.Property<int?>("PaperInfoID");
 
-                    b.Property<int?>("ResearcherID");
-
                     b.HasKey("ResID", "PaperID");
 
                     b.HasIndex("PaperInfoID");
-
-                    b.HasIndex("ResearcherID");
 
                     b.ToTable("AuthoredPapers");
                 });
@@ -445,12 +441,13 @@ namespace TRPR.Data.TRPRMigrations
             modelBuilder.Entity("TRPR.Models.AuthoredPaper", b =>
                 {
                     b.HasOne("TRPR.Models.PaperInfo", "PaperInfo")
-                        .WithMany()
+                        .WithMany("AuthoredPapers")
                         .HasForeignKey("PaperInfoID");
 
                     b.HasOne("TRPR.Models.Researcher", "Researcher")
                         .WithMany("AuthoredPapers")
-                        .HasForeignKey("ResearcherID");
+                        .HasForeignKey("ResID")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("TRPR.Models.Comment", b =>
