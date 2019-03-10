@@ -11,7 +11,7 @@ namespace TRPR.Models
         public PaperInfo()
         {
             PaperKeywords = new HashSet<PaperKeyword>();
-            PaperFiles = new HashSet<PaperFile>();
+            Files = new HashSet<File>();
         }
 
         public int ID { get; set; }
@@ -37,14 +37,16 @@ namespace TRPR.Models
 
         [Display(Name = "Status")]
         [Range(1, int.MaxValue, ErrorMessage = "You must select the status of the Paper.")]
-        public int StatID { get; set; }
+        public int StatusID { get; set; }
         public Status Status { get; set; }
+
+        
 
         [Display(Name = "Keywords")]
         public ICollection<PaperKeyword> PaperKeywords { get; set; }
 
         [Display(Name = "Files")]
-        public ICollection<PaperFile> PaperFiles { get; set; }
+        public ICollection<File> Files { get; set; }
 
         [Display(Name = "Authored Papers")]
         public ICollection<AuthoredPaper> AuthoredPapers { get; set; }

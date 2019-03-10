@@ -8,16 +8,21 @@ namespace TRPR.Models
 {
     public class ReviewAssign
     {
+        public ReviewAssign()
+        {
+            Files = new HashSet<File>();
+        }
+
         public int ID { get; set; }
 
         [Display(Name = "Main Paper")]
         [Range(1, int.MaxValue, ErrorMessage = "You must select the main paper.")]
-        public int PaperID { get; set; }
+        public int PaperInfoID { get; set; }
         public PaperInfo PaperInfo { get; set; }
 
         [Display(Name = "Reveiwer")]
         [Range(1, int.MaxValue, ErrorMessage = "You must select the Reviewer.")]
-        public int ResID { get; set; }
+        public int ResearcherID { get; set; }
         public Researcher Researcher { get; set; }
 
         [Display(Name = "Role")]
@@ -41,15 +46,15 @@ namespace TRPR.Models
         public string RevCitationReview { get; set; }
 
         [Display(Name = "Recommendation")]
-        public int RecID { get; set; }
+        public int RecommendID { get; set; }
         public Recommend Recommend { get; set; }
 
         [Display(Name = "Review Again")]
-        public int ReRevID { get; set; }
+        public int ReviewAgainID { get; set; }
         public ReviewAgain ReviewAgain { get; set; }
 
         [Display(Name = "Files")]
-        public ICollection<ReviewFile> ReviewFiles { get; set; }
+        public ICollection<File> Files { get; set; }
 
     }
 }

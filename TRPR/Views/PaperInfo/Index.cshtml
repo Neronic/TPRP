@@ -25,11 +25,12 @@
                 @Html.DisplayNameFor(model => model.PaperLength)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StatID)
+                @Html.DisplayNameFor(model => model.Status.StatName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.AuthoredPapers)
             </th>
+            
             <th>
                 <input type="submit" disabled="disabled" value="Uploaded Files" class="btn btn-link" />
             </th>
@@ -52,7 +53,7 @@
                 @Html.DisplayFor(modelItem => item.PaperLength)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StatID)
+                @Html.DisplayFor(modelItem => item.Status.StatName)
             </td>
             <td>
                 @foreach (var c in item.AuthoredPapers)
@@ -62,9 +63,9 @@
             </td>
             <td>
                 @{
-                    foreach (var f in item.PaperFiles)
+                    foreach (var f in item.Files)
                     {
-                        <a asp-action="Download" title="@f.File.FileName" asp-route-id="@f.File.ID">@f.File.FileName</a>
+                        <a asp-action="Download" title="@f.FileName" asp-route-id="@f.ID">@f.FileName</a>
                         <br />
                     }
                 }

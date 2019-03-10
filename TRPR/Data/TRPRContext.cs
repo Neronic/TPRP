@@ -27,9 +27,7 @@ namespace TRPR.Data
         public DbSet<ReviewAssign> ReviewAssigns { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Status> Statuses { get; set; }
-        public DbSet<ReviewFile> ReviewFiles { get; set; }
         public DbSet<ResearchInstitute> ResearchInstitutes { get; set; }
-        public DbSet<PaperFile> PaperFiles { get; set; }
         public DbSet<ResearchExpertise> ResearchExpertises { get; set; }
         public DbSet<AuthoredPaper> AuthoredPapers { get; set; }
         public DbSet<PaperKeyword> PaperKeywords { get; set; }
@@ -48,33 +46,25 @@ namespace TRPR.Data
 
             //Many to Many Authored - Paper
             modelBuilder.Entity<AuthoredPaper>()
-            .HasKey(t => new { t.ResID, t.PaperID });
+            .HasKey(t => new { t.ResearcherID, t.PaperInfoID });
 
             //Many to Many Researcher - Expertise
             modelBuilder.Entity<ResearchExpertise>()
-            .HasKey(t => new { t.ResID, t.ExpID });
+            .HasKey(t => new { t.ResearcherID, t.ExpertiseID });
 
             //Many to Many Researcher - Institute
             modelBuilder.Entity<ResearchInstitute>()
-            .HasKey(t => new { t.ResID, t.InstID });
-
-            //Many to Many Review - File
-            modelBuilder.Entity<ReviewFile>()
-            .HasKey(t => new { t.RevID, t.FileID });
-
-            //Many to Many Paper - File
-            modelBuilder.Entity<PaperFile>()
-            .HasKey(t => new { t.PaperID, t.FileID });
+            .HasKey(t => new { t.ResearcherID, t.InstituteID });
 
             //Many to Many Paper - Keyword
             modelBuilder.Entity<PaperKeyword>()
-            .HasKey(t => new { t.PaperID, t.KeyID });
+            .HasKey(t => new { t.PaperInfoID, t.KeywordID });
 
             //No Cascade Delete for Author - Paper
             modelBuilder.Entity<AuthoredPaper>()
                 .HasOne(pc => pc.Researcher)
                 .WithMany(c => c.AuthoredPapers)
-                .HasForeignKey(pc => pc.ResID)
+                .HasForeignKey(pc => pc.ResearcherID)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

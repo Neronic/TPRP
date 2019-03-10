@@ -32,9 +32,16 @@
                 <span asp-validation-for="PaperLength" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StatID" class="control-label"></label>
-                <input asp-for="StatID" class="form-control" />
-                <span asp-validation-for="StatID" class="text-danger"></span>
+                <label asp-for="StatusID" class="control-label"></label>
+                <select asp-for="StatusID" class="form-control" asp-items="ViewBag.StatusID">
+                    <option>Select a Status</option>
+                </select>
+                <span asp-validation-for="StatusID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AuthoredPapers" class="control-label">Researcher Bio</label>
+                <input asp-for="AuthoredPapers" class="form-control" />
+                <span asp-validation-for="AuthoredPapers" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="control-label">Related File:</label>

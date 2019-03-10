@@ -19,6 +19,12 @@ namespace TRPR.Models
         public int TypeID { get; set; }
         public FileType FileType { get; set; }
 
+        public int? PaperInfoID { get; set; }
+        public virtual PaperInfo PaperInfo { get; set; }
+
+        public int? ReveiwAssignID { get; set; }
+        public virtual ReviewAssign ReviewAssign { get; set; }
+
         [ScaffoldColumn(false)]
         public byte[] FileContent { get; set; }
 
