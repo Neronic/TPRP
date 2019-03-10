@@ -16,7 +16,7 @@ namespace TRPR.Data.TRPRMigrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("TRPR")
-                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -30,9 +30,13 @@ namespace TRPR.Data.TRPRMigrations
 
                     b.Property<int?>("PaperInfoID");
 
+                    b.Property<int?>("ResearcherID");
+
                     b.HasKey("ResID", "PaperID");
 
                     b.HasIndex("PaperInfoID");
+
+                    b.HasIndex("ResearcherID");
 
                     b.ToTable("AuthoredPapers");
                 });
@@ -439,13 +443,12 @@ namespace TRPR.Data.TRPRMigrations
             modelBuilder.Entity("TRPR.Models.AuthoredPaper", b =>
                 {
                     b.HasOne("TRPR.Models.PaperInfo", "PaperInfo")
-                        .WithMany("AuthoredPapers")
+                        .WithMany()
                         .HasForeignKey("PaperInfoID");
 
                     b.HasOne("TRPR.Models.Researcher", "Researcher")
                         .WithMany("AuthoredPapers")
-                        .HasForeignKey("ResID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("ResearcherID");
                 });
 
             modelBuilder.Entity("TRPR.Models.Comment", b =>
