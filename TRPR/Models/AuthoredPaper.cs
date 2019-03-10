@@ -7,10 +7,10 @@ namespace TRPR.Models
 {
     public class AuthoredPaper
     {
-        public int ResID { get; set; }
+        public int ResearcherID { get; set; }
         public Researcher Researcher { get; set; }
 
-        public int PaperID { get; set; }
+        public int PaperInfoID { get; set; }
         public PaperInfo PaperInfo { get; set; }
 
         public string AuthPapLevel { get; set; }

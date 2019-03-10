@@ -25,7 +25,7 @@
                 @Html.DisplayNameFor(model => model.PaperLength)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StatID)
+                @Html.DisplayNameFor(model => model.Status.StatName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.AuthoredPapers)
@@ -52,7 +52,7 @@
                 @Html.DisplayFor(modelItem => item.PaperLength)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StatID)
+                @Html.DisplayFor(modelItem => item.Status.StatName)
             </td>
             <td>
                 @foreach (var c in item.AuthoredPapers)

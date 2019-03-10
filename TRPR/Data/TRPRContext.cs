@@ -47,25 +47,25 @@ namespace TRPR.Data
 
             //Many to Many Authored - Paper
             modelBuilder.Entity<AuthoredPaper>()
-            .HasKey(t => new { t.ResID, t.PaperID });
+            .HasKey(t => new { t.ResearcherID, t.PaperInfoID });
 
             //Many to Many Researcher - Expertise
             modelBuilder.Entity<ResearchExpertise>()
-            .HasKey(t => new { t.ResID, t.ExpID });
+            .HasKey(t => new { t.ResearcherID, t.ExpertiseID });
 
             //Many to Many Researcher - Institute
             modelBuilder.Entity<ResearchInstitute>()
-            .HasKey(t => new { t.ResID, t.InstID });
+            .HasKey(t => new { t.ResearcherID, t.InstituteID });
 
             //Many to Many Paper - Keyword
             modelBuilder.Entity<PaperKeyword>()
-            .HasKey(t => new { t.PaperID, t.KeyID });
+            .HasKey(t => new { t.PaperInfoID, t.KeywordID });
 
             //No Cascade Delete for Author - Paper
             modelBuilder.Entity<AuthoredPaper>()
                 .HasOne(pc => pc.Researcher)
                 .WithMany(c => c.AuthoredPapers)
-                .HasForeignKey(pc => pc.ResID)
+                .HasForeignKey(pc => pc.ResearcherID)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }
