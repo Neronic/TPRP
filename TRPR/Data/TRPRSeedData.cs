@@ -796,7 +796,7 @@ namespace TRPR.Data
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
                         PaperType = "Clinical case study",
                         PaperLength = 10,
-                        StatID = 3   
+                        StatID = 3
                     },
                     new PaperInfo
                     {

@@ -51,7 +51,22 @@ namespace TRPR.Controllers
         // GET: PaperInfo/Create
         public IActionResult Create()
         {
+            PopulateDropDownLists();
             return View();
+        }
+
+        private SelectList StatusSelectList(int? id)
+        {
+            var dQuery = from d in _context.Statuses
+                         orderby d.StatName
+                         select d;
+            return new SelectList(dQuery, "ID", "StatName", id);
+        }
+
+        
+        private void PopulateDropDownLists(PaperInfo infos = null)
+        {
+            ViewData["StatID"] = StatusSelectList(infos?.StatID);
         }
 
         // POST: PaperInfo/Create

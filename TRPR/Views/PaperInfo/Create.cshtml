@@ -33,7 +33,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="StatID" class="control-label"></label>
-                <input asp-for="StatID" class="form-control" />
+                <select asp-for="StatID" class="form-control" asp-items="ViewBag.StatID">
+                    <option>Select a Status</option>
+                </select>
                 <span asp-validation-for="StatID" class="text-danger"></span>
             </div>
             <div class="form-group">
