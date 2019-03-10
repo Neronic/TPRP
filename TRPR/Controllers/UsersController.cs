@@ -144,6 +144,6 @@ namespace TRPR.Controllers
         }
         
         //ADD LOGIC FOR PASSWORD CHANGE
-
+        //ADD LOGIC FOR EMAIL CHANGE
     }
 }
