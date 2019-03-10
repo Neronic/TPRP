@@ -158,7 +158,13 @@ namespace TRPR.Controllers
             return _context.Files.Any(e => e.ID == id);
         }
 
-        
-        
+        public FileContentResult Download(int id)
+        {
+            var theFile = _context.Files.Include(f => f.FileContent).Where(f => f.ID == id).SingleOrDefault();
+            return File(theFile.FileContent, theFile.FileMimeType, theFile.FileName);
+        }
+
+
+
     }
 }

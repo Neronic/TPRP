@@ -23,7 +23,9 @@ namespace TRPR.Controllers
         // GET: PaperInfo
         public async Task<IActionResult> Index()
         {
-            var papers = _context.PaperInfos                
+            var papers = _context.PaperInfos
+                .Include(p => p.Status)
+                .Include(p => p.Files)
                 .Include(p => p.AuthoredPapers)
                 .ThenInclude(pc => pc.Researcher);
             return View(await papers.ToListAsync());
@@ -51,31 +53,23 @@ namespace TRPR.Controllers
         // GET: PaperInfo/Create
         public IActionResult Create()
         {
+            var paperInfo = new PaperInfo();
+            paperInfo.AuthoredPapers = new List<AuthoredPaper>();
             PopulateDropDownLists();
             return View();
         }
-
-        private SelectList StatusSelectList(int? id)
-        {
-            var dQuery = from d in _context.Statuses
-                         orderby d.StatName
-                         select d;
-            return new SelectList(dQuery, "ID", "StatName", id);
-        }
-
         
-        private void PopulateDropDownLists(PaperInfo infos = null)
-        {
-            ViewData["StatID"] = StatusSelectList(infos?.StatID);
-        }
 
         // POST: PaperInfo/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,PaperTitle,PaperAbstract,PaperType,PaperLength,StatID")] PaperInfo paperInfo, IEnumerable<IFormFile> theFiles)
+        public async Task<IActionResult> Create([Bind("ID,PaperTitle,PaperAbstract,PaperType,PaperLength,StatusID")] PaperInfo paperInfo, IEnumerable<IFormFile> theFiles, string bio)
         {
+            paperInfo.AuthoredPapers = new List<AuthoredPaper>();
+            var bioAdd = new AuthoredPaper { PaperInfoID = paperInfo.ID, ResearcherID = int.Parse(bio) };
+            paperInfo.AuthoredPapers.Add(bioAdd);
             if (ModelState.IsValid)
             {
                 await AddDocuments(paperInfo, theFiles);
@@ -83,6 +77,7 @@ namespace TRPR.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            PopulateDropDownLists(paperInfo);
             return View(paperInfo);
         }
 
@@ -200,10 +195,30 @@ namespace TRPR.Controllers
             return _context.PaperInfos.Any(e => e.ID == id);
         }
 
-        public FileContentResult Download(int id)
+        public FileResult Download(int id)
         {
-            var theFile = _context.Files.Include(f => f.FileContent).Where(f => f.ID == id).SingleOrDefault();
+            var theFile = _context.Files.Where(f => f.ID == id).SingleOrDefault();
             return File(theFile.FileContent, theFile.FileMimeType, theFile.FileName);
+        }
+
+        private SelectList StatusSelectList(int? id)
+        {
+            var dQuery = from d in _context.Statuses
+                         orderby d.StatName
+                         select d;
+            return new SelectList(dQuery, "ID", "StatName", id);
+        }
+
+
+        private void PopulateDropDownLists(PaperInfo infos = null)
+        {
+            ViewData["StatusID"] = StatusSelectList(infos?.StatusID);
+        }
+
+        [HttpGet]
+        public JsonResult GetStatuses(int? id)
+        {
+            return Json(StatusSelectList(id));
         }
     }
 }
