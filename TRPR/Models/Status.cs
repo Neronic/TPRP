@@ -8,6 +8,11 @@ namespace TRPR.Models
 {
     public class Status
     {
+        public Status()
+        {
+            this.PaperInfos = new HashSet<PaperInfo>();
+        }
+
         public int ID { get; set; }
 
         [Display(Name = "Status")]
@@ -15,6 +20,6 @@ namespace TRPR.Models
         [StringLength(20, ErrorMessage = "Name must be under 20 characters")]
         public string StatName { get; set; }
 
-        //public ICollection<PatientCondition> PatientConditions { get; set; }
+        public ICollection<PaperInfo> PaperInfos { get; set; }
     }
 }

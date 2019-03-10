@@ -426,7 +426,7 @@ namespace TRPR.Data.TRPRMigrations
             modelBuilder.Entity("TRPR.Models.PaperInfo", b =>
                 {
                     b.HasOne("TRPR.Models.Status", "Status")
-                        .WithMany()
+                        .WithMany("PaperInfos")
                         .HasForeignKey("StatusID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

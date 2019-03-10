@@ -40,6 +40,8 @@ namespace TRPR.Models
         public int StatusID { get; set; }
         public Status Status { get; set; }
 
+        
+
         [Display(Name = "Keywords")]
         public ICollection<PaperKeyword> PaperKeywords { get; set; }
 

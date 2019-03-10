@@ -10,8 +10,8 @@ using TRPR.Data;
 namespace TRPR.Data.TRPRMigrations
 {
     [DbContext(typeof(TRPRContext))]
-    [Migration("20190310155606_ForeignKeyFix")]
-    partial class ForeignKeyFix
+    [Migration("20190310163022_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -422,7 +422,7 @@ namespace TRPR.Data.TRPRMigrations
             modelBuilder.Entity("TRPR.Models.PaperInfo", b =>
                 {
                     b.HasOne("TRPR.Models.Status", "Status")
-                        .WithMany()
+                        .WithMany("PaperInfos")
                         .HasForeignKey("StatusID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
