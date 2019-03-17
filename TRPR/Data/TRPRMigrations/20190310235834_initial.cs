@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TRPR.Data.TRPRMigrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -140,6 +140,41 @@ namespace TRPR.Data.TRPRMigrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Statuses", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                schema: "TRPR",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    UserName = table.Column<string>(nullable: true),
+                    NormalizedUserName = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    NormalizedEmail = table.Column<string>(nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    UserID = table.Column<int>(nullable: false),
+                    UserFullName = table.Column<string>(nullable: true),
+                    UserFirstName = table.Column<string>(nullable: true),
+                    UserMiddleName = table.Column<string>(nullable: true),
+                    UserLastName = table.Column<string>(nullable: true),
+                    UserEmail = table.Column<string>(nullable: true),
+                    UserDateOfBirth = table.Column<DateTime>(nullable: false),
+                    UserPrefix = table.Column<string>(nullable: true),
+                    UserPhoneNumber = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -526,6 +561,10 @@ namespace TRPR.Data.TRPRMigrations
 
             migrationBuilder.DropTable(
                 name: "ResearchInstitutes",
+                schema: "TRPR");
+
+            migrationBuilder.DropTable(
+                name: "Users",
                 schema: "TRPR");
 
             migrationBuilder.DropTable(

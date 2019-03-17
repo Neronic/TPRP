@@ -16,7 +16,7 @@ namespace TRPR.Data.TRPRMigrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("TRPR")
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -28,15 +28,9 @@ namespace TRPR.Data.TRPRMigrations
 
                     b.Property<string>("AuthPapLevel");
 
-                    b.Property<int?>("PaperInfoID");
-
-                    b.Property<int?>("ResearcherID");
-
-                    b.HasKey("ResID", "PaperID");
+                    b.HasKey("ResearcherID", "PaperInfoID");
 
                     b.HasIndex("PaperInfoID");
-
-                    b.HasIndex("ResearcherID");
 
                     b.ToTable("AuthoredPapers");
                 });
@@ -386,6 +380,62 @@ namespace TRPR.Data.TRPRMigrations
                     b.HasKey("ID");
 
                     b.ToTable("Statuses");
+                });
+
+            modelBuilder.Entity("TRPR.Models.User", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp");
+
+                    b.Property<string>("Email");
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail");
+
+                    b.Property<string>("NormalizedUserName");
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<DateTime>("UserDateOfBirth");
+
+                    b.Property<string>("UserEmail");
+
+                    b.Property<string>("UserFirstName");
+
+                    b.Property<string>("UserFullName");
+
+                    b.Property<int>("UserID");
+
+                    b.Property<string>("UserLastName");
+
+                    b.Property<string>("UserMiddleName");
+
+                    b.Property<string>("UserName");
+
+                    b.Property<string>("UserPhoneNumber");
+
+                    b.Property<string>("UserPrefix");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("TRPR.Models.AuthoredPaper", b =>

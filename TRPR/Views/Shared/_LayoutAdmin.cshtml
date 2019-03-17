@@ -50,7 +50,7 @@
                         </a>
                     </li>
                     <li>
-                        <a asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLg">
+                        <a href="#">
                             <i class="far fa-bell">
                                 <span class="label" style="color: #8EA03E;"> 4 </span>
                             </i>
@@ -61,7 +61,7 @@
                             <i class="far fa-user"></i>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href"">Action</a></li>
+                            <li><a href="#">Action</a></li>
                             <li><a href="#">Another action</a></li>
                             <li><a href="#">Something else here</a></li>
                             <li class="divider"></li>
@@ -75,25 +75,27 @@
     <!--  end navbar -->
     <div class="wrapper">
         <!-- Sidebar  -->
-        <nav class="sidebar" id="sidebarLeft">
+        <nav id="sidebar">
             <div class="sidebar-header">
-                <button type="button" id="sidebarCollapse" class="btn d-none">
+                <h3>Editors Menu</h3>
+
+                <button type="button" id="sidebarCollapse" class="btn btn-info">
                     <i class="fas fa-align-justify"></i>
                 </button>
                 <strong>TRPR</strong>
-                <h3>Author</h3>
             </div>
 
             <ul class="list-unstyled components">
                 <li>
-                    <a asp-area="" asp-controller="Home" asp-action="Index" class="btnLg">
-                        <i class="fas fa-home"></i><span>Home</span>
+                    <a href="#">
+                        <i class="fas fa-home"></i>
+                        Home
                     </a>
                 </li>
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-copy"></i>
-                        <span>My Papers</span>
+                        My Papers
                     </a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
@@ -112,49 +114,38 @@
                 </li>
                 <li>
 
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-book"></i>
-                        <span>Journals</span>
+                    <a asp-area="" asp-controller="ReviewAssigns" asp-action="Index">
+                        <i class="fas fa-user-edit"></i>
+                        Editors
                     </a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
-                        <li>
-                            <a href="https://www.trontario.org/login.html?redirect=%2Ftrpr-electronic.html">2018</a>
-                        </li>
-                        <li>
-                            <a href="#">2017</a>
-                        </li>
-                        <li>
-                            <a href="#">2016</a>
-                        </li>
-                    </ul>
                 </li>
                 <li>
-                    <a href="https://www.trontario.org/education-research/trpr--journal-of-tro/index.html#v15-call-for-papers">
-                        <i class="fas fa-info"></i>
-                        <span>Call for Papers</span>
+                    <a asp-area="" asp-controller="Researchers" asp-action="Index" class="navbar-brand">
+                        <i class="far fa-user"></i>
+                        Authors
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <i class="fas fa-briefcase"></i>
-                        <span>Resources</span>
+                        Resources
                     </a>
                 </li>
                 <li>
                     <a href="https://www.trontario.org/contact/index.html">
                         <i class="fas fa-paper-plane"></i>
-                        <span>Contact</span>
+                        Contact
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <i class="fas fa-question"></i>
-                        <span>FAQ</span>
+                        FAQ
                     </a>
                 </li>
             </ul>
 
-            <div id="socialLinks">
+            <div class="list-unstyled CTAs">
 
                 <a href="https://www.facebook.com/TROntario/"><i class="fab fa-facebook-f"></i></a>
 
@@ -217,3 +208,5 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+
+
