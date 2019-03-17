@@ -273,6 +273,43 @@ a.article:hover {
 /* ---------------------------------------------------
     PAGES STYLE
 ----------------------------------------------------- */
+
+/* ---------------------------------------------------
+    LOGIN
+----------------------------------------------------- */
+#loginNavbar {
+    background-color: #A1A0C2;
+    color: #F2F2F2;
+}
+
+.loginPage {
+    display:flex;
+    flex-direction:row;
+}
+
+.leftPanel {
+    display: flex;
+    width:50%;
+    justify-content:flex-start;
+}
+
+#peopleLogo{
+    flex-shrink: 1;
+}
+
+.rightPanel {
+    display: flex;
+    width: 50%;
+    justify-content:center;
+}
+
+#btnLogin {
+    border: 1px solid #F2F2F2;
+}
+
+#peopleLogo {
+    width:auto;
+}
 #dashHead {
     display: grid;
     grid-template-columns: 1fr 3fr;
