@@ -13,6 +13,7 @@ using TRPR.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TRPR.Models;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace TRPR
 {
@@ -40,6 +41,8 @@ namespace TRPR
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<User>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
