@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+        <div class="page">
+            <div id="dashHead">
+            <h4 style="display: inline">@ViewData["Title"]</h4>
+                <input type="button" id="btnSubmission" class="btnMed" value="New Submission" onclick="location.href='@Url.Action("Create", "PaperInfo")'" />
+            </div>
+            <div id="AuthorDash">
+                <div id="AD3">
+                    <button onclick="" asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLgLt">
+                        <span class="label" style="color: #F2F2F2;"> Papers Submitted </span>
+                        <span class="label" style="color: #F2F2F2; font-size:6em;"> 3 </span>
+                    </button>
+                    <button asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLgMd">
+                        <span class="label" style="color: #F2F2F2;"> Reviewed </span><br />
+                        <span class="label" style="color: #F2F2F2; font-size:6em;"> 5 </span>
+                    </button>
+                    <button asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLgDk">
+                        <span class="label" style="color: #F2F2F2;"> Drafts </span><br/>
+                        <span class="label" style="color: #F2F2F2; font-size:6em;"> 2 </span>
+                    </button>
+                </div>
+
+                <div id="AD4">
+                    <h4>Most Recent</h4>
+                    <table style="width:100%" class="table table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Paper</th>
+                                <th>Title</th>
+                                <th>Status</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Multisensory Environments</td>
+                                <td>6th May 2018</td>
+                                <td>Accepted</td>
+                                <td><i class="far fa-trash-alt"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Multisensory Environments</td>
+                                <td>6th May 2018</td>
+                                <td>Accepted</td>
+                                <td><i class="far fa-trash-alt"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Multisensory Environments</td>
+                                <td>6th May 2018</td>
+                                <td>Accepted</td>
+                                <td><i class="far fa-trash-alt"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Multisensory Environments</td>
+                                <td>6th May 2018</td>
+                                <td>Accepted</td>
+                                <td><i class="far fa-trash-alt"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
