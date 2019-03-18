@@ -14,18 +14,18 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="PaperInfoID" class="control-label"></label>
-                <select asp-for="PaperInfoID" class="form-control" asp-items="ViewBag.PaperID">
+                <select asp-for="PaperInfoID" class="form-control" asp-items="ViewBag.PaperInfoID">
                     <option>Select a Paper</option>
                 </select>
                 <span asp-validation-for="PaperInfoID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="control-label">Filter Associate Editors by Expertise:</label>
-                @Html.DropDownList("ExpID", null, "All Expertises", htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("expertiseID", null, "All Expertises", htmlAttributes: new { @class = "form-control" })
             </div>
             <div class="form-group">
                 <label asp-for="ResearcherID" class="control-label"></label>
-                <select asp-for="ResearcherID" class="form-control" asp-items="ViewBag.ResID">
+                <select asp-for="ResearcherID" class="form-control" asp-items="ViewBag.ResearcherID">
                     <option>Select an Associate Editor</option>
                 </select>
                 <span asp-validation-for="ResearcherID" class="text-danger"></span>
