@@ -43,6 +43,7 @@ namespace TRPR
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+
             services.AddDbContext<TRPRContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("TRPRContext")));
         }
