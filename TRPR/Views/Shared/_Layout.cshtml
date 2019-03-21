@@ -81,7 +81,19 @@
                     <i class="fas fa-align-justify"></i>
                 </button>
                 <strong>TRPR</strong>
-                <h3>Author</h3>
+                @if (User.IsInRole("Editor"))
+                {
+                    <h3>Admin</h3>
+                }
+                else if (User.IsInRole("Researcher"))
+                {
+                    <h3>Review</h3>
+                }
+                else
+                {
+                    <h3>Author</h3>
+                }
+
             </div>
 
             <ul class="list-unstyled components">
@@ -110,30 +122,48 @@
                         </li>
                     </ul>
                 </li>
-                <li>
+                @if (User.IsInRole("Editor"))
+                {
+                    <li>
 
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-book"></i>
-                        <span>Journals</span>
-                    </a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
-                        <li>
-                            <a href="https://www.trontario.org/login.html?redirect=%2Ftrpr-electronic.html">2018</a>
-                        </li>
-                        <li>
-                            <a href="#">2017</a>
-                        </li>
-                        <li>
-                            <a href="#">2016</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="https://www.trontario.org/education-research/trpr--journal-of-tro/index.html#v15-call-for-papers">
-                        <i class="fas fa-info"></i>
-                        <span>Call for Papers</span>
-                    </a>
-                </li>
+                        <a asp-area="" asp-controller="ReviewAssigns" asp-action="Index">
+                            <i class="fas fa-user-edit"></i>
+                            Editors
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Researchers" asp-action="Index" class="navbar-brand">
+                            <i class="far fa-user"></i>
+                            Authors
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-book"></i>
+                            <span>Journals</span>
+                        </a>
+                        <ul class="collapse list-unstyled" id="pageSubmenu">
+                            <li>
+                                <a href="https://www.trontario.org/login.html?redirect=%2Ftrpr-electronic.html">2018</a>
+                            </li>
+                            <li>
+                                <a href="#">2017</a>
+                            </li>
+                            <li>
+                                <a href="#">2016</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="https://www.trontario.org/education-research/trpr--journal-of-tro/index.html#v15-call-for-papers">
+                            <i class="fas fa-info"></i>
+                            <span>Call for Papers</span>
+                        </a>
+                    </li>
+                }
                 <li>
                     <a href="#">
                         <i class="fas fa-briefcase"></i>
