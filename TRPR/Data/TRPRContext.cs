@@ -45,10 +45,6 @@ namespace TRPR.Data
             .HasIndex(p => p.ResEmail)
             .IsUnique();
 
-            //Many to Many Authored - Paper
-            modelBuilder.Entity<AuthoredPaper>()
-            .HasKey(t => new { t.ResearcherID, t.PaperInfoID });
-
             //Many to Many Researcher - Expertise
             modelBuilder.Entity<ResearchExpertise>()
             .HasKey(t => new { t.ResearcherID, t.ExpertiseID });
