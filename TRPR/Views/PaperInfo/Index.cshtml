@@ -30,9 +30,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.AuthoredPapers)
             </th>
-            
             <th>
                 <input type="submit" disabled="disabled" value="Uploaded Files" class="btn btn-link" />
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Files)
             </th>
             <th></th>
         </tr>
@@ -68,6 +70,12 @@
                         <a asp-action="Download" title="@f.FileName" asp-route-id="@f.ID">@f.FileName</a>
                         <br />
                     }
+                }
+            </td>
+            <td>
+                @foreach (var o in item.Files)
+                {
+                    @o.CreatedOn <br />
                 }
             </td>
             <td>
