@@ -3,38 +3,61 @@
 @{
     ViewData["Title"] = "Edit";
 }
+<div class="page" id="reviewPage">
+    <div id="paper">
+        <div class="paperDetail">
+            <div id="header1">
+                <h6 id="status">Pending</h6>
+                <h5 id="reference code">@Html.DisplayFor(model => model.PaperInfo.ID)</h5>
+                <h6 id="date">Due Date: </h6>
+            </div>
+            <div id="header2">
+                <button class="btnMed">Save</button>
+                <h6>
+                    @Html.DisplayFor(model => model.PaperInfo.PaperTitle)
+                </h6>
+                <button class="btnMed">Print</button>
+            </div>
+        </div>
+        <hr />
+        <div>
 
-<h2>Edit</h2>
+            @*--partial view of file/index or paper/index not sure which one shows the pdf*@
 
-<h4>ReviewAssign</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+
+        </div>
+    </div>
+    <div id="navbar2">
+
+        <partial name="~/Views/Shared/_navbar.cshtml" />
+    </div>
+    <div id="editorReview">
+        <form asp-action="Edit" id="reviewSection">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ID" />
-            <div class="form-group">
-                <dl class="dl-horizontal">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.PaperInfo)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.PaperInfo.PaperTitle)
-                    </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Researcher)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.Researcher.FullName)
-                    </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Roles)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.Roles.RoleTitle)
-                    </dd>
-                </dl>
-            </div>
+            @*<div class="form-group">
+                    <dl class="dl-horizontal">
+                        <dt>
+                                @Html.DisplayNameFor(model => model.PaperInfo)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.PaperInfo.PaperTitle)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Researcher)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Researcher.FullName)
+                            </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Roles)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Roles.RoleTitle)
+                        </dd>
+                    </dl>
+                </div>*@
+            @Html.DisplayFor(model => model.Roles.RoleTitle)
             <div class="form-group">
                 <label asp-for="RevContentReview" class="control-label"></label>
                 <input asp-for="RevContentReview" class="form-control" />
@@ -74,16 +97,38 @@
                 </select>
                 <span asp-validation-for="ReviewAgainID" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+
+
+
+
+            @*-- partial view file/create*@
+
+
+
+
+            @*<div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>*@
+            <div class="dropdown">
+                <a class="btn btnMed dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Save
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="#">Action</a><br />
+                    <a class="dropdown-item" href="#">Another action</a>
+                </div>
             </div>
-        </form>
+            <button class="btnMed">Submit</button>
+            </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@*</div>
+    </div>*@
+
+@*<div>
+        <a asp-action="Index">Back to List</a>
+    </div>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

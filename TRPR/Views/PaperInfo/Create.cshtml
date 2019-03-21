@@ -4,11 +4,13 @@
     ViewData["Title"] = "New Submission";
 }
 
-<h4>New Submission</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" method="post" enctype="multipart/form-data">
+<div class="page" id="submissionPage">
+    <div id="dashHead">
+        <h4 style="display: inline">@ViewData["Title"]</h4>
+        <input type="button" class="btnMed" value="Save and Close" />
+    </div>
+    <div>
+        <form asp-action="Create" method="post" enctype="multipart/form-data" id="submissionFrm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="PaperType" class="control-label"></label>
@@ -21,34 +23,46 @@
                 <span asp-validation-for="PaperTitle" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="AuthoredPapers" class="control-label">Biography (Max 60 Words)</label>
+                <input asp-for="AuthoredPapers" class="form-control" />
+                <span asp-validation-for="AuthoredPapers" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="PaperAbstract" class="control-label"></label>
                 <input asp-for="PaperAbstract" class="form-control" />
                 <span asp-validation-for="PaperAbstract" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="PaperKeywords" class="control-label"></label>
+                <input asp-for="PaperKeywords" class="form-control" />
+                <span asp-validation-for="PaperKeywords" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+            <label asp-for="PaperLength" class="control-label"></label>
+            <input asp-for="PaperLength" class="form-control" />
+            <span asp-validation-for="PaperLength" class="text-danger"></span>
+        </div>*@
+            @*<div class="form-group">
+            <label asp-for="StatusID" class="control-label"></label>
+            <select asp-for="StatusID" class="form-control" asp-items="ViewBag.StatusID">
+                <option>Select a Status</option>
+            </select>
+            <span asp-validation-for="StatusID" class="text-danger"></span>
+        </div>*@
+            <h5>Co-Author</h5>
+            <input type="text" placeholder="Email" class="form-control" style="width:250px; display:inline; margin-top:8px;">
+            <button class="btnMed">Search</button>
+            <button class="btnMed">Add New Author</button>
 
-            <div class="form-group">
-                <label asp-for="PaperLength" class="control-label"></label>
-                <input asp-for="PaperLength" class="form-control" />
-                <span asp-validation-for="PaperLength" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StatusID" class="control-label"></label>
-                <select asp-for="StatusID" class="form-control" asp-items="ViewBag.StatusID">
-                    <option>Select a Status</option>
-                </select>
-                <span asp-validation-for="StatusID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AuthoredPapers" class="control-label">Researcher Bio</label>
-                <input asp-for="AuthoredPapers" class="form-control" />
-                <span asp-validation-for="AuthoredPapers" class="text-danger"></span>
-            </div>
+            <h4>My Co-Authors</h4>
+
             <div class="form-group">
                 <label class="control-label">Related File:</label>
                 <input type="file" class="" multiple="multiple" name="theFiles" /><br />
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Save and Close" class="btnMed" />
+                <input type="submit" value="Save and Submit" class="btnMed" />
             </div>
         </form>
     </div>

@@ -21,7 +21,7 @@ namespace TRPR.Models
         [StringLength(200, ErrorMessage = "Title cannot be more than 200 characters long.")]
         public string PaperTitle { get; set; }
 
-        [Display(Name = "Abstract")]
+        [Display(Name = "Abstract (Max 250 Words)")]
         [Required(ErrorMessage = "You cannot leave the abstract blank.")]
         [StringLength(500, ErrorMessage = "Abstract cannot be more than 500 characters long.")]
         public string PaperAbstract { get; set; }
