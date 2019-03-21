@@ -14,7 +14,19 @@ namespace TRPR.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            if (User.IsInRole("Editor"))
+            {
+                return View("IndexEditor");
+            }
+            else if (User.IsInRole("Researcher"))
+            {
+                return View("IndexResearcher");
+            }
+            else
+            {
+                return View();
+            }
+            
         }
 
         public IActionResult About()

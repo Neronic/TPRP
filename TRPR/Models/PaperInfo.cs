@@ -45,10 +45,10 @@ namespace TRPR.Models
         [Display(Name = "Keywords")]
         public ICollection<PaperKeyword> PaperKeywords { get; set; }
 
-        [Display(Name = "Files")]
+        [Display(Name = "Date")]
         public ICollection<File> Files { get; set; }
 
-        [Display(Name = "Authored Papers")]
+        [Display(Name = "Researcher Bio")]
         public ICollection<AuthoredPaper> AuthoredPapers { get; set; }
     }
 }

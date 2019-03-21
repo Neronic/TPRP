@@ -20,10 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\Home\IndexEditor.cshtml">
+    <Content Update="Views\Home\IndexResearcher.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Home\IndexAdmin.cshtml">
+    <Content Update="Views\Home\IndexEditor.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\PaperInfo\Details.cshtml">

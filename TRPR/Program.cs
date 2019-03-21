@@ -28,6 +28,8 @@ namespace TRPR
                     var context = services.GetRequiredService<TRPRContext>();
                     context.Database.Migrate();
                     TRPRSeedData.Initialize(services);
+                    var identityContext = services.GetRequiredService<ApplicationDbContext>();
+                    ApplicationSeedData.SeedAsync(identityContext, services).Wait();
                 }
                 catch (Exception ex)
                 {
