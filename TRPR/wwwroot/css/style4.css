@@ -12,11 +12,13 @@
 body {
     font-family: 'Frutiger LT Std', sans-serif;
     background: #fafafa;
+    padding-right:0;
 }
 
 .page {
     width: 100%;
     margin-top: 2em;
+    margin-right:0;
 }
 
 p {
@@ -72,18 +74,27 @@ span {
 .btnLgDk,
 .btnLgLt,
 .btnLgMd,
-.btnMed,
+.btnMedP,
+.btnMedG
 .btnLgXDk {
     color: #F2F2F2;
     border: none;
     border-radius: 4px;
 }
 
-.btnMed {
-    background: #8181AE;
+.btnMedP,
+.btnMedG {
     width: 6em;
     height: 3em;
     font-size: 1em;
+}
+
+.btnMedP {
+    background: #8181AE;
+}
+
+.btnMedG {
+    background: #B8C4CE;
 }
 
 .btnLgMd,
@@ -366,7 +377,8 @@ a.article:hover {
 #reviewPage {
     display: flex;
     flex-direction: row;
-    justify-content:space-around;
+    justify-content: space-between;
+    padding-right: 0;
 }
 
 #paper {
@@ -406,12 +418,151 @@ a.article:hover {
 #editorReview {
     flex-basis: 30%;
     display: flex;
-    justify-content:flex-end;
+    justify-content: flex-end;
 }
 
+#reviewSection {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-end;
+}
 
+#buttons {
+display:flex;
+flex-direction:row;
+justify-content:flex-end;
+padding-top:2em;
+}
 
+#btnSubmit,
+#btnSave {
+margin-left:2em;
+}
+/* ---------------------------------------------------
+    FILE UPLOADER
+----------------------------------------------------- */
 
+.picture-container {
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    padding-bottom: 15px;
+    background-color: #fff;
+    width: 100%
+}
+
+.picture {
+    width: 90%;
+    height: 10em;
+    background-color: #F0F2F8;
+    color: #FFFFFF;
+    margin: 5px auto;
+    overflow: hidden;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+}
+
+    .picture > .icon {
+        width: 100%;
+        height: 100%;
+        display: inline-block;
+        color: #707070;
+        border: 4px solid #CCCCCC;
+        /*-webkit-border-radius: 10%;
+        -moz-border-radius: 10%;
+        -o-border-radius: 10%;
+        border-radius: 10%;*/
+        -webkit-transition: all 0.2s;
+        -moz-transition: all 0.2s;
+        -o-transition: all 0.2s;
+        transition: all 0.2s;
+    }
+
+    .picture:hover .icon {
+        border-color: #3B86FF;
+    }
+
+    .picture > .icon > svg {
+        height: 1.4em;
+        font-size: 4em;
+    }
+
+    /*.picture > svg {
+        width: 100%;
+        height: 100%;
+    }*/
+
+    .picture input[type="file"] {
+        cursor: pointer;
+        display: block;
+        height: 100%;
+        left: 0;
+        opacity: 0 !important;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 100;
+        right: 0;
+        bottom: 0;
+    }
+
+/*svg tick animation*/
+.circ {
+    opacity: 0;
+    display: none;
+    stroke-dasharray: 130;
+    stroke-dashoffset: 130;
+    -webkit-transition: all .75s;
+    -moz-transition: all .75s;
+    /*-ms-transition: all .75s;*/
+    -o-transition: all .75s;
+    transition: all .75s;
+}
+
+.tick {
+    stroke-dasharray: 50;
+    stroke-dashoffset: 50;
+    -webkit-transition: stroke-dashoffset .4s 0.5s ease-out;
+    -moz-transition: stroke-dashoffset .4s 0.5s ease-out;
+    -ms-transition: stroke-dashoffset .4s 0.5s ease-out;
+    -o-transition: stroke-dashoffset .4s 0.5s ease-out;
+    transition: stroke-dashoffset .4s 0.5s ease-out;
+}
+
+.drawn > svg .path {
+    display: block;
+    opacity: 1;
+    stroke-dashoffset: 0;
+}
+
+.drawn {
+    border-color: #fff;
+}
+
+[data-toggle="popover"] {
+    cursor: pointer;
+}
+
+span.popover-content-remove {
+    padding-left: 10px;
+    color: red;
+    cursor: pointer;
+    float: right;
+}
+
+.pb10 {
+    padding-bottom: 10px;
+}
+
+.popover-header {
+    text-align: center;
+}
+
+.popover {
+    min-width: 200px;
+}
 
 /* ---------------------------------------------------
     MEDIAQUERIES
@@ -419,7 +570,6 @@ a.article:hover {
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
-
 @media (max-width: 768px) {
     #sidebar {
         min-width: 80px;

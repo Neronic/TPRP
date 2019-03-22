@@ -20,17 +20,14 @@
             </div>
         </div>
         <hr />
-        <div>
-
-            @*--partial view of file/index or paper/index not sure which one shows the pdf*@
-
+        <div id="showViewer" class="form-group">
 
         </div>
     </div>
-    <div id="navbar2">
+    @*<div id="navbar2">
 
-        <partial name="~/Views/Shared/_navbar.cshtml" />
-    </div>
+            <partial name="~/Views/Shared/_navbar.cshtml" />
+        </div>*@
     <div id="editorReview">
         <form asp-action="Edit" id="reviewSection">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -101,7 +98,10 @@
 
 
 
-            @*-- partial view file/create*@
+            <div id="fileUploader">
+
+                <partial name="~/Views/Shared/_fileUploader.cshtml" />
+            </div>
 
 
 
@@ -109,17 +109,19 @@
             @*<div class="form-group">
                     <input type="submit" value="Save" class="btn btn-default" />
                 </div>*@
-            <div class="dropdown">
-                <a class="btn btnMed dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Save
-                </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="#">Action</a><br />
-                    <a class="dropdown-item" href="#">Another action</a>
+            <div id="buttons">
+                <div class="dropdown" id="btnSave">
+                    <a class="btn btnMedG dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Save
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="#">Action</a><br />
+                        <a class="dropdown-item" href="#">Another action</a>
+                    </div>
                 </div>
+                <button id="btnSubmit" class="btnMedP">Submit</button>
             </div>
-            <button class="btnMed">Submit</button>
-            </form>
+        </form>
     </div>
 </div>
 
@@ -133,3 +135,12 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+@*@section Scripts {
+        <script type="text/javascript">
+            $('#ViewerFileID').change(function () {
+                var selectedOption = $("#ViewerFileID").val();
+                $('#showViewer').load('/ReviewAssigns/GetViewerPartial/' + selectedOption);
+            });
+        </script>
+    }*@
