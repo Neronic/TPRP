@@ -43,6 +43,7 @@ namespace TRPR
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentity<IdentityUser, IdentityRole>()
+
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultUI()
             .AddDefaultTokenProviders();
@@ -61,6 +62,7 @@ namespace TRPR
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
 
             services.AddDbContext<TRPRContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("TRPRContext")));

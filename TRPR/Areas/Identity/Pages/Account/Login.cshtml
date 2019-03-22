@@ -34,7 +34,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Journals</a></li>
                 <li><a href="https://www.trontario.org/education-research/trpr--journal-of-tro/index.html#v15-call-for-papers"> Call for Papers </a></li>
-                <li><a href="#">Resources</a></li>
+                <li><a href="#"Resources</a></li>
                 <li><a href="https://www.trontario.org/contact/index.html">Contact</a></li>
                 <li><a href="#">FAQ</a></li>
                 <li><a asp-area="Identity" asp-page="/Account/Register" id="btnLogin">Register</a></li>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" />
+                    <input asp-for="Input.Password" class="form-control" value="password"/>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
