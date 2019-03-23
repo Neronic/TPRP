@@ -212,24 +212,6 @@ namespace TRPR.Controllers
             return View(reviewAssign);
         }
 
-        //public PartialViewResult GetViewerPartial(int? id)
-        //{
-        //    string fileBase64 = "";//For our Byte[] converted to Base64 String
-        //    string downLink = "";//In case the file cannot be displayed
-        //    string MimeType = "";//So the partial view can decide what to do with the file
-
-        //    var theFile = _context.Files.Include(f => f.FileContent).Where(f => f.ID == id.GetValueOrDefault()).SingleOrDefault();
-        //    if (theFile != null)
-        //    {
-        //        fileBase64 = Convert.ToBase64String(theFile.FileContent.Content);
-        //        MimeType = theFile?.FileContent.MimeType;
-        //        downLink = "<a href='/files/download/" + theFile.ID + "' title='Download: " + theFile.Description + "'>" + theFile.FileName + "</a>";
-        //    }
-        //    ViewData["MimeType"] = MimeType;
-        //    ViewData["fileBase64"] = fileBase64;
-        //    ViewData["downloadLink"] = downLink;
-        //    return PartialView("_pdfViewwer");
-        //}
 
 
 
