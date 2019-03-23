@@ -12,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
 using TRPR.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TRPR.Models;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace TRPR
@@ -32,14 +31,15 @@ namespace TRPR
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
+                options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            //services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>()
+
+            //services.AddDefaultIdentity<IdentityUser>()
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentity<IdentityUser, IdentityRole>()
@@ -59,13 +59,13 @@ namespace TRPR
                 options.Password.RequiredUniqueChars = 1;
             });
 
-            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-
             services.AddDbContext<TRPRContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("TRPRContext")));
+                   options.UseSqlServer(Configuration.GetConnectionString("TRPRContext")));
+
+            //To give access to IHttpContextAccessor for Audit Data with IAuditable
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -93,7 +93,6 @@ namespace TRPR
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-
             });
         }
     }
