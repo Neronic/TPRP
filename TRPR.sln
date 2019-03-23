@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.28307.136
+VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TRPR", "TRPR\TRPR.csproj", "{4456F378-7DEA-43DC-BB83-A81741BA95C5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TRPR", "TRPR\TRPR.csproj", "{31C419CB-BAD5-4916-9E66-059E1C36ACDA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4456F378-7DEA-43DC-BB83-A81741BA95C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4456F378-7DEA-43DC-BB83-A81741BA95C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4456F378-7DEA-43DC-BB83-A81741BA95C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4456F378-7DEA-43DC-BB83-A81741BA95C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31C419CB-BAD5-4916-9E66-059E1C36ACDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31C419CB-BAD5-4916-9E66-059E1C36ACDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31C419CB-BAD5-4916-9E66-059E1C36ACDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31C419CB-BAD5-4916-9E66-059E1C36ACDA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {0CDFE4E2-2EF0-4779-A948-6701CE968EB1}
+		SolutionGuid = {23CC1156-DE3E-480C-B0B5-8EB8FF2E8B54}
 	EndGlobalSection
 EndGlobal
