@@ -36,7 +36,7 @@ namespace TRPR.Models
         [StringLength(256)]
         public string CreatedBy { get; set; }
 
-        [Display(Name = "Created On")]
+        [ScaffoldColumn(false)]
         public DateTime? CreatedOn { get; set; }
 
         [ScaffoldColumn(false)]
