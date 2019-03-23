@@ -21,7 +21,7 @@ namespace TRPR.Models
         [StringLength(200, ErrorMessage = "Title cannot be more than 200 characters long.")]
         public string PaperTitle { get; set; }
 
-        [Display(Name = "Abstract (Max 250 Words)")]
+        [Display(Name = "Abstract")]
         [Required(ErrorMessage = "You cannot leave the abstract blank.")]
         [StringLength(500, ErrorMessage = "Abstract cannot be more than 500 characters long.")]
         public string PaperAbstract { get; set; }
@@ -45,10 +45,10 @@ namespace TRPR.Models
         [Display(Name = "Keywords")]
         public ICollection<PaperKeyword> PaperKeywords { get; set; }
 
-        [Display(Name = "Date")]
+        [Display(Name = "Files")]
         public ICollection<File> Files { get; set; }
 
-        [Display(Name = "Researcher Bio")]
+        [Display(Name = "Authored Papers")]
         public ICollection<AuthoredPaper> AuthoredPapers { get; set; }
     }
 }
