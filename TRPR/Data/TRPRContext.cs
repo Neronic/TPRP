@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using TRPR.Models;
 
@@ -14,25 +12,6 @@ namespace TRPR.Data
         public TRPRContext (DbContextOptions<TRPRContext> options)
             : base(options)
         {
-            UserName = "SeedData";
-        }
-
-        public TRPRContext(DbContextOptions<TRPRContext> options, IHttpContextAccessor httpContextAccessor)
-            : base(options)
-        {
-            _httpContextAccessor = httpContextAccessor;
-            UserName = _httpContextAccessor.HttpContext?.User.Identity.Name;
-            //UserName = (UserName == null) ? "Unknown" : UserName;
-            UserName = UserName ?? "Unknown";
-        }
-
-        //To give access to IHttpContextAccessor for Audit Data with IAuditable
-        private readonly IHttpContextAccessor _httpContextAccessor;
-
-        //Property to hold the UserName value
-        public string UserName
-        {
-            get; private set;
         }
 
         public DbSet<File> Files { get; set; }
@@ -52,7 +31,6 @@ namespace TRPR.Data
         public DbSet<ResearchExpertise> ResearchExpertises { get; set; }
         public DbSet<AuthoredPaper> AuthoredPapers { get; set; }
         public DbSet<PaperKeyword> PaperKeywords { get; set; }
-        public DbSet<User> Users { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -66,10 +44,6 @@ namespace TRPR.Data
             .HasIndex(p => p.ResEmail)
             .IsUnique();
 
-            //Many to Many Authored - Paper
-            modelBuilder.Entity<AuthoredPaper>()
-            .HasKey(t => new { t.ResearcherID, t.PaperInfoID });
-
             //Many to Many Researcher - Expertise
             modelBuilder.Entity<ResearchExpertise>()
             .HasKey(t => new { t.ResearcherID, t.ExpertiseID });
@@ -82,50 +56,16 @@ namespace TRPR.Data
             modelBuilder.Entity<PaperKeyword>()
             .HasKey(t => new { t.PaperInfoID, t.KeywordID });
 
+            //Many to Many Researcher - Institute
+            modelBuilder.Entity<AuthoredPaper>()
+            .HasKey(t => new { t.ResearcherID, t.PaperInfoID });
+
             //No Cascade Delete for Author - Paper
             modelBuilder.Entity<AuthoredPaper>()
                 .HasOne(pc => pc.Researcher)
                 .WithMany(c => c.AuthoredPapers)
                 .HasForeignKey(pc => pc.ResearcherID)
                 .OnDelete(DeleteBehavior.Restrict);
-        }
-
-        public override int SaveChanges(bool acceptAllChangesOnSuccess)
-        {
-            OnBeforeSaving();
-            return base.SaveChanges(acceptAllChangesOnSuccess);
-        }
-
-        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            OnBeforeSaving();
-            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-        }
-
-        private void OnBeforeSaving()
-        {
-            var entries = ChangeTracker.Entries();
-            foreach (var entry in entries)
-            {
-                if (entry.Entity is File trackable)
-                {
-                    var now = DateTime.UtcNow;
-                    switch (entry.State)
-                    {
-                        case EntityState.Modified:
-                            trackable.UpdatedOn = now;
-                            trackable.UpdatedBy = UserName;
-                            break;
-
-                        case EntityState.Added:
-                            trackable.CreatedOn = now;
-                            trackable.CreatedBy = UserName;
-                            trackable.UpdatedOn = now;
-                            trackable.UpdatedBy = UserName;
-                            break;
-                    }
-                }
-            }
         }
     }
 }
