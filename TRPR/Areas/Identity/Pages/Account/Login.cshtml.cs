@@ -9,7 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using TRPR.Models;
+using TRPR.Data;
+using TRPR.Utilities;
 
 namespace TRPR.Areas.Identity.Pages.Account
 {
@@ -18,11 +19,13 @@ namespace TRPR.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly TRPRContext _context;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, TRPRContext context)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
 
         [BindProperty]
@@ -60,6 +63,7 @@ namespace TRPR.Areas.Identity.Pages.Account
 
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+            HttpContext.Response.Cookies.Delete("userName");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
@@ -77,6 +81,16 @@ namespace TRPR.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
+                    var emp = _context.Researchers.Where(e => e.ResEmail == Input.Email).FirstOrDefault();
+                    if (emp != null)
+                    {
+                        CookieHelper.CookieSet(HttpContext, "userName", emp.FullName, 3200);
+                    }
+                    else
+                    {
+                        //What better time to create the profile?
+                        //returnUrl = "~/ResearcherProfile/Create";
+                    }
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
