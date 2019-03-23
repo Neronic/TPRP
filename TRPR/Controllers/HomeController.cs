@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 using TRPR.Models;
 
 namespace TRPR.Controllers
-{ 
-    //[Authorize]
+{
+    [Authorize]
     public class HomeController : Controller
-    {
+    {        
         public IActionResult Index()
         {
             if (User.IsInRole("Editor"))
@@ -26,7 +26,7 @@ namespace TRPR.Controllers
             {
                 return View();
             }
-            
+
         }
 
         public IActionResult About()
