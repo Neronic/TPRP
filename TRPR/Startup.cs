@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using TRPR.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TRPR.Models;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace TRPR
 {
@@ -38,10 +38,12 @@ namespace TRPR
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            //services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>()
+
+            //services.AddDefaultIdentity<IdentityUser>()
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentity<IdentityUser, IdentityRole>()
+
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultUI()
             .AddDefaultTokenProviders();
@@ -60,7 +62,10 @@ namespace TRPR
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddDbContext<TRPRContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("TRPRContext")));
+                   options.UseSqlServer(Configuration.GetConnectionString("TRPRContext")));
+
+            //To give access to IHttpContextAccessor for Audit Data with IAuditable
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,7 +93,6 @@ namespace TRPR
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-
             });
         }
     }

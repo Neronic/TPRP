@@ -55,7 +55,7 @@ namespace TRPR.Models
         public string ResEmail { get; set; }
 
         [Display(Name = "Biography")]
-        [Required(ErrorMessage = "You cannot leave the biography blank.")]
+        //[Required(ErrorMessage = "You cannot leave the biography blank.")]
         [StringLength(500, ErrorMessage = "Biography cannot be more than 500 characters long.")]
         public string ResBio { get; set; }
 

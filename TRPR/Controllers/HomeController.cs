@@ -3,16 +3,30 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TRPR.Models;
 
 namespace TRPR.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
-    {
+    {        
         public IActionResult Index()
         {
-            return View();
+            if (User.IsInRole("Editor"))
+            {
+                return View("IndexEditor");
+            }
+            else if (User.IsInRole("Researcher"))
+            {
+                return View("IndexResearcher");
+            }
+            else
+            {
+                return View();
+            }
+
         }
 
         public IActionResult About()

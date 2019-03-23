@@ -31,7 +31,6 @@ namespace TRPR.Data
         public DbSet<ResearchExpertise> ResearchExpertises { get; set; }
         public DbSet<AuthoredPaper> AuthoredPapers { get; set; }
         public DbSet<PaperKeyword> PaperKeywords { get; set; }
-        public DbSet<User> Users { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -56,6 +55,10 @@ namespace TRPR.Data
             //Many to Many Paper - Keyword
             modelBuilder.Entity<PaperKeyword>()
             .HasKey(t => new { t.PaperInfoID, t.KeywordID });
+
+            //Many to Many Researcher - Institute
+            modelBuilder.Entity<AuthoredPaper>()
+            .HasKey(t => new { t.ResearcherID, t.PaperInfoID });
 
             //No Cascade Delete for Author - Paper
             modelBuilder.Entity<AuthoredPaper>()

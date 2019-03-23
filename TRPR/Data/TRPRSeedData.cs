@@ -1418,121 +1418,6 @@ namespace TRPR.Data
                 }
                 
 
-                //if (!context.ReviewFiles.Any())
-                //{
-                //    context.ReviewFiles.AddRange(
-                //    new ReviewFile
-                //    {
-                //        RevID = 1,
-                //        FileID = 17
-                //    },
-                //    new ReviewFile
-                //    {
-                //        RevID = 2,
-                //        FileID = 14
-                //    },
-                //    new ReviewFile
-                //    {
-                //        RevID = 2,
-                //        FileID = 2
-                //    },
-                //    new ReviewFile
-                //    {
-                //        RevID = 1,
-                //        FileID = 4
-                //    },
-                //    new ReviewFile
-                //    {
-                //        RevID = 2,
-                //        FileID = 5
-                //    },
-                //    new ReviewFile
-                //    {
-                //        RevID = 2,
-                //        FileID = 7
-                //    },
-                //    new ReviewFile
-                //    {
-                //        RevID = 2,
-                //        FileID = 8
-                //    },
-                //    new ReviewFile
-                //    {
-                //        RevID = 1,
-                //        FileID = 20
-                //    },
-                //    new ReviewFile
-                //    {
-                //        RevID = 1,
-                //        FileID = 11
-                //    },
-                //    new ReviewFile
-                //    {
-                //        RevID = 1,
-                //        FileID = 12
-                //    }
-                //);
-                //    context.SaveChanges();
-                //}
-
-
-                //if (!context.PaperFiles.Any())
-                //{
-                //    context.PaperFiles.AddRange(
-                //new PaperFile
-                //{
-                //    PaperInfoID = 1,
-                //    FileID = 19
-                //},
-                //new PaperFile
-                //{
-                //    PaperInfoID = 2,
-                //    FileID = 18
-                //},
-                //new PaperFile
-                //{
-                //    PaperInfoID = 3,
-                //    FileID = 16
-                //},
-                //new PaperFile
-                //{
-                //    PaperInfoID = 4,
-                //    FileID = 15
-                //},
-                //new PaperFile
-                //{
-                //    PaperInfoID = 5,
-                //    FileID = 13
-                //},
-                //new PaperFile
-                //{
-                //    PaperInfoID = 6,
-                //    FileID = 10
-                //},
-                //new PaperFile
-                //{
-                //    PaperInfoID = 7,
-                //    FileID = 9
-                //},
-                //new PaperFile
-                //{
-                //    PaperInfoID = 8,
-                //    FileID = 6
-                //},
-                //new PaperFile
-                //{
-                //    PaperInfoID = 9,
-                //    FileID = 3
-                //},
-                //new PaperFile
-                //{
-                //    PaperInfoID = 10,
-                //    FileID = 1
-                //}
-                //);
-                //    context.SaveChanges();
-                //}
-
                 if (!context.PaperKeywords.Any())
                 {
                     context.PaperKeywords.AddRange(
@@ -1598,7 +1483,7 @@ namespace TRPR.Data
                     },
                     new PaperKeyword
                     {
-                        PaperInfoID = 1,
+                        PaperInfoID = 4,
                         KeywordID = 1
                     },
                     new PaperKeyword
