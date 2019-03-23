@@ -30,26 +30,26 @@ namespace TRPR.Models
         public int RoleID { get; set; }
         public Role Roles { get; set; }
 
-        [Display(Name = "A discussion of implications for TR practice which describes the contribution the study makes to therapeutic recreation practice and provides specific recommendations for practice ")]
+        [Display(Name = "Content Review")]
         public string RevContentReview { get; set; }
 
-        [Display(Name = "Do the 5-6 keywords best describe content of the article? ")]
+        [Display(Name = "Keyword Review")]
         public string RevKeywordReview { get; set; }
 
-        [Display(Name = "Is the length of the manuscript a maximum number of 15 pages including references?")]
+        [Display(Name = "Length Review")]
         public string RevLengthReview { get; set; }
 
-        [Display(Name = "Is it formatted properly?")]
+        [Display(Name = "Format Review")]
         public string RevFormatReview { get; set; }
 
-        [Display(Name = "Do the citations and referencing follow the guidelines?")]
+        [Display(Name = "Citation Review")]
         public string RevCitationReview { get; set; }
 
-        [Display(Name = "*Recommendation")]
+        [Display(Name = "Recommendation")]
         public int RecommendID { get; set; }
         public Recommend Recommend { get; set; }
 
-        [Display(Name = "*Would you be willing to review a revision of this paper?")]
+        [Display(Name = "Review Again")]
         public int ReviewAgainID { get; set; }
         public ReviewAgain ReviewAgain { get; set; }
 
