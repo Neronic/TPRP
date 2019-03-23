@@ -1,0 +1,53 @@
+﻿@model TRPR.Models.Researcher
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h2><h2>Profile for: @Model.FullName</h2></h2>
+
+<div>
+    <h4>Researcher</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ResTitle)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ResTitle)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ResFirst)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ResFirst)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ResMiddle)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ResMiddle)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ResLast)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ResLast)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ResEmail)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ResEmail)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ResBio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ResBio)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Edit Profile</a>
+</div>
