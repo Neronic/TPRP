@@ -7,7 +7,7 @@
 <div class="page" id="submissionPage">
     <div id="dashHead">
         <h4 style="display: inline">@ViewData["Title"]</h4>
-        <input type="button" class="btnMed" value="Save and Close" />
+        <input type="button" class="btnMedP" value="Save and Close" />
     </div>
     <div>
         <form asp-action="Create" method="post" enctype="multipart/form-data" id="submissionFrm">
@@ -19,22 +19,22 @@
             </div>
             <div class="form-group">
                 <label asp-for="PaperTitle" class="control-label"></label>
-                <input asp-for="PaperTitle" class="form-control" />
+                <textarea asp-for="PaperTitle" type="text" class="form-control"></textarea>
                 <span asp-validation-for="PaperTitle" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AuthoredPapers" class="control-label">Biography (Max 60 Words)</label>
-                <input asp-for="AuthoredPapers" class="form-control" />
+                <textarea asp-for="AuthoredPapers" type="text" class="form-control" rows="4"></textarea>
                 <span asp-validation-for="AuthoredPapers" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PaperAbstract" class="control-label"></label>
-                <input asp-for="PaperAbstract" class="form-control" />
+                <textarea asp-for="PaperAbstract" type="text" class="form-control" rows="20"></textarea>
                 <span asp-validation-for="PaperAbstract" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PaperKeywords" class="control-label"></label>
-                <input asp-for="PaperKeywords" class="form-control" />
+                <textarea asp-for="PaperKeywords" class="form-control" typeof="text"></textarea>
                 <span asp-validation-for="PaperKeywords" class="text-danger"></span>
             </div>
             @*<div class="form-group">
@@ -51,27 +51,74 @@
         </div>*@
             <h5>Co-Author</h5>
             <input type="text" placeholder="Email" class="form-control" style="width:250px; display:inline; margin-top:8px;">
-            <button class="btnMed">Search</button>
-            <button class="btnMedP">Add New Author</button>
+            <button class="btnMedG">Search</button>
+            <button class="btnMedP" id="addNewCoAuthor" data-toggle="modal" data-target="#addCoAuthorModal" type="button">Add New Author</button>
 
+
+            <!-----------------------------------------------Modal Popup--------------------------------------------------------->
+
+            <div class="modal-fade" id="addCoAuthorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Add Co-Author</h4>
+                        </div>
+                        <div class="modal-body">
+                            @{
+                                var doc = new TRPR.Models.Researcher();
+                                Html.RenderPartial("_coAuthorRegistration", doc);
+                            }
+                        </div>
+                        @*<div class="modal-footer"></div>*@
+                    </div>
+                </div>
+            </div>
             <h4>My Co-Authors</h4>
 
             <div class="form-group">
                 <label class="control-label">Related File:</label>
                 <input type="file" class="" multiple="multiple" name="theFiles" /><br />
             </div>
+
+            <div id="fileUploader">
+
+                <partial name="~/Views/Shared/_fileUploader.cshtml" />
+            </div>
+
             <div class="form-group">
-                <input type="submit" value="Save and Close" class="btnMed" />
-                <input type="submit" value="Save and Submit" class="btnMed" />
+                <input type="submit" value="Save and Close" class="btnMedG" />
+                <input type="submit" value="Save and Submit" class="btnMedP" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<script type="text/javascript">
+    $("#addCoAuthorModal").on("hidden.bs.modal", function () {
+    });
+    $("#btnCoAuthCreate").click(function (event) {
+        event.preventDefault();
+        var form = $("#createCoAuthorForm");
+        if (form.valid()) {
+            $a.ajax({
+                type: "POST",
+                url: form.attr("action"),
+                data: form.serialize()
+            })
+                .success(function () {
+                    $("#addCoAuthorModal").modal(hide);
+                })
+                .error(function () {
+                    alert("Create Failed. There was a problem adding the Co-Author.");
+                });
+        }
+        return false;
+    });
 
+</script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
