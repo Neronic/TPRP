@@ -46,6 +46,24 @@
         <dd>
             @Html.DisplayFor(model => model.ResBio)
         </dd>
+        <dt>
+            Institutes
+        </dt>
+        <dd>
+            @foreach (var i in Model.ResearchInstitutes)
+            {
+                @i.Institute.InstName <br />
+            }
+        </dd>
+        <dt>
+            Expertises
+        </dt>
+        <dd>
+            @foreach (var i in Model.ResearchExpertises)
+            {
+                @i.Expertise.ExpName <br />
+            }
+        </dd>
     </dl>
 </div>
 <div>
