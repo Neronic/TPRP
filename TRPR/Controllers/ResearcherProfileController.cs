@@ -35,8 +35,11 @@ namespace TRPR.Controllers
             var researcher = await _context.Researchers
                 .Include(r => r.ResearchInstitutes)
                 .ThenInclude(ri => ri.Institute)
+                .Include(r => r.ResearchExpertises)
+                .ThenInclude(re => re.Expertise)
                 .Where(c => c.ResEmail == User.Identity.Name)
                 .FirstOrDefaultAsync();
+
             if (researcher == null)
             {
                 return RedirectToAction(nameof(Create));
@@ -57,7 +60,7 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,ResFirst,ResLast,ResEmail")] Researcher researcher)
+        public async Task<IActionResult> Create([Bind("ID,ResTitle,ResFirst,ResLast,ResEmail,ResBio")] Researcher researcher)
         {
             researcher.ResEmail = User.Identity.Name;
             try
@@ -89,6 +92,8 @@ namespace TRPR.Controllers
             var researcher = await _context.Researchers
                 .Include(r => r.ResearchInstitutes)
                 .ThenInclude(ri => ri.Institute)
+                .Include(r => r.ResearchExpertises)
+                .ThenInclude(re => re.Expertise)
                 .Where(c => c.ResEmail == User.Identity.Name)
                 .FirstOrDefaultAsync();
             if (researcher == null)
@@ -106,10 +111,14 @@ namespace TRPR.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var researcherToUpdate = await _context.Researchers
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .Include(r => r.ResearchInstitutes)
+                .ThenInclude(ri => ri.Institute)
+                .Include(r => r.ResearchExpertises)
+                .ThenInclude(re => re.Expertise)
+                .FirstOrDefaultAsync(r => r.ID == id);
 
             if (await TryUpdateModelAsync<Researcher>(researcherToUpdate, "",
-                c => c.ResFirst, c => c.ResLast, c => c.ResEmail))
+                c => c.ResTitle, c => c.ResFirst, c => c.ResLast, c => c.ResEmail, c => c.ResBio))
             {
                 try
                 {
