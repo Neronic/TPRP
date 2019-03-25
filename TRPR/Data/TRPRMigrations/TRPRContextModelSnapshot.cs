@@ -238,8 +238,9 @@ namespace TRPR.Data.TRPRMigrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Active");
+
                     b.Property<string>("ResBio")
-                        .IsRequired()
                         .HasMaxLength(500);
 
                     b.Property<string>("ResEmail")
@@ -258,6 +259,7 @@ namespace TRPR.Data.TRPRMigrations
                         .HasMaxLength(50);
 
                     b.Property<string>("ResTitle")
+                        .IsRequired()
                         .HasMaxLength(10);
 
                     b.HasKey("ID");
