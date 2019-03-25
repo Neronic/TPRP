@@ -13,22 +13,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ResTitle)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ResFirst)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ResMiddle)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ResLast)
+                @Html.DisplayNameFor(model => model.FullName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ResEmail)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ResBio)
+            </th>
+            <th>
+                Institutes
+            </th>
+            <th>
+                Expertises
             </th>
             <th></th>
         </tr>
@@ -37,22 +34,25 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ResTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ResFirst)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ResMiddle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ResLast)
+                @Html.DisplayFor(modelItem => item.FullName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ResEmail)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ResBio)
+            </td>
+            <td>
+                @foreach (var i in item.ResearchInstitutes)
+                {
+                    @i.Institute.InstName <br />
+                }
+            </td>
+            <td>
+                @foreach (var i in item.ResearchExpertises)
+                {
+                    @i.Expertise.ExpName <br />
+                }
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
