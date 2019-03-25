@@ -14,14 +14,24 @@ namespace TRPR.Models
             this.ResearchInstitutes = new HashSet<ResearchInstitute>();
             this.AuthoredPapers = new HashSet<AuthoredPaper>();
             this.ReviewAssigns = new HashSet<ReviewAssign>();
+            Active = true;
         }
+
 
         [Display(Name = "Researcher")]
         public string FullName
         {
             get
             {
-                return  ResFirst
+                return  ResFirst + " " + ResLast;
+            }
+        }
+
+        public string FormalName
+        {
+            get
+            {
+                return ResTitle + ". " + ResFirst
                     + (string.IsNullOrEmpty(ResMiddle) ? " " :
                         (" " + (char?)ResMiddle[0] + ". ").ToUpper())
                     + ResLast;
@@ -31,7 +41,8 @@ namespace TRPR.Models
         public int ID { get; set; }
 
         [Display(Name = "Title")]
-        [StringLength(10, ErrorMessage = "Title name cannot be more than 10 characters long.")]
+        [Required(ErrorMessage = "You cannot leave the title blank.")]
+        [StringLength(10, ErrorMessage = "Title cannot be more than 10 characters long.")]
         public string ResTitle { get; set; }
 
         [Display(Name = "First Name")]
@@ -70,5 +81,7 @@ namespace TRPR.Models
 
         [Display(Name = "Reviews")]
         public virtual ICollection<ReviewAssign> ReviewAssigns { get; set; }
+
+        public bool Active { get; set; }
     }
 }
