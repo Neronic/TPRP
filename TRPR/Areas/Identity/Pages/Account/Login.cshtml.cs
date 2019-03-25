@@ -81,17 +81,17 @@ namespace TRPR.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
-                    var emp = _context.Researchers.Where(e => e.ResEmail == Input.Email).FirstOrDefault();
-                    if (emp != null)
+                    var res = _context.Researchers.Where(e => e.ResEmail == Input.Email).FirstOrDefault();
+                    if (res != null)
                     {
-                        CookieHelper.CookieSet(HttpContext, "userName", emp.FullName, 3200);
+                        CookieHelper.CookieSet(HttpContext, "userName", res.FullName, 3200);
                     }
                     else
                     {
                         //What better time to create the profile?
                         //returnUrl = "~/ResearcherProfile/Create";
                     }
-                    _logger.LogInformation("User logged in.");
+                    _logger.LogInformation("User logged in."); 
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
