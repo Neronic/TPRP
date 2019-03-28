@@ -25,8 +25,7 @@ namespace TRPR.Controllers
         public async Task<IActionResult> Index()
         {
             var researcher = from r in _context.Researchers
-                .Include(r => r.ResearchInstitutes)
-                .ThenInclude(ri => ri.Institute)
+                .Include(ri => ri.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
                 select r;
@@ -43,8 +42,7 @@ namespace TRPR.Controllers
             }
 
             var researcher = await _context.Researchers
-                .Include(r => r.ResearchInstitutes)
-                .ThenInclude(ri => ri.Institute)
+                .Include(ri => ri.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
                 .FirstOrDefaultAsync(m => m.ID == id);
@@ -98,8 +96,7 @@ namespace TRPR.Controllers
             }
 
             var researcher = await _context.Researchers
-                .Include(r => r.ResearchInstitutes)
-                .ThenInclude(ri => ri.Institute)
+                .Include(r => r.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
                 .AsNoTracking()
@@ -121,8 +118,7 @@ namespace TRPR.Controllers
         public async Task<IActionResult> Edit(int id, string[] selectedOptions)
         {
             var researcherToUpdate = await _context.Researchers
-                .Include(r => r.ResearchInstitutes)
-                .ThenInclude(ri => ri.Institute)
+                .Include(ri => ri.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
                 .SingleOrDefaultAsync(m => m.ID == id);
@@ -136,7 +132,7 @@ namespace TRPR.Controllers
 
 
             if (await TryUpdateModelAsync<Researcher>(researcherToUpdate, "", 
-                r => r.ResTitle, r => r.ResFirst, r => r.ResMiddle, r => r.ResLast, r => r.ResBio, r => r.ResEmail))
+                r => r.TitleID, r => r.ResFirst, r => r.ResMiddle, r => r.ResLast, r => r.ResBio, r => r.ResEmail))
             {
                 try
                 {
@@ -176,8 +172,7 @@ namespace TRPR.Controllers
             }
 
             var researcher = await _context.Researchers
-                .Include(r => r.ResearchInstitutes)
-                .ThenInclude(ri => ri.Institute)
+                .Include(r => r.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
                 .FirstOrDefaultAsync(m => m.ID == id);
