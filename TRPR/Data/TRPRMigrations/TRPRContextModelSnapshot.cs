@@ -268,6 +268,7 @@ namespace TRPR.Data.TRPRMigrations
                     b.Property<int>("InstituteID");
 
                     b.Property<string>("ResBio")
+                        .IsRequired()
                         .HasMaxLength(500);
 
                     b.Property<string>("ResEmail")
