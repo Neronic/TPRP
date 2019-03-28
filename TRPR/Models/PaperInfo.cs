@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TRPR.Models
 {
-    public class PaperInfo
+    public class PaperInfo : Auditable
     {
         public PaperInfo()
         {
@@ -26,12 +26,12 @@ namespace TRPR.Models
         [StringLength(500, ErrorMessage = "Abstract cannot be more than 500 characters long.")]
         public string PaperAbstract { get; set; }
 
-        [Display(Name = "Type")]
-        [Required(ErrorMessage = "You cannot leave the type blank.")]
-        [StringLength(30, ErrorMessage = "Type cannot be more than 30 characters long.")]
-        public string PaperType { get; set; }
+        [Display(Name = "Type of Paper")]
+        [Range(1, int.MaxValue, ErrorMessage = "You must select the type of Paper.")]
+        public int PaperTypeID { get; set; }
+        public PaperType PaperType { get; set; }
 
-        [Display(Name = "Length")]
+        [Display(Name = "Length of Paper")]
         [Required(ErrorMessage = "You cannot leave the length blank.")]
         public int PaperLength { get; set; }
 
