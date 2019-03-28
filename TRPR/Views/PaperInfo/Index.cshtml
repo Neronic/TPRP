@@ -1,82 +1,122 @@
-﻿@model IEnumerable<TRPR.Models.PaperInfo>
+﻿@model TRPR.Utilities.PaginatedList<TRPR.Models.PaperInfo>
 
 
-<table class="table table-striped" id="fullTable" style="width:100%;">
-    <thead class="thead">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.PaperTitle)
-            </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.PaperAbstract)
-            </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.PaperType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PaperLength)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status.StatName)
-            </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.AuthoredPapers)
-            </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.Files)
-                @*<input type="submit" disabled="disabled" value="Files" />*@
-            </th>
-            <th>
-                Date
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PaperTitle)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.PaperAbstract)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.PaperType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PaperLength)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status.StatName)
-            </td>
-            @*<td>
-                @foreach (var c in item.AuthoredPapers)
-                {
-                    @c.Researcher.ResBio <br />
-                }
-            </td>*@
-            <td>
-                @{
-                    foreach (var f in item.Files)
-                    {
-                        <a asp-action="Download" title="@f.FileName" asp-route-id="@f.ID">@f.FileName</a>
-                        <br />
-                    }
-                }
-            </td>
-            <td>
-                @foreach (var o in item.Files)
-                {
-                    @o.CreatedOn <br />
-                }
-            </td>
-            <td>
-                @*<a asp-action="Edit" asp-route-id="@item.ID">Review</a> |*@
-                <a asp-action="Details" asp-route-id="@item.ID">Review</a> 
-                @*<a asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form asp-action="Index">
+    <input type="hidden" name="sortDirection" value="@ViewData["sortDirection"]" />
+    <input type="hidden" name="sortField" value="@ViewData["sortField"]" />
+    <div class="form-horizontal">
+        <button class="btn" type="button" data-toggle="collapse" id="filterToggle" data-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
+            Filter/Search
+        </button>
+        <div class="collapse @(ViewData["Filtering"])" id="collapseFilter">
+            <div class="row well">
+
+                <div class="form-group col-md-4">
+                    <label class="control-label col-md-6">Select by Type of Paper:</label>
+                    <div class="col-md-6">
+                        @Html.DropDownList("PaperTypeID", null, "All Paper Types", htmlAttributes: new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="control-label col-md-7">Search Title:</label>
+                    <div class="col-md-5">
+                        @Html.TextBox("SearchString", null, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="control-label col-md-6">Select by Status:</label>
+                    <div class="col-md-6">
+                        @Html.DropDownList("StatusID", null, "All Statuses", htmlAttributes: new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="control-label col-md-4">Filter by Keyword:</label>
+                    <div class="col-md-6">
+                        @Html.DropDownList("KeywordID", null, "All Keywords", htmlAttributes: new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <input type="submit" name="actionButton" value="Filter" class="btn btn-default" />
+                    <a asp-action="Index">Clear</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <input type="submit" name="actionButton" value="Paper Title" class="btn btn-link" />
+                </th>
+                <th>
+                    <input type="submit" disabled="disabled" value="Abstract" class="btn btn-link" />
+                </th>
+                <th>
+                    <input type="submit" name="actionButton" value="Paper Type" class="btn btn-link" />
+                </th>
+                <th>
+                    <input type="submit" name="actionButton" value="Length" class="btn btn-link" />
+                </th>
+                <th>
+                    <input type="submit" name="actionButton" value="Status" class="btn btn-link" />
+                </th>
+                <th>
+                    <input type="submit" disabled="disabled" value="Uploaded Files" class="btn btn-link" />
+                </th>
+                <th>
+                    <input type="submit" disabled="disabled" value="Files" class="btn btn-link" />
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PaperTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PaperAbstract)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PaperType.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PaperLength)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status.StatName)
+                    </td>
+                    <td>
+                        @{
+                            foreach (var f in item.Files)
+                            {
+                                <a asp-action="Download" title="@f.FileName" asp-route-id="@f.ID">@f.FileName</a>
+                                <br />
+                            }
+                        }
+                    </td>
+                    <td>
+                        @foreach (var o in item.Files)
+                        {
+                            @o.CreatedOn <br />
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <partial name="_PagingNavBar" />
+</form>

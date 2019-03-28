@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using TRPR.Data;
 using TRPR.Models;
+using TRPR.Utilities;
 
 namespace TRPR.Controllers
 {
@@ -21,15 +22,20 @@ namespace TRPR.Controllers
         }
 
         // GET: ReviewAssigns
-        public async Task<IActionResult> Index(int? PaperInfoID, int? ResearcherID, int? RoleID)
+        public async Task<IActionResult> Index(int? PaperInfoID, int? ResearcherID, int? RoleID, int? page)
         {
-            var reviewAssigns = _context.ReviewAssigns
+            var reviewAssigns = from r in _context.ReviewAssigns
                 .Include(ra => ra.Roles)
                 .Include(ra => ra.Researcher)
                 .ThenInclude(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
-                .Include(r => r.PaperInfo);
-            return View(await reviewAssigns.ToListAsync());
+                .Include(r => r.PaperInfo)
+                select r;
+
+            int pageSize = 20;//Change as required
+            var pagedData = await PaginatedList<ReviewAssign>.CreateAsync(reviewAssigns.AsNoTracking(), page ?? 1, pageSize);
+
+            return View(pagedData);
         }
 
         // GET: ReviewAssigns/Details/5

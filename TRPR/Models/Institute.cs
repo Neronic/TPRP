@@ -15,6 +15,6 @@ namespace TRPR.Models
         [StringLength(100, ErrorMessage = "Name must be under 100 characters")]
         public string InstName { get; set; }
 
-        public ICollection<ResearchInstitute> ResearchInstitutes { get; set; }
+        public ICollection<Researcher> Researchers { get; set; }
     }
 }
