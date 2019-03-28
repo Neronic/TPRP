@@ -11,7 +11,6 @@ namespace TRPR.Models
         public Researcher()
         {
             this.ResearchExpertises = new HashSet<ResearchExpertise>();
-            this.ResearchInstitutes = new HashSet<ResearchInstitute>();
             this.AuthoredPapers = new HashSet<AuthoredPaper>();
             this.ReviewAssigns = new HashSet<ReviewAssign>();
             Active = true;
@@ -31,7 +30,7 @@ namespace TRPR.Models
         {
             get
             {
-                return ResTitle + ". " + ResFirst
+                return Title + ". " + ResFirst
                     + (string.IsNullOrEmpty(ResMiddle) ? " " :
                         (" " + (char?)ResMiddle[0] + ". ").ToUpper())
                     + ResLast;
@@ -41,9 +40,9 @@ namespace TRPR.Models
         public int ID { get; set; }
 
         [Display(Name = "Title")]
-        [Required(ErrorMessage = "You cannot leave the title blank.")]
-        [StringLength(10, ErrorMessage = "Title cannot be more than 10 characters long.")]
-        public string ResTitle { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "You must select a title.")]
+        public int TitleID { get; set; }
+        public Title Title { get; set; }
 
         [Display(Name = "First Name")]
         [Required(ErrorMessage = "You cannot leave the first name blank.")]
@@ -65,16 +64,18 @@ namespace TRPR.Models
         [DataType(DataType.EmailAddress)]
         public string ResEmail { get; set; }
 
-        [Display(Name = "Biography")]
+        [Display(Name = "Professional Biography")]
         //[Required(ErrorMessage = "You cannot leave the biography blank.")]
         [StringLength(500, ErrorMessage = "Biography cannot be more than 500 characters long.")]
         public string ResBio { get; set; }
 
-        [Display(Name = "Expertises")]
+        [Display(Name = "Areas of Expertises")]
         public virtual ICollection<ResearchExpertise> ResearchExpertises { get; set; }
 
-        [Display(Name = "Institute")]
-        public virtual ICollection<ResearchInstitute> ResearchInstitutes { get; set; }
+        [Display(Name = "Affilitation")]
+        [Range(1, int.MaxValue, ErrorMessage = "You must select an Institute.")]
+        public int InstituteID { get; set; }
+        public Institute Institutes { get; set; }
 
         [Display(Name = "Authored Papers")]
         public virtual ICollection<AuthoredPaper> AuthoredPapers { get; set; }
