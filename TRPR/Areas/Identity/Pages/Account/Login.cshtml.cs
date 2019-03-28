@@ -89,7 +89,7 @@ namespace TRPR.Areas.Identity.Pages.Account
                     else
                     {
                         //What better time to create the profile?
-                        //returnUrl = "~/ResearcherProfile/Create";
+                        returnUrl = "~/ResearcherProfile/Create";
                     }
                     _logger.LogInformation("User logged in."); 
                     return LocalRedirect(returnUrl);
