@@ -19,7 +19,7 @@
                 @Html.DisplayNameFor(model => model.PaperAbstract)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PaperType)
+                @Html.DisplayNameFor(model => model.PaperTypeID)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PaperLength)
@@ -49,7 +49,7 @@
                 @Html.DisplayFor(modelItem => item.PaperAbstract)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PaperType)
+                @Html.DisplayFor(modelItem => item.PaperType.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PaperLength)

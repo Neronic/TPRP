@@ -17,6 +17,103 @@ namespace TRPR.Data
                 serviceProvider.GetRequiredService<DbContextOptions<TRPRContext>>()))
             {
 
+                if (!context.Titles.Any())
+                {
+                     context.Titles.AddRange(
+                     new Title
+                     {
+                         Name = "Mr"
+                     },
+                     new Title
+                     {
+                         Name = "Mrs"
+                     },
+                     new Title
+                     {
+                         Name = "Ms"
+                     },
+                     new Title
+                     {
+                         Name = "Miss"
+                     },
+                     new Title
+                     {
+                         Name = "Mx"
+                     },
+                     new Title
+                     {
+                         Name = "M"
+                     },
+                     new Title
+                     {
+                         Name = "Sir"
+                     },
+                     new Title
+                     {
+                         Name = "Dr"
+                     },
+                     new Title
+                     {
+                         Name = "Prof"
+                     },
+                     new Title
+                     {
+                         Name = "Lady"
+                     }
+                );
+                    context.SaveChanges();
+                }
+                if (!context.PaperTypes.Any())
+                {
+                    context.PaperTypes.AddRange(
+                    new PaperType
+                    {
+                        Name = "Peer-reviewed"
+                    },
+                    new PaperType
+                    {
+                        Name = "Empirical study"
+                    },
+                    new PaperType
+                    {
+                        Name = "Review article"
+                    },
+                    new PaperType
+                    {
+                        Name = "Systematic review"
+                    },
+                    new PaperType
+                    {
+                        Name = "Meta-analysis"
+                    },
+                    new PaperType
+                    {
+                        Name = "Original research"
+                    },
+                    new PaperType
+                    {
+                        Name = "Clinical case study"
+                    },
+                    new PaperType
+                    {
+                        Name = "Clinical trial"
+                    },
+                    new PaperType
+                    {
+                        Name = "Perspective, opinion, and commentary"
+                    },
+                    new PaperType
+                    {
+                        Name = "Rapid Communications"
+                    },
+                    new PaperType
+                    {
+                        Name = "Case Study"
+                    }
+               );
+                    context.SaveChanges();
+                }
+
                 if (!context.Expertises.Any())
                 {
                     context.Expertises.AddRange(
@@ -387,175 +484,195 @@ namespace TRPR.Data
                     context.Researchers.AddRange(
                     new Researcher
                     {
-                        ResTitle = "Ms",
+                        TitleID = 3,
                         ResFirst = "Alicia",
                         ResLast = "Keys",
                         ResEmail = "akeys@outlook.com",
-                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec."
+                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec.",
+                        InstituteID = 1
                     },
                     new Researcher
                     {
-                        ResTitle = "Mr",
+                        TitleID = 1,
                         ResFirst = "Alexander",
                         ResMiddle = "R",
                         ResLast = "Junior",
                         ResEmail = "arjunior@outlook.com",
-                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec."
+                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec.",
+                        InstituteID = 5
                     },
                     new Researcher
                     {
-                        ResTitle = "Ms",
+                        TitleID = 5,
                         ResFirst = "Hannah",
                         ResMiddle = "Y",
                         ResLast = "Kim",
                         ResEmail = "hanahkim@outlook.com",
-                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec."
+                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec.",
+                        InstituteID = 12
                     },
                     new Researcher
                     {
-                        ResTitle = "Mr",
+                        TitleID = 7,
                         ResFirst = "Karen",
                         ResLast = "Cho",
                         ResEmail = "kcho@outlook.com",
-                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec."
+                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec.",
+                        InstituteID = 6
                     },
                     new Researcher
                     {
-                        ResTitle = "Ms",
+                        TitleID = 8,
                         ResFirst = "Min",
                         ResMiddle = "Jung",
                         ResLast = "Kim",
                         ResEmail = "kmj@outlook.com",
-                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec."
+                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec.",
+                        InstituteID = 1
                     },
                     new Researcher
                     {
-                        ResTitle = "Mr",
+                        TitleID = 9,
                         ResFirst = "Dolan",
                         ResLast = "Grays",
                         ResEmail = "dgrays@outlook.com",
-                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec."
+                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec.",
+                        InstituteID = 3
                     },
                     new Researcher
                     {
-                        ResTitle = "Dr",
+                        TitleID = 5,
                         ResFirst = "Ethan",
                         ResMiddle = "Alex",
                         ResLast = "Greys",
                         ResEmail = "ethangreys@outlook.com",
-                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec."
+                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec.",
+                        InstituteID = 18
                     },
                     new Researcher
                     {
-                        ResTitle = "Ms",
+                        TitleID = 2,
                         ResFirst = "Emma",
                         ResMiddle = "Hec",
                         ResLast = "Cham",
                         ResEmail = "emma@outlook.com",
-                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec."
+                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec.",
+                        InstituteID = 3
                     },
                     new Researcher
                     {
-                        ResTitle = "Mr",
+                        TitleID = 1,
                         ResFirst = "James",
                         ResMiddle = "H",
                         ResLast = "Charles",
                         ResEmail = "james@outlook.com",
-                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec."
+                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec.",
+                        InstituteID = 11
                     },
                     new Researcher
                     {
-                        ResTitle = "Dr",
+                        TitleID = 4,
                         ResFirst = "Alexandra",
                         ResMiddle = "Di",
                         ResLast = "Angelo",
                         ResEmail = "alexandra@outlook.com",
-                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec."
+                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec.",
+                        InstituteID = 15
                     },
                     new Researcher
                     {
-                        ResTitle = "Ms",
+                        TitleID = 10,
                         ResFirst = "Janice",
                         ResLast = "Joplin",
                         ResEmail = "jjpolin@outlook.com",
-                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec."
+                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec.",
+                        InstituteID = 20
                     },
                     new Researcher
                     {
-                        ResTitle = "Mr",
+                        TitleID = 1,
                         ResFirst = "Alex",
                         ResMiddle = "B",
                         ResLast = "Nolan",
                         ResEmail = "abnolan@outlook.com",
-                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec."
+                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec.",
+                        InstituteID = 16
                     },
                     new Researcher
                     {
-                        ResTitle = "Ms",
+                        TitleID = 2,
                         ResFirst = "Hannah",
                         ResLast = "Mack",
                         ResEmail = "hmackm@outlook.com",
-                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec."
+                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec.",
+                        InstituteID = 18
                     },
                     new Researcher
                     {
-                        ResTitle = "Mrs",
+                        TitleID = 3,
                         ResFirst = "Katherine",
                         ResLast = "Cho",
                         ResEmail = "katcho@outlook.com",
-                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec."
+                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec.",
+                        InstituteID = 6
                     },
                     new Researcher
                     {
-                        ResTitle = "Ms",
+                        TitleID = 8,
                         ResFirst = "Kim",
                         ResMiddle = "Na",
                         ResLast = "Eun",
                         ResEmail = "kimnaeun@outlook.com",
-                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec."
+                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec.",
+                        InstituteID = 7
                     },
                     new Researcher
                     {
-                        ResTitle = "Mr",
+                        TitleID = 8,
                         ResFirst = "Jack",
                         ResLast = "Sparrow",
                         ResEmail = "jacksparrow@outlook.com",
-                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec."
+                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec.",
+                        InstituteID = 17
                     },
                     new Researcher
                     {
-                        ResTitle = "Dr",
+                        TitleID = 9,
                         ResFirst = "Emily",
                         ResMiddle = "Sarah",
                         ResLast = "Sargeant",
                         ResEmail = "essargeant@outlook.com",
-                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec."
+                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec.",
+                        InstituteID = 12
                     },
                     new Researcher
                     {
-                        ResTitle = "Ms",
+                        TitleID = 2,
                         ResFirst = "Han",
                         ResLast = "Solo",
                         ResEmail = "hansolo@outlook.com",
-                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec."
+                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec.",
+                        InstituteID = 11
                     },
                     new Researcher
                     {
-                        ResTitle = "Mr",
+                        TitleID = 1,
                         ResFirst = "James",
                         ResMiddle = "K",
                         ResLast = "Charles",
                         ResEmail = "jameskcharles@outlook.com",
-                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec."
+                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec.",
+                        InstituteID = 9
                     },
                     new Researcher
                     {
-                        ResTitle = "Dr",
+                        TitleID = 5,
                         ResFirst = "Sarah",
                         ResMiddle = "M",
                         ResLast = "Dawson",
                         ResEmail = "sarahmdawson@outlook.com",
-                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec."
+                        ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec.",
+                        InstituteID = 10
                     }
                 );
                     context.SaveChanges();
@@ -673,120 +790,6 @@ namespace TRPR.Data
                     context.SaveChanges();
                 }
 
-
-
-                if (!context.ResearchInstitutes.Any())
-                {
-                    context.ResearchInstitutes.AddRange(
-                    new ResearchInstitute
-                    {
-                        ResearcherID = 1,
-                        InstituteID = 20
-                    },
-                    new ResearchInstitute
-                    {
-                        ResearcherID = 2,
-                        InstituteID = 19
-                    },
-                    new ResearchInstitute
-                    {
-                        ResearcherID = 3,
-                        InstituteID = 18
-                    },
-                    new ResearchInstitute
-                    {
-                        ResearcherID = 4,
-                        InstituteID = 17
-                    },
-                    new ResearchInstitute
-                    {
-                        ResearcherID = 5,
-                        InstituteID = 16
-                    },
-                    new ResearchInstitute
-                    {
-                        ResearcherID = 6,
-                        InstituteID = 15
-                    },
-                    new ResearchInstitute
-                    {
-                        ResearcherID = 7,
-                        InstituteID = 14
-                    },
-                    new ResearchInstitute
-                    {
-                        ResearcherID = 8,
-                        InstituteID = 13
-                    },
-                    new ResearchInstitute
-                    {
-                        ResearcherID = 9,
-                        InstituteID = 12
-                    },
-                    new ResearchInstitute
-                    {
-                        ResearcherID = 10,
-                        InstituteID = 11
-                    },
-                    new ResearchInstitute
-                    {
-                        ResearcherID = 9,
-                        InstituteID = 10
-                    },
-                    new ResearchInstitute
-                    {
-                        ResearcherID = 10,
-                        InstituteID = 9
-                    },
-                    new ResearchInstitute
-                    {
-                        ResearcherID = 11,
-                        InstituteID = 8
-                    },
-                    new ResearchInstitute
-                    {
-                        ResearcherID = 12,
-                        InstituteID = 7
-                    },
-                    new ResearchInstitute
-                    {
-                        ResearcherID = 13,
-                        InstituteID = 6
-                    },
-                    new ResearchInstitute
-                    {
-                        ResearcherID = 14,
-                        InstituteID = 5
-                    },
-                    new ResearchInstitute
-                    {
-                        ResearcherID = 15,
-                        InstituteID = 4
-                    },
-                    new ResearchInstitute
-                    {
-                        ResearcherID = 16,
-                        InstituteID = 3
-                    },
-                    new ResearchInstitute
-                    {
-                        ResearcherID = 17,
-                        InstituteID = 1
-                    },
-                    new ResearchInstitute
-                    {
-                        ResearcherID = 18,
-                        InstituteID = 1
-                    },
-                    new ResearchInstitute
-                    {
-                        ResearcherID = 19,
-                        InstituteID = 1
-                    }
-                );
-                    context.SaveChanges();
-                }
-
                 if (!context.PaperInfos.Any())
                 {
                     context.PaperInfos.AddRange(
@@ -794,7 +797,7 @@ namespace TRPR.Data
                     {
                         PaperTitle = "Therapeutic recreation: A practical approach",
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
-                        PaperType = "Clinical case study",
+                        PaperTypeID = 1,
                         PaperLength = 10,
                         StatusID = 3
                     },
@@ -802,7 +805,7 @@ namespace TRPR.Data
                     {
                         PaperTitle = "Therapeutic recreation in the nursing home: Reinventing a good thing",
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
-                        PaperType = "Clinical trial",
+                        PaperTypeID = 2,
                         PaperLength = 7,
                         StatusID = 3
                     },
@@ -810,7 +813,7 @@ namespace TRPR.Data
                     {
                         PaperTitle = "Mental health and transcending life challenges: The role of therapeutic recreation services",
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
-                        PaperType = "Opinion",
+                        PaperTypeID = 3,
                         PaperLength = 15,
                         StatusID = 3
                     },
@@ -818,7 +821,7 @@ namespace TRPR.Data
                     {
                         PaperTitle = "Reflections on therapeutic recreation and youth: Possibilities for broadening horizons",
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
-                        PaperType = "Original research",
+                        PaperTypeID = 4,
                         PaperLength = 27,
                         StatusID = 3
                     },
@@ -826,7 +829,7 @@ namespace TRPR.Data
                     {
                         PaperTitle = "Multicultural Sensitivity: An Innovative Mind-Set in Therapeutic Recreation Practice.",
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
-                        PaperType = "Clinical case study",
+                        PaperTypeID = 5,
                         PaperLength = 15,
                         StatusID = 3
                     },
@@ -834,7 +837,7 @@ namespace TRPR.Data
                     {
                         PaperTitle = "The therapeutic recreation (TR) profession in Canada: Where are we now and where are we going?",
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
-                        PaperType = "Clinical trial",
+                        PaperTypeID = 6,
                         PaperLength = 22,
                         StatusID = 3
                     },
@@ -842,7 +845,7 @@ namespace TRPR.Data
                     {
                         PaperTitle = "Outcome effectiveness of therapeutic recreation camping program for adolescents living with cancer and diabetes",
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
-                        PaperType = "Original research",
+                        PaperTypeID = 7,
                         PaperLength = 9,
                         StatusID = 3
                     },
@@ -850,7 +853,7 @@ namespace TRPR.Data
                     {
                         PaperTitle = "Effects of a therapeutic camping program on addiction recovery: The Algonquin Haymarket relapse prevention program",
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
-                        PaperType = "Opinion",
+                        PaperTypeID = 8,
                         PaperLength = 8,
                         StatusID = 3
                     },
@@ -858,7 +861,7 @@ namespace TRPR.Data
                     {
                         PaperTitle = "Therapeutic recreation camps: an effective intervention for children and young people with chronic illness?",
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
-                        PaperType = "Clinical trial",
+                        PaperTypeID = 9,
                         PaperLength = 4,
                         StatusID = 3
                     },
@@ -866,7 +869,7 @@ namespace TRPR.Data
                     {
                         PaperTitle = "Therapeutic recreation program design",
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
-                        PaperType = "Original research",
+                        PaperTypeID = 1,
                         PaperLength = 19,
                         StatusID = 2
                     },
@@ -874,7 +877,7 @@ namespace TRPR.Data
                     {
                         PaperTitle = "Quality of life and identity: The benefits of a community-based therapeutic recreation and adaptive sports program",
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
-                        PaperType = "Perspective",
+                        PaperTypeID = 2,
                         PaperLength = 18,
                         StatusID = 3
                     },
@@ -882,7 +885,7 @@ namespace TRPR.Data
                     {
                         PaperTitle = "Therapeutic recreation: A practical approach",
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
-                        PaperType = "Clinical case study",
+                        PaperTypeID = 3,
                         PaperLength = 7,
                         StatusID = 3
                     },
@@ -890,7 +893,7 @@ namespace TRPR.Data
                     {
                         PaperTitle = "Therapeutic recreation modalities and facilitation techniques: A national study",
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
-                        PaperType = "Original research",
+                        PaperTypeID = 4,
                         PaperLength = 21,
                         StatusID = 2
                     },
@@ -898,7 +901,7 @@ namespace TRPR.Data
                     {
                         PaperTitle = "Therapeutic massage as a therapeutic recreation facilitation technique",
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
-                        PaperType = "Clinical trial",
+                        PaperTypeID = 5,
                         PaperLength = 24,
                         StatusID = 3
                     },
@@ -906,7 +909,7 @@ namespace TRPR.Data
                     {
                         PaperTitle = "Guided imagery as a therapeutic recreation modality to reduce pain and anxiety",
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
-                        PaperType = "Commentary",
+                        PaperTypeID = 6,
                         PaperLength = 8,
                         StatusID = 3
                     },
@@ -914,7 +917,7 @@ namespace TRPR.Data
                     {
                         PaperTitle = "Aquatic therapy: a viable therapeutic recreation intervention.",
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
-                        PaperType = "Clinical case study",
+                        PaperTypeID = 2,
                         PaperLength = 10,
                         StatusID = 1
                     },
@@ -922,7 +925,7 @@ namespace TRPR.Data
                     {
                         PaperTitle = "The benefits of participation in aquatic activities for people with disabilities.",
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
-                        PaperType = "Original research",
+                        PaperTypeID = 5,
                         PaperLength = 16,
                         StatusID = 3
                     },
@@ -930,7 +933,7 @@ namespace TRPR.Data
                     {
                         PaperTitle = "Aquatic therapy in community-based therapeutic recreation: pain management in a case of fibromyalgia",
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
-                        PaperType = "Clinical trial",
+                        PaperTypeID = 3,
                         PaperLength = 14,
                         StatusID = 1
                     },
@@ -938,7 +941,7 @@ namespace TRPR.Data
                     {
                         PaperTitle = "Therapeutic recreation treats depression in the elderly",
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
-                        PaperType = "Perspective",
+                        PaperTypeID = 7,
                         PaperLength = 6,
                         StatusID = 3
                     },
@@ -946,7 +949,7 @@ namespace TRPR.Data
                     {
                         PaperTitle = "Therapeutic recreation practice: A strengths approach",
                         PaperAbstract = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pulvinar dolor a leo tempus pellentesque. Phasellus molestie sem mattis ipsum euismod ultrices. In nec ultricies neque, a venenatis mi. Nam cursus molestie justo in convallis. Cras mollis efficitur enim in fermentum. Vestibulum laoreet dictum felis in porttitor. Aenean tristique scelerisque turpis in pharetra. Fusce faucibus nisl sed tristique tempor. Phasellus pretium, velit metus.",
-                        PaperType = "Original research",
+                        PaperTypeID = 9,
                         PaperLength = 4,
                         StatusID = 3
                     }

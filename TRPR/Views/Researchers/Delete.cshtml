@@ -12,10 +12,10 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ResTitle)
+            @Html.DisplayNameFor(model => model.TitleID)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ResTitle)
+            @Html.DisplayFor(model => model.Title.Name)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.ResFirst)
@@ -48,13 +48,10 @@
             @Html.DisplayFor(model => model.ResBio)
         </dd>
         <dt>
-            Institutes
+            @Html.DisplayNameFor(model => model.InstituteID)
         </dt>
         <dd>
-            @foreach (var i in Model.ResearchInstitutes)
-            {
-                @i.Institute.InstName <br />
-            }
+            @Html.DisplayFor(model => model.Institutes.InstName)
         </dd>
         <dt>
             Expertises

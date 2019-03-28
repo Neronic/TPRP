@@ -25,8 +25,7 @@ namespace TRPR.Controllers
         public async Task<IActionResult> Index()
         {
             var researcher = from r in _context.Researchers
-                .Include(r => r.ResearchInstitutes)
-                .ThenInclude(ri => ri.Institute)
+                .Include(ri => ri.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
                 select r;
@@ -43,8 +42,7 @@ namespace TRPR.Controllers
             }
 
             var researcher = await _context.Researchers
-                .Include(r => r.ResearchInstitutes)
-                .ThenInclude(ri => ri.Institute)
+                .Include(ri => ri.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
                 .FirstOrDefaultAsync(m => m.ID == id);
@@ -61,6 +59,7 @@ namespace TRPR.Controllers
         {
             Researcher researcher = new Researcher();
             PopulateAssignedExpertiseData(researcher);
+            PopulateDropDownLists();
             return View();
         }
 
@@ -86,6 +85,7 @@ namespace TRPR.Controllers
                 ModelState.AddModelError("", "Unable to save changes after multiple attempts. Try again, and if the problem persists, see your system administrator.");
             }
             PopulateAssignedExpertiseData(researcher);
+            PopulateDropDownLists();
             return View(researcher);
         }
 
@@ -98,8 +98,7 @@ namespace TRPR.Controllers
             }
 
             var researcher = await _context.Researchers
-                .Include(r => r.ResearchInstitutes)
-                .ThenInclude(ri => ri.Institute)
+                .Include(r => r.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
                 .AsNoTracking()
@@ -110,6 +109,7 @@ namespace TRPR.Controllers
                 return NotFound();
             }
             PopulateAssignedExpertiseData(researcher);
+            PopulateDropDownLists();
             return View(researcher);
         }
 
@@ -121,8 +121,7 @@ namespace TRPR.Controllers
         public async Task<IActionResult> Edit(int id, string[] selectedOptions)
         {
             var researcherToUpdate = await _context.Researchers
-                .Include(r => r.ResearchInstitutes)
-                .ThenInclude(ri => ri.Institute)
+                .Include(ri => ri.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
                 .SingleOrDefaultAsync(m => m.ID == id);
@@ -136,7 +135,7 @@ namespace TRPR.Controllers
 
 
             if (await TryUpdateModelAsync<Researcher>(researcherToUpdate, "", 
-                r => r.ResTitle, r => r.ResFirst, r => r.ResMiddle, r => r.ResLast, r => r.ResBio, r => r.ResEmail))
+                r => r.TitleID, r => r.ResFirst, r => r.ResMiddle, r => r.ResLast, r => r.ResBio, r => r.ResEmail))
             {
                 try
                 {
@@ -164,6 +163,7 @@ namespace TRPR.Controllers
                 }
             }
             PopulateAssignedExpertiseData(researcherToUpdate);
+            PopulateDropDownLists();
             return View(researcherToUpdate);
         }
 
@@ -176,8 +176,7 @@ namespace TRPR.Controllers
             }
 
             var researcher = await _context.Researchers
-                .Include(r => r.ResearchInstitutes)
-                .ThenInclude(ri => ri.Institute)
+                .Include(r => r.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
                 .FirstOrDefaultAsync(m => m.ID == id);
@@ -213,6 +212,20 @@ namespace TRPR.Controllers
         private bool ResearcherExists(int id)
         {
             return _context.Researchers.Any(e => e.ID == id);
+        }
+
+        private SelectList TitleSelectList(int? id)
+        {
+            var dQuery = from d in _context.Titles
+                         orderby d.Name
+                         select d;
+            return new SelectList(dQuery, "ID", "Name", id);
+        }
+
+
+        private void PopulateDropDownLists(Researcher researcher = null)
+        {
+            ViewData["TitleID"] = TitleSelectList(researcher?.TitleID);
         }
 
         private void PopulateAssignedExpertiseData(Researcher researcher)
