@@ -206,10 +206,19 @@ namespace TRPR.Controllers
             return new SelectList(dQuery, "ID", "StatName", id);
         }
 
+        private SelectList PaperTypeSelectList(int? id)
+        {
+            var dQuery = from d in _context.PaperTypes
+                         orderby d.Name
+                         select d;
+            return new SelectList(dQuery, "ID", "Name", id);
+        }
+
 
         private void PopulateDropDownLists(PaperInfo infos = null)
         {
             ViewData["StatusID"] = StatusSelectList(infos?.StatusID);
+            ViewData["PaperTypeID"] = PaperTypeSelectList(infos?.PaperTypeID);
         }
 
         [HttpGet]
