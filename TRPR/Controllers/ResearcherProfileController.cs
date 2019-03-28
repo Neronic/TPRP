@@ -33,8 +33,7 @@ namespace TRPR.Controllers
         {
 
             var researcher = await _context.Researchers
-                .Include(r => r.ResearchInstitutes)
-                .ThenInclude(ri => ri.Institute)
+                .Include(r => r.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
                 .Where(c => c.ResEmail == User.Identity.Name)
@@ -90,8 +89,7 @@ namespace TRPR.Controllers
             }
 
             var researcher = await _context.Researchers
-                .Include(r => r.ResearchInstitutes)
-                .ThenInclude(ri => ri.Institute)
+                .Include(r => r.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
                 .Where(c => c.ResEmail == User.Identity.Name)
@@ -111,14 +109,13 @@ namespace TRPR.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var researcherToUpdate = await _context.Researchers
-                .Include(r => r.ResearchInstitutes)
-                .ThenInclude(ri => ri.Institute)
+                .Include(r => r.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
                 .FirstOrDefaultAsync(r => r.ID == id);
 
             if (await TryUpdateModelAsync<Researcher>(researcherToUpdate, "",
-                c => c.ResTitle, c => c.ResFirst, c => c.ResLast, c => c.ResEmail, c => c.ResBio))
+                c => c.TitleID, c => c.ResFirst, c => c.ResLast, c => c.ResEmail, c => c.ResBio))
             {
                 try
                 {
