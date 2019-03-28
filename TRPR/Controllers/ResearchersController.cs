@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using TRPR.Data;
 using TRPR.Models;
+using TRPR.Utilities;
 using TRPR.ViewModels;
 
 namespace TRPR.Controllers
@@ -22,7 +23,7 @@ namespace TRPR.Controllers
         }
 
         // GET: Researchers
-        public async Task<IActionResult> Index(string SearchString, string SearchEmail, int? InstituteID, int? ExpertiseID, string sortDirection, string actionButton, string sortField = "Default field")
+        public async Task<IActionResult> Index(string SearchString, string SearchEmail, int? InstituteID, int? ExpertiseID, int? page, string sortDirection, string actionButton, string sortField = "FullName")
         {
             PopulateDropDownLists();
             ViewData["ExpertiseID"] = new SelectList(_context.Expertises.OrderBy(p => p.ExpName), "ID", "ExpName");
@@ -33,6 +34,9 @@ namespace TRPR.Controllers
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
                 select r;
+
+            int pageSize = 20;//Change as required
+            var pagedData = await PaginatedList<Researcher>.CreateAsync(researcher.AsNoTracking(), page ?? 1, pageSize);
 
             if (InstituteID.HasValue)
             {
@@ -59,6 +63,7 @@ namespace TRPR.Controllers
             //Before we sort, see if we have called for a change of filtering or sorting
             if (!String.IsNullOrEmpty(actionButton)) //Form Submitted so lets sort!
             {
+                page = 1;//Reset page to start
                 if (actionButton != "Filter")//Change of sort is requested
                 {
                     if (actionButton == sortField) //Reverse order on same field
@@ -102,7 +107,7 @@ namespace TRPR.Controllers
             ViewData["sortField"] = sortField;
             ViewData["sortDirection"] = sortDirection;
 
-            return View(await researcher.ToListAsync());
+            return View(pagedData);
         }
 
         // GET: Researchers/Details/5
