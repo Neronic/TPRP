@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TRPR.Models
 {
-    public class Comment 
+    public class Comment : Auditable
     {
         public int ID { get; set; }
 
@@ -24,19 +24,5 @@ namespace TRPR.Models
         [Required(ErrorMessage = "You cannot leave the comment blank.")]
         [StringLength(500, ErrorMessage = "Comment cannot be more than 500 characters long.")]
         public string Comtext { get; set; }
-
-        [ScaffoldColumn(false)]
-        [StringLength(256)]
-        public string CreatedBy { get; set; }
-
-        [ScaffoldColumn(false)]
-        public DateTime? CreatedOn { get; set; }
-
-        [ScaffoldColumn(false)]
-        [StringLength(256)]
-        public string UpdatedBy { get; set; }
-
-        [ScaffoldColumn(false)]
-        public DateTime? UpdatedOn { get; set; }
     }
 }
