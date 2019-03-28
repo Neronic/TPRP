@@ -64,10 +64,19 @@
             <span asp-validation-for="ReviewAgainID" class="text-danger"></span>
         </div>
         <partial name="~/Views/Shared/_fileUploader.cshtml" />
-                    <div class="form-group">
-                        <input type="submit" value="Save" class="btn btnMedP" />
-                    </div>
-                </form>
+        <div id="buttons">
+            <div class="dropdown" id="btnSave">
+                <a class="btn btnMedG dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Save
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="#">Action</a><br />
+                    <a class="dropdown-item" href="#">Another action</a>
+                </div>
+            </div>
+            <button id="btnSubmit" class="btnMedP">Submit</button>
+        </div>
+    </form>
             </div>
         @*</div>*@
 
