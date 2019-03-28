@@ -12,13 +12,13 @@
 body {
     font-family: 'Frutiger LT Std', sans-serif;
     background: #fafafa;
-    padding-right:0;
+    padding-right: 0;
 }
 
 .page {
     width: 100%;
     margin-top: 2em;
-    margin-right:0;
+    margin-right: 0;
 }
 
 p {
@@ -124,7 +124,28 @@ span {
 }
 
 .btnSubmission {
-font-size: smaller;
+    font-size: smaller;
+}
+
+/* ---------------------------------------------------
+   TABLE
+----------------------------------------------------- */
+.table {
+    padding-top: 20px;
+    width: 60%;
+}
+
+#fullTable {
+    width: 100%;
+}
+
+.thead {
+    background: #A1A0C2;
+    color: #F5F6FA;
+}
+
+tr:nth-child(even) {
+    background-color: rgba(204, 208, 166, 0.15);
 }
 
 /* ---------------------------------------------------
@@ -432,15 +453,15 @@ a.article:hover {
 }
 
 #buttons {
-display:flex;
-flex-direction:row;
-justify-content:flex-end;
-padding-top:2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding-top: 2em;
 }
 
 #btnSubmit,
 #btnSave {
-margin-left:2em;
+    margin-left: 2em;
 }
 /* ---------------------------------------------------
     FILE UPLOADER

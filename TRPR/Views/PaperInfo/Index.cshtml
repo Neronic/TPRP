@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<TRPR.Models.PaperInfo>
 
 
-<table class="table table-striped">
-    <thead class="">
+<table class="table table-striped" id="fullTable" style="width:100%;">
+    <thead class="thead">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.PaperTitle)
@@ -72,8 +72,8 @@
                 }
             </td>
             <td>
-                <a asp-controller="ReviewAssign" asp-action="Edit" asp-route-id="@item.ID">Review</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                @*<a asp-action="Edit" asp-route-id="@item.ID">Review</a> |*@
+                <a asp-action="Details" asp-route-id="@item.ID">Review</a> |
                 @*<a asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
             </td>
         </tr>
