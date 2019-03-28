@@ -38,6 +38,8 @@ namespace TRPR.Controllers
                 .Include(r => r.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
+                .Include(r => r.Institutes)
+                .Include(r => r.Title)
                 .Where(c => c.ResEmail == User.Identity.Name)
                 .FirstOrDefaultAsync();
 
@@ -97,6 +99,8 @@ namespace TRPR.Controllers
                 .Include(r => r.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
+                .Include(r => r.Institutes)
+                .Include(r => r.Title)
                 .Where(c => c.ResEmail == User.Identity.Name)
                 .FirstOrDefaultAsync();
             if (researcher == null)
@@ -117,6 +121,8 @@ namespace TRPR.Controllers
                 .Include(ri => ri.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
+                .Include(r => r.Institutes)
+                .Include(r => r.Title)
                 .SingleOrDefaultAsync(m => m.ID == id);
 
             if (researcherToUpdate == null)
