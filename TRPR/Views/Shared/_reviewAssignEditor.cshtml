@@ -3,32 +3,35 @@
 <div class="row">
     @*<div class="col-md-4">*@
     <form asp-action="_reviewAssigns">
-        @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="hidden" asp-for="ID" />
-        <div class="form-group">
-            <label asp-for="PaperInfoID" class="control-label"></label>
-            <select asp-for="PaperInfoID" class="form-control" asp-items="ViewBag.PaperInfoID"></select>
-            <span asp-validation-for="PaperInfoID" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="ResearcherID" class="control-label"></label>
-            <select asp-for="ResearcherID" class="form-control" asp-items="ViewBag.ResearcherID"></select>
-            <span asp-validation-for="ResearcherID" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="RoleID" class="control-label"></label>
-            <select asp-for="RoleID" class="form-control" asp-items="ViewBag.RoleID"></select>
-            <span asp-validation-for="RoleID" class="text-danger"></span>
-        </div>*@
-        <div class="form-group">
-            <label>
-                A discussion of implications for TR practice which describes the contribution the study makes to
-                therapeutic recreation practice and provides specific recommendations for practice
-            </label>
-            @*<label asp-for="RevContentReview" class="control-label" ></label>*@
-            <input asp-for="RevContentReview" class="form-control" />
-            <span asp-validation-for="RevContentReview" class="text-danger"></span>
-        </div>
+        @if (User.IsInRole("Editor"))
+        {
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="PaperInfoID" class="control-label"></label>
+                <select asp-for="PaperInfoID" class="form-control" asp-items="ViewBag.PaperInfoID"></select>
+                <span asp-validation-for="PaperInfoID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ResearcherID" class="control-label"></label>
+                <select asp-for="ResearcherID" class="form-control" asp-items="ViewBag.ResearcherID"></select>
+                <span asp-validation-for="ResearcherID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoleID" class="control-label"></label>
+                <select asp-for="RoleID" class="form-control" asp-items="ViewBag.RoleID"></select>
+                <span asp-validation-for="RoleID" class="text-danger"></span>
+            </div>
+        }
+            <div class="form-group">
+                <label>
+                    A discussion of implications for TR practice which describes the contribution the study makes to
+                    therapeutic recreation practice and provides specific recommendations for practice
+                </label>
+                @*<label asp-for="RevContentReview" class="control-label" ></label>*@
+                <input asp-for="RevContentReview" class="form-control" />
+                <span asp-validation-for="RevContentReview" class="text-danger"></span>
+            </div>
         <div class="form-group">
             <label>Do the 5-6 keywords best describe content of the article? </label>
             @*<label asp-for="RevKeywordReview" class="control-label"></label>*@
@@ -64,10 +67,19 @@
             <span asp-validation-for="ReviewAgainID" class="text-danger"></span>
         </div>
         <partial name="~/Views/Shared/_fileUploader.cshtml" />
-                    <div class="form-group">
-                        <input type="submit" value="Save" class="btn btnMedP" />
-                    </div>
-                </form>
+        <div id="buttons">
+            <div class="dropdown" id="btnSave">
+                <a class="btn btnMedG dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Save
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="#">Action</a><br />
+                    <a class="dropdown-item" href="#">Another action</a>
+                </div>
+            </div>
+            <button id="btnSubmit" class="btnMedP">Submit</button>
+        </div>
+    </form>
             </div>
         @*</div>*@
 
