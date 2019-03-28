@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TRPR.Models
 {
-    public class ReviewAssign
+    public class ReviewAssign : Auditable
     {
         public ReviewAssign()
         {
