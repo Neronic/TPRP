@@ -59,6 +59,7 @@ namespace TRPR.Controllers
         {
             Researcher researcher = new Researcher();
             PopulateAssignedExpertiseData(researcher);
+            PopulateDropDownLists();
             return View();
         }
 
@@ -84,6 +85,7 @@ namespace TRPR.Controllers
                 ModelState.AddModelError("", "Unable to save changes after multiple attempts. Try again, and if the problem persists, see your system administrator.");
             }
             PopulateAssignedExpertiseData(researcher);
+            PopulateDropDownLists();
             return View(researcher);
         }
 
@@ -107,6 +109,7 @@ namespace TRPR.Controllers
                 return NotFound();
             }
             PopulateAssignedExpertiseData(researcher);
+            PopulateDropDownLists();
             return View(researcher);
         }
 
@@ -160,6 +163,7 @@ namespace TRPR.Controllers
                 }
             }
             PopulateAssignedExpertiseData(researcherToUpdate);
+            PopulateDropDownLists();
             return View(researcherToUpdate);
         }
 
@@ -208,6 +212,20 @@ namespace TRPR.Controllers
         private bool ResearcherExists(int id)
         {
             return _context.Researchers.Any(e => e.ID == id);
+        }
+
+        private SelectList TitleSelectList(int? id)
+        {
+            var dQuery = from d in _context.Titles
+                         orderby d.Name
+                         select d;
+            return new SelectList(dQuery, "ID", "Name", id);
+        }
+
+
+        private void PopulateDropDownLists(Researcher researcher = null)
+        {
+            ViewData["TitleID"] = TitleSelectList(researcher?.TitleID);
         }
 
         private void PopulateAssignedExpertiseData(Researcher researcher)
