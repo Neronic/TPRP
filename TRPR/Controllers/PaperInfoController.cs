@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TRPR.Data;
 using TRPR.Models;
+using TRPR.Utilities;
 
 namespace TRPR.Controllers
 {
@@ -21,11 +22,11 @@ namespace TRPR.Controllers
         }
 
         // GET: PaperInfo
-        public async Task<IActionResult> Index(string SearchString, int? PaperTypeID, int? StatusID, int? KeywordID, string sortDirection, string actionButton, string sortField = "Default field")
+        public async Task<IActionResult> Index(string SearchString, int? PaperTypeID, int? StatusID, int? KeywordID, int? page, string sortDirection, string actionButton, string sortField = "Title")
         {
             PopulateDropDownLists();
             ViewData["KeywordID"] = new SelectList(_context.Keywords.OrderBy(p => p.KeyWord), "ID", "KeyWord");
-            ViewData["Filtering"] = "";
+            ViewData["Filtering"] = "";           
 
             var papers = from p in _context.PaperInfos
                 .Include(p => p.Status)
@@ -33,6 +34,9 @@ namespace TRPR.Controllers
                 .Include(p => p.AuthoredPapers)
                 .ThenInclude(pc => pc.Researcher)
                 select p;
+
+            int pageSize = 10;//Change as required
+            var pagedData = await PaginatedList<PaperInfo>.CreateAsync(papers.AsNoTracking(), page ?? 1, pageSize);
 
             //Add as many filters as needed
             if (PaperTypeID.HasValue)
@@ -60,6 +64,7 @@ namespace TRPR.Controllers
             //Before we sort, see if we have called for a change of filtering or sorting
             if (!String.IsNullOrEmpty(actionButton)) //Form Submitted so lets sort!
             {
+                page = 1;//Reset page to start
                 if (actionButton != "Filter")//Change of sort is requested
                 {
                     if (actionButton == sortField) //Reverse order on same field
@@ -81,7 +86,7 @@ namespace TRPR.Controllers
                 else
                 {
                     papers = papers
-                       .OrderByDescending(p => p.PaperTitle);
+                       .OrderByDescending(p => p.Status.StatName);
                 }
             }
             else if (sortField == "Paper Type")
@@ -89,7 +94,7 @@ namespace TRPR.Controllers
                 if (String.IsNullOrEmpty(sortDirection))
                 {
                     papers = papers
-                        .OrderBy(p => p.PaperType);
+                        .OrderBy(p => p.PaperType.Name);
                 }
                 else
                 {
@@ -127,7 +132,7 @@ namespace TRPR.Controllers
             ViewData["sortField"] = sortField;
             ViewData["sortDirection"] = sortDirection;
 
-            return View(await papers.ToListAsync());
+            return View(pagedData);
 
         }
 
