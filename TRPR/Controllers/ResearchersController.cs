@@ -33,6 +33,8 @@ namespace TRPR.Controllers
                 .Include(ri => ri.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
+                .Include(r => r.Title)
+                .Include(r => r.Institutes)
                 select r;
 
             int pageSize = 20;//Change as required
@@ -122,6 +124,8 @@ namespace TRPR.Controllers
                 .Include(ri => ri.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
+                .Include(r => r.Institutes)
+                .Include(r => r.Title)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (researcher == null)
             {
@@ -145,7 +149,7 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,ResTitle,ResFirst,ResMiddle,ResLast,ResEmail,ResBio,IntituteID")] Researcher researcher, string[] selectedOptions)
+        public async Task<IActionResult> Create([Bind("ID,TitleID,ResFirst,ResMiddle,ResLast,ResEmail,ResBio,IntituteID")] Researcher researcher, string[] selectedOptions)
         {
             try
             {
@@ -178,6 +182,8 @@ namespace TRPR.Controllers
                 .Include(r => r.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
+                .Include(r => r.Institutes)
+                .Include(r => r.Title)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
 
@@ -201,6 +207,8 @@ namespace TRPR.Controllers
                 .Include(ri => ri.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
+                .Include(r => r.Institutes)
+                .Include(r => r.Title)
                 .SingleOrDefaultAsync(m => m.ID == id);
 
             if (researcherToUpdate == null)
@@ -256,6 +264,8 @@ namespace TRPR.Controllers
                 .Include(r => r.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
+                .Include(r => r.Institutes)
+                .Include(r => r.Title)
                 .FirstOrDefaultAsync(m => m.ID == id);
 
             if (researcher == null)
