@@ -23,7 +23,7 @@ namespace TRPR.Controllers
         }
 
         // GET: Researchers
-        public async Task<IActionResult> Index(string SearchString, string SearchEmail, int? InstituteID, int? ExpertiseID, int? page, string sortDirection, string actionButton, string sortField = "FullName")
+        public async Task<IActionResult> Index(string SearchString, string SearchEmail, int? TitleID, int? InstituteID, int? ExpertiseID, int? page, string sortDirection, string actionButton, string sortField = "FullName")
         {
             PopulateDropDownLists();
             ViewData["ExpertiseID"] = new SelectList(_context.Expertises.OrderBy(p => p.ExpName), "ID", "ExpName");
