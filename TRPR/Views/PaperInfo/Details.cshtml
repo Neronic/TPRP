@@ -4,7 +4,31 @@
     ViewData["Title"] = "Details";
 }
 
-<div class="page" id="details">
+<div class="page" id="reviewPage">
+    <div id="paper">
+        <div class="paperDetail">
+            <div id="header1">
+                <h6 id="status">Pending</h6>
+                <h5 id="reference code">@Html.DisplayFor(model => model.ID)</h5>
+                <h6 id="date">Due Date: </h6>
+            </div>
+            <div id="header2">
+                <button class="btnMedP">Save</button>
+                <h6>
+                    @Html.DisplayFor(model => model.PaperTitle)
+                </h6>
+                <button class="btnMedP">Print</button>
+            </div>
+        </div>
+        <hr />
+        <div id="showViewer" class="form-group">
+
+            @*---------------------------------------- pdf view here ------------------------------------------------------------*@
+
+        </div>
+    </div>
+
+@*<div class="page" id="details">
     <div class="paperDetail">
         <dl class="dl-horizontal">
             <dt>
@@ -39,16 +63,20 @@
             </dd>
         </dl>
 
-    </div>
+    </div>*@
     <div id="navbar2">
 
-        <partial name="~/Views/Shared/_navbar.cshtml" />
-        <partial name="/Views/Shared/_navbar.cshtml" />
+        @*<partial name="~/Views/Shared/_navbar.cshtml" />
+        <partial name="/Views/Shared/_navbar.cshtml" /*@
     </div>
 
-    <div>
-        <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
-        <a asp-action="Index">Back to List</a>
+    <div style="width:50%;">
+        @{ var p = new TRPR.Models.ReviewAssign();
+            <partial name="_reviewAssignEditor" model="p"/>
+
+        }
+        @*<a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+        <a asp-action="Index">Back to List</a>*@
     </div>
 
 </div>

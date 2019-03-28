@@ -1,14 +1,9 @@
 ﻿@model TRPR.Utilities.PaginatedList<TRPR.Models.PaperInfo>
 
-@{
-    ViewData["Title"] = "Index";
-}
 
-<h2>Index</h2>
-
-<p>
+@*<p>
     <a asp-action="Create">Create New</a>
-</p>
+</p>*@
 <form asp-action="Index">
     <input type="hidden" name="sortDirection" value="@ViewData["sortDirection"]" />
     <input type="hidden" name="sortField" value="@ViewData["sortField"]" />
@@ -53,29 +48,29 @@
         </div>
     </div>
 
-    <table class="table">
-        <thead>
+    <table class="table table-striped" id="fullTable">
+        <thead class="thead">
             <tr>
                 <th>
-                    <input type="submit" name="actionButton" value="Paper Title" class="btn btn-link" />
+                    <input type="submit" name="actionButton" value="Paper Title" class="btn btn-link" style="color:#F5F6FA;" />
                 </th>
-                <th>
+                @*<th>
                     <input type="submit" disabled="disabled" value="Abstract" class="btn btn-link" />
+                </th>*@
+                <th>
+                    <input type="submit" name="actionButton" value="Paper Type" class="btn btn-link" style="color:#F5F6FA;" />
                 </th>
                 <th>
-                    <input type="submit" name="actionButton" value="Paper Type" class="btn btn-link" />
+                    <input type="submit" name="actionButton" value="Length" class="btn btn-link" style="color:#F5F6FA;"/>
                 </th>
                 <th>
-                    <input type="submit" name="actionButton" value="Length" class="btn btn-link" />
+                    <input type="submit" name="actionButton" value="Status" class="btn btn-link" style="color:#F5F6FA;"/>
                 </th>
                 <th>
-                    <input type="submit" name="actionButton" value="Status" class="btn btn-link" />
+                    <input type="submit" disabled="disabled" value="Uploaded Files" class="btn btn-link" style="color:#F5F6FA;"/>
                 </th>
                 <th>
-                    <input type="submit" disabled="disabled" value="Uploaded Files" class="btn btn-link" />
-                </th>
-                <th>
-                    <input type="submit" disabled="disabled" value="Files" class="btn btn-link" />
+                    <input type="submit" disabled="disabled" value="Files" class="btn btn-link" style="color:#F5F6FA;"/>
                 </th>
                 <th></th>
             </tr>
@@ -87,9 +82,9 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.PaperTitle)
                     </td>
-                    <td>
+                    @*<td>
                         @Html.DisplayFor(modelItem => item.PaperAbstract)
-                    </td>
+                    </td>*@
                     <td>
                         @Html.DisplayFor(modelItem => item.PaperType.Name)
                     </td>
@@ -115,9 +110,9 @@
                         }
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                        @*<a asp-action="Edit" asp-route-id="@item.ID">Review</a>*@ 
+                        <a asp-action="Details" asp-route-id="@item.ID">Review</a>
+                        @*<a asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
                     </td>
                 </tr>
             }
