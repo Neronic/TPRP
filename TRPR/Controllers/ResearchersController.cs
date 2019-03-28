@@ -22,13 +22,85 @@ namespace TRPR.Controllers
         }
 
         // GET: Researchers
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string SearchString, string SearchEmail, int? InstituteID, int? ExpertiseID, string sortDirection, string actionButton, string sortField = "Default field")
         {
+            PopulateDropDownLists();
+            ViewData["ExpertiseID"] = new SelectList(_context.Expertises.OrderBy(p => p.ExpName), "ID", "ExpName");
+            ViewData["Filtering"] = "";
+
             var researcher = from r in _context.Researchers
                 .Include(ri => ri.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
                 select r;
+
+            if (InstituteID.HasValue)
+            {
+                researcher = researcher.Where(p => p.InstituteID == InstituteID);
+                ViewData["Filtering"] = " in";
+            }
+            if (ExpertiseID.HasValue)
+            {
+                researcher = researcher.Where(p => p.ResearchExpertises.Any(c => c.ExpertiseID == ExpertiseID));
+                ViewData["Filtering"] = " in";
+            }
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                researcher = researcher.Where(p => p.ResLast.ToUpper().Contains(SearchString.ToUpper())
+                                       || p.ResFirst.ToUpper().Contains(SearchString.ToUpper()));
+                ViewData["Filtering"] = " in";
+            }
+            if (!String.IsNullOrEmpty(SearchEmail))
+            {
+                researcher = researcher.Where(p => p.ResEmail.ToUpper().Contains(SearchEmail.ToUpper()));
+                ViewData["Filtering"] = " in";
+            }
+
+            //Before we sort, see if we have called for a change of filtering or sorting
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted so lets sort!
+            {
+                if (actionButton != "Filter")//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = String.IsNullOrEmpty(sortDirection) ? "desc" : "";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
+            //Now we know which field and direction to sort by, but a Switch is hard to use for 2 criteria
+            //so we will use an if() structure instead.
+            if (sortField == "Email")
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    researcher = researcher
+                        .OrderBy(p => p.ResEmail);
+                }
+                else
+                {
+                    researcher = researcher
+                        .OrderByDescending(p => p.ResEmail);
+                }
+            }
+            else //Sorting by FullName - the default sort order
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    researcher = researcher
+                        .OrderBy(p => p.ResLast)
+                        .ThenBy(p => p.ResFirst);
+                }
+                else
+                {
+                    researcher = researcher
+                        .OrderByDescending(p => p.ResLast)
+                        .ThenByDescending(p => p.ResFirst);
+                }
+            }
+            //Set sort for next time
+            ViewData["sortField"] = sortField;
+            ViewData["sortDirection"] = sortDirection;
 
             return View(await researcher.ToListAsync());
         }
@@ -222,10 +294,18 @@ namespace TRPR.Controllers
             return new SelectList(dQuery, "ID", "Name", id);
         }
 
+        private SelectList InstituteSelectList(int? id)
+        {
+            var dQuery = from d in _context.Institutes
+                         orderby d.InstName
+                         select d;
+            return new SelectList(dQuery, "ID", "InstName", id);
+        }
 
         private void PopulateDropDownLists(Researcher researcher = null)
         {
             ViewData["TitleID"] = TitleSelectList(researcher?.TitleID);
+            ViewData["InstituteID"] = InstituteSelectList(researcher?.InstituteID);
         }
 
         private void PopulateAssignedExpertiseData(Researcher researcher)
