@@ -9,81 +9,85 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.PaperInfo.PaperTitle)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Researcher.FullName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Roles)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RevContentReview)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RevKeywordReview)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RevLengthReview)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RevFormatReview)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RevCitationReview)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Recommend.RecTitle)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReviewAgain.ReSponse)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PaperInfo.PaperTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Researcher.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Roles.RoleTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RevContentReview)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RevKeywordReview)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RevLengthReview)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RevFormatReview)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RevCitationReview)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Recommend.RecTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReviewAgain.ReSponse)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<form asp-action="Index">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PaperInfo.PaperTitle)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Researcher.FullName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Roles)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RevContentReview)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RevKeywordReview)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RevLengthReview)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RevFormatReview)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RevCitationReview)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Recommend.RecTitle)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReviewAgain.ReSponse)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PaperInfo.PaperTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Researcher.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Roles.RoleTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RevContentReview)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RevKeywordReview)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RevLengthReview)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RevFormatReview)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RevCitationReview)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Recommend.RecTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReviewAgain.ReSponse)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <partial name="_PagingNavBar" />
+</form>
