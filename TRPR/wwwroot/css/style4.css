@@ -104,7 +104,8 @@ span {
 
 .btnLgMd,
 .btnLgDk,
-.btnLgLt {
+.btnLgLt, 
+.btnLgXDk{
     width: 12em;
     height: 12em;
     color: #F2F2F2;
