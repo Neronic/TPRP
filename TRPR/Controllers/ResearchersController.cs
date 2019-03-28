@@ -145,7 +145,7 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,ResTitle,ResFirst,ResMiddle,ResLast,ResEmail,ResBio")] Researcher researcher, string[] selectedOptions)
+        public async Task<IActionResult> Create([Bind("ID,ResTitle,ResFirst,ResMiddle,ResLast,ResEmail,ResBio,IntituteID")] Researcher researcher, string[] selectedOptions)
         {
             try
             {
@@ -212,7 +212,7 @@ namespace TRPR.Controllers
 
 
             if (await TryUpdateModelAsync<Researcher>(researcherToUpdate, "", 
-                r => r.TitleID, r => r.ResFirst, r => r.ResMiddle, r => r.ResLast, r => r.ResBio, r => r.ResEmail))
+                r => r.TitleID, r => r.ResFirst, r => r.ResMiddle, r => r.ResLast, r => r.ResBio, r => r.ResEmail, r => r.InstituteID))
             {
                 try
                 {
