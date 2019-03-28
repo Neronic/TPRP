@@ -65,7 +65,9 @@
                             <li><a asp-area="" asp-page="/Home/IndexEditor">Editor</a></li>
                             <li><a href="#">Account</a></li>
                             <li class="divider"></li>
-                            <li><a href="#">Log Out</a></li>
+                            <li>
+                                <partial name="_LoginPartial" />
+                            </li>
                         </ul>
                     </li>
                 </ul>
