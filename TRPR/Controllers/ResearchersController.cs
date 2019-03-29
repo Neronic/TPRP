@@ -149,7 +149,7 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,TitleID,ResFirst,ResMiddle,ResLast,ResEmail,ResBio,InstituteID")] Researcher researcher, string[] selectedOptions)
+        public async Task<IActionResult> Create([Bind("ID,TitleID,ResFirst,ResMiddle,ResLast,ResEmail,ResBio,ItituteID")] Researcher researcher, string[] selectedOptions)
         {
             try
             {
@@ -161,7 +161,7 @@ namespace TRPR.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-            catch (RetryLimitExceededException /* dex */)
+            catch (Exception /* dex */)
             {
                 ModelState.AddModelError("", "Unable to save changes after multiple attempts. Try again, and if the problem persists, see your system administrator.");
             }
