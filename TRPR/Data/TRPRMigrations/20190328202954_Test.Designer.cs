@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TRPR.Data;
 
 namespace TRPR.Data.TRPRMigrations
 {
     [DbContext(typeof(TRPRContext))]
-    partial class TRPRContextModelSnapshot : ModelSnapshot
+    [Migration("20190328202954_Test")]
+    partial class Test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,7 +114,7 @@ namespace TRPR.Data.TRPRMigrations
 
                     b.Property<int?>("ReviewAssignID");
 
-                    b.Property<int?>("TypeID");
+                    b.Property<int>("TypeID");
 
                     b.Property<string>("UpdatedBy")
                         .HasMaxLength(256);
@@ -268,7 +270,6 @@ namespace TRPR.Data.TRPRMigrations
                     b.Property<int>("InstituteID");
 
                     b.Property<string>("ResBio")
-                        .IsRequired()
                         .HasMaxLength(500);
 
                     b.Property<string>("ResEmail")

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using System.IO;
-
+using TRPR.Utilities;
 
 namespace TRPR.Controllers
 {
@@ -25,9 +25,14 @@ namespace TRPR.Controllers
         }
 
         // GET: Files
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            return View(await _context.Files.ToListAsync());
+            var files = _context.Files;
+
+            int pageSize = 20;//Change as required
+            var pagedData = await PaginatedList<Models.File>.CreateAsync(files.AsNoTracking(), page ?? 1, pageSize);
+
+            return View(pagedData);
         }
 
         // GET: Files/Details/5

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TRPR.Models
 {
-    public class File
+    public class File : Auditable
     {
         public int ID { get; set; }
 
@@ -16,7 +16,7 @@ namespace TRPR.Models
 
         [Display(Name = "File Type")]
         [Range(1, int.MaxValue, ErrorMessage = "You must select the type of file.")]
-        public int TypeID { get; set; }
+        public int? TypeID { get; set; }
         public FileType FileType { get; set; }
 
         public int? PaperInfoID { get; set; }
@@ -31,19 +31,5 @@ namespace TRPR.Models
         [StringLength(256)]
         [ScaffoldColumn(false)]
         public string FileMimeType { get; set; }
-
-        [ScaffoldColumn(false)]
-        [StringLength(256)]
-        public string CreatedBy { get; set; }
-
-        [ScaffoldColumn(false)]
-        public DateTime? CreatedOn { get; set; }
-
-        [ScaffoldColumn(false)]
-        [StringLength(256)]
-        public string UpdatedBy { get; set; }
-
-        [ScaffoldColumn(false)]
-        public DateTime? UpdatedOn { get; set; }
     }
 }

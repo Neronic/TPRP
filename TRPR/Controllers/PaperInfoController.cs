@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TRPR.Data;
 using TRPR.Models;
+using TRPR.Utilities;
 
 namespace TRPR.Controllers
 {
@@ -21,14 +22,117 @@ namespace TRPR.Controllers
         }
 
         // GET: PaperInfo
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string SearchString, int? PaperTypeID, int? StatusID, int? KeywordID, int? page, string sortDirection, string actionButton, string sortField = "Title")
         {
-            var papers = _context.PaperInfos
+            PopulateDropDownLists();
+            ViewData["KeywordID"] = new SelectList(_context.Keywords.OrderBy(p => p.KeyWord), "ID", "KeyWord");
+            ViewData["Filtering"] = "";           
+
+            var papers = from p in _context.PaperInfos
                 .Include(p => p.Status)
                 .Include(p => p.Files)
                 .Include(p => p.AuthoredPapers)
-                .ThenInclude(pc => pc.Researcher);
-            return View(await papers.ToListAsync());
+                .ThenInclude(pc => pc.Researcher)
+                select p;
+
+            int pageSize = 10;//Change as required
+            var pagedData = await PaginatedList<PaperInfo>.CreateAsync(papers.AsNoTracking(), page ?? 1, pageSize);
+
+            //Add as many filters as needed
+            if (PaperTypeID.HasValue)
+            {
+                papers = papers.Where(p => p.PaperTypeID == PaperTypeID);
+                ViewData["Filtering"] = " in";
+            }
+            if (StatusID.HasValue)
+            {
+                papers = papers.Where(p => p.StatusID == StatusID);
+                ViewData["Filtering"] = " in";
+            }
+            if (KeywordID.HasValue)
+            {
+                papers = papers.Where(p => p.PaperKeywords.Any(c => c.KeywordID == KeywordID));
+                ViewData["Filtering"] = " in";
+            }
+
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                papers = papers.Where(p => p.PaperTitle.ToUpper().Contains(SearchString.ToUpper()));
+                ViewData["Filtering"] = " in";
+            }
+
+            //Before we sort, see if we have called for a change of filtering or sorting
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted so lets sort!
+            {
+                page = 1;//Reset page to start
+                if (actionButton != "Filter")//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = String.IsNullOrEmpty(sortDirection) ? "desc" : "";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
+            //Now we know which field and direction to sort by, but a Switch is hard to use for 2 criteria
+            //so we will use an if() structure instead.
+            if (sortField == "Status")//Sorting by Patient Name
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    papers = papers
+                        .OrderBy(p => p.Status.StatName);
+                }
+                else
+                {
+                    papers = papers
+                       .OrderByDescending(p => p.Status.StatName);
+                }
+            }
+            else if (sortField == "Paper Type")
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    papers = papers
+                        .OrderBy(p => p.PaperType.Name);
+                }
+                else
+                {
+                    papers = papers
+                        .OrderByDescending(p => p.PaperType.Name);
+                }
+            }
+            else if (sortField == "Length")
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    papers = papers
+                        .OrderBy(p => p.PaperLength);
+                }
+                else
+                {
+                    papers = papers
+                        .OrderByDescending(p => p.PaperLength);
+                }
+            }
+            else //Sorting by Title - the default sort order
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    papers = papers
+                        .OrderBy(p => p.PaperTitle);
+                }
+                else
+                {
+                    papers = papers
+                       .OrderByDescending(p => p.PaperTitle);
+                }
+            }
+            //Set sort for next time
+            ViewData["sortField"] = sortField;
+            ViewData["sortDirection"] = sortDirection;
+
+            return View(pagedData);
 
         }
 
@@ -64,15 +168,22 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,PaperTitle,PaperAbstract,PaperType,PaperLength,StatusID")] PaperInfo paperInfo, IEnumerable<IFormFile> theFiles)
+        public async Task<IActionResult> Create([Bind("ID,PaperTitle,PaperAbstract,PaperTypeID,PaperLength,StatusID")] PaperInfo paperInfo, IEnumerable<IFormFile> theFiles)
         {
-            
-            if (ModelState.IsValid)
+            try
             {
-                await AddDocuments(paperInfo, theFiles);
-                _context.Add(paperInfo);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    await AddDocuments(paperInfo, theFiles);
+                    paperInfo.StatusID = 2;
+                    _context.Add(paperInfo);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (Exception /* dex */)
+            {
+                ModelState.AddModelError("", "Unable to save changes after multiple attempts. Try again, and if the problem persists, see your system administrator.");
             }
             PopulateDropDownLists(paperInfo);
             return View(paperInfo);

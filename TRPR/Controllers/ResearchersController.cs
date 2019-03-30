@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using TRPR.Data;
 using TRPR.Models;
+using TRPR.Utilities;
 using TRPR.ViewModels;
 
 namespace TRPR.Controllers
@@ -22,15 +23,93 @@ namespace TRPR.Controllers
         }
 
         // GET: Researchers
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string SearchString, string SearchEmail, int? TitleID, int? InstituteID, int? ExpertiseID, int? page, string sortDirection, string actionButton, string sortField = "FullName")
         {
+            PopulateDropDownLists();
+            ViewData["ExpertiseID"] = new SelectList(_context.Expertises.OrderBy(p => p.ExpName), "ID", "ExpName");
+            ViewData["Filtering"] = "";
+
             var researcher = from r in _context.Researchers
                 .Include(ri => ri.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
+                .Include(r => r.Title)
+                .Include(r => r.Institutes)
                 select r;
 
-            return View(await researcher.ToListAsync());
+            int pageSize = 20;//Change as required
+            var pagedData = await PaginatedList<Researcher>.CreateAsync(researcher.AsNoTracking(), page ?? 1, pageSize);
+
+            if (InstituteID.HasValue)
+            {
+                researcher = researcher.Where(p => p.InstituteID == InstituteID);
+                ViewData["Filtering"] = " in";
+            }
+            if (ExpertiseID.HasValue)
+            {
+                researcher = researcher.Where(p => p.ResearchExpertises.Any(c => c.ExpertiseID == ExpertiseID));
+                ViewData["Filtering"] = " in";
+            }
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                researcher = researcher.Where(p => p.ResLast.ToUpper().Contains(SearchString.ToUpper())
+                                       || p.ResFirst.ToUpper().Contains(SearchString.ToUpper()));
+                ViewData["Filtering"] = " in";
+            }
+            if (!String.IsNullOrEmpty(SearchEmail))
+            {
+                researcher = researcher.Where(p => p.ResEmail.ToUpper().Contains(SearchEmail.ToUpper()));
+                ViewData["Filtering"] = " in";
+            }
+
+            //Before we sort, see if we have called for a change of filtering or sorting
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted so lets sort!
+            {
+                page = 1;//Reset page to start
+                if (actionButton != "Filter")//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = String.IsNullOrEmpty(sortDirection) ? "desc" : "";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
+            //Now we know which field and direction to sort by, but a Switch is hard to use for 2 criteria
+            //so we will use an if() structure instead.
+            if (sortField == "Email")
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    researcher = researcher
+                        .OrderBy(p => p.ResEmail);
+                }
+                else
+                {
+                    researcher = researcher
+                        .OrderByDescending(p => p.ResEmail);
+                }
+            }
+            else //Sorting by FullName - the default sort order
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    researcher = researcher
+                        .OrderBy(p => p.ResLast)
+                        .ThenBy(p => p.ResFirst);
+                }
+                else
+                {
+                    researcher = researcher
+                        .OrderByDescending(p => p.ResLast)
+                        .ThenByDescending(p => p.ResFirst);
+                }
+            }
+            //Set sort for next time
+            ViewData["sortField"] = sortField;
+            ViewData["sortDirection"] = sortDirection;
+
+            return View(pagedData);
         }
 
         // GET: Researchers/Details/5
@@ -45,6 +124,8 @@ namespace TRPR.Controllers
                 .Include(ri => ri.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
+                .Include(r => r.Institutes)
+                .Include(r => r.Title)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (researcher == null)
             {
@@ -68,7 +149,7 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,ResTitle,ResFirst,ResMiddle,ResLast,ResEmail,ResBio")] Researcher researcher, string[] selectedOptions)
+        public async Task<IActionResult> Create([Bind("ID,TitleID,ResFirst,ResMiddle,ResLast,ResEmail,ResBio,ItituteID")] Researcher researcher, string[] selectedOptions)
         {
             try
             {
@@ -80,7 +161,7 @@ namespace TRPR.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-            catch (RetryLimitExceededException /* dex */)
+            catch (Exception /* dex */)
             {
                 ModelState.AddModelError("", "Unable to save changes after multiple attempts. Try again, and if the problem persists, see your system administrator.");
             }
@@ -101,6 +182,8 @@ namespace TRPR.Controllers
                 .Include(r => r.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
+                .Include(r => r.Institutes)
+                .Include(r => r.Title)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
 
@@ -124,6 +207,8 @@ namespace TRPR.Controllers
                 .Include(ri => ri.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
+                .Include(r => r.Institutes)
+                .Include(r => r.Title)
                 .SingleOrDefaultAsync(m => m.ID == id);
 
             if (researcherToUpdate == null)
@@ -135,7 +220,7 @@ namespace TRPR.Controllers
 
 
             if (await TryUpdateModelAsync<Researcher>(researcherToUpdate, "", 
-                r => r.TitleID, r => r.ResFirst, r => r.ResMiddle, r => r.ResLast, r => r.ResBio, r => r.ResEmail))
+                r => r.TitleID, r => r.ResFirst, r => r.ResMiddle, r => r.ResLast, r => r.ResBio, r => r.ResEmail, r => r.InstituteID))
             {
                 try
                 {
@@ -179,6 +264,8 @@ namespace TRPR.Controllers
                 .Include(r => r.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
+                .Include(r => r.Institutes)
+                .Include(r => r.Title)
                 .FirstOrDefaultAsync(m => m.ID == id);
 
             if (researcher == null)
@@ -222,10 +309,18 @@ namespace TRPR.Controllers
             return new SelectList(dQuery, "ID", "Name", id);
         }
 
+        private SelectList InstituteSelectList(int? id)
+        {
+            var dQuery = from d in _context.Institutes
+                         orderby d.InstName
+                         select d;
+            return new SelectList(dQuery, "ID", "InstName", id);
+        }
 
         private void PopulateDropDownLists(Researcher researcher = null)
         {
             ViewData["TitleID"] = TitleSelectList(researcher?.TitleID);
+            ViewData["InstituteID"] = InstituteSelectList(researcher?.InstituteID);
         }
 
         private void PopulateAssignedExpertiseData(Researcher researcher)

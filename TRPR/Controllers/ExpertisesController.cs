@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TRPR.Data;
 using TRPR.Models;
+using TRPR.Utilities;
 
 namespace TRPR.Controllers
 {
@@ -20,9 +21,14 @@ namespace TRPR.Controllers
         }
 
         // GET: Expertises
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            return View(await _context.Expertises.ToListAsync());
+            var expertises = _context.Expertises;
+
+            int pageSize = 50;//Change as required
+            var pagedData = await PaginatedList<Expertise>.CreateAsync(expertises.AsNoTracking(), page ?? 1, pageSize);
+
+            return View(pagedData);
         }
 
         // GET: Expertises/Details/5
