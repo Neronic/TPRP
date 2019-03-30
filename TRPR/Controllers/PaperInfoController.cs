@@ -168,15 +168,22 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,PaperTitle,PaperAbstract,PaperType,PaperLength,StatusID")] PaperInfo paperInfo, IEnumerable<IFormFile> theFiles)
+        public async Task<IActionResult> Create([Bind("ID,PaperTitle,PaperAbstract,PaperTypeID,PaperLength,StatusID")] PaperInfo paperInfo, IEnumerable<IFormFile> theFiles)
         {
-            
-            if (ModelState.IsValid)
+            try
             {
-                await AddDocuments(paperInfo, theFiles);
-                _context.Add(paperInfo);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    await AddDocuments(paperInfo, theFiles);
+                    paperInfo.StatusID = 2;
+                    _context.Add(paperInfo);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (Exception /* dex */)
+            {
+                ModelState.AddModelError("", "Unable to save changes after multiple attempts. Try again, and if the problem persists, see your system administrator.");
             }
             PopulateDropDownLists(paperInfo);
             return View(paperInfo);
