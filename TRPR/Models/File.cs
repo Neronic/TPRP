@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TRPR.Models
 {
-    public class File
+    public class File : Auditable
     {
         public int ID { get; set; }
 
@@ -31,19 +31,5 @@ namespace TRPR.Models
         [StringLength(256)]
         [ScaffoldColumn(false)]
         public string FileMimeType { get; set; }
-
-        [ScaffoldColumn(false)]
-        [StringLength(256)]
-        public string CreatedBy { get; set; }
-
-        [ScaffoldColumn(false)]
-        public DateTime? CreatedOn { get; set; }
-
-        [ScaffoldColumn(false)]
-        [StringLength(256)]
-        public string UpdatedBy { get; set; }
-
-        [ScaffoldColumn(false)]
-        public DateTime? UpdatedOn { get; set; }
     }
 }
