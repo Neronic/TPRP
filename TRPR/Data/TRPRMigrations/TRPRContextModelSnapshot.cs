@@ -112,7 +112,7 @@ namespace TRPR.Data.TRPRMigrations
 
                     b.Property<int?>("ReviewAssignID");
 
-                    b.Property<int>("TypeID");
+                    b.Property<int?>("TypeID");
 
                     b.Property<string>("UpdatedBy")
                         .HasMaxLength(256);
