@@ -32,7 +32,19 @@ namespace TRPR.Controllers
                 .Include(r => r.PaperInfo)
                 select r;
 
-            int pageSize = 20;//Change as required
+            if (User.IsInRole("Researcher"))
+            {
+                reviewAssigns = from r in _context.ReviewAssigns
+               .Include(ra => ra.Roles)
+               .Include(ra => ra.Researcher)
+               .ThenInclude(r => r.ResearchExpertises)
+               .ThenInclude(re => re.Expertise)
+               .Include(r => r.PaperInfo)
+               .Where(c => c.CreatedBy == User.Identity.Name)
+               select r;
+            }
+            
+                int pageSize = 20;//Change as required
             var pagedData = await PaginatedList<ReviewAssign>.CreateAsync(reviewAssigns.AsNoTracking(), page ?? 1, pageSize);
 
             return View(pagedData);
