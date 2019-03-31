@@ -33,7 +33,6 @@ namespace TRPR.Controllers
         // GET: ResearcherProfile/Details/5
         public async Task<IActionResult> Details()
         {
-
             var researcher = await _context.Researchers
                 .Include(r => r.Institutes)
                 .Include(r => r.ResearchExpertises)
