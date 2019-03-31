@@ -24,16 +24,30 @@ namespace TRPR.Controllers
         // GET: PaperInfo
         public async Task<IActionResult> Index(string SearchString, int? PaperTypeID, int? StatusID, int? KeywordID, int? page, string sortDirection, string actionButton, string sortField = "Title")
         {
-            PopulateDropDownLists();
-            ViewData["KeywordID"] = new SelectList(_context.Keywords.OrderBy(p => p.KeyWord), "ID", "KeyWord");
-            ViewData["Filtering"] = "";           
-
             var papers = from p in _context.PaperInfos
                 .Include(p => p.Status)
                 .Include(p => p.Files)
                 .Include(p => p.AuthoredPapers)
                 .ThenInclude(pc => pc.Researcher)
-                select p;
+                                  select p;
+
+            if (User.IsInRole("Researcher"))
+            {
+                papers = from p in _context.PaperInfos
+                .Include(p => p.Status)
+                .Include(p => p.Files)
+                .Include(p => p.AuthoredPapers)
+                .ThenInclude(pc => pc.Researcher)
+                .Where(c => c.CreatedBy == User.Identity.Name)
+                         select p;
+            }
+
+            PopulateDropDownLists();
+            ViewData["KeywordID"] = new SelectList(_context.Keywords.OrderBy(p => p.KeyWord), "ID", "KeyWord");
+            ViewData["Filtering"] = "";
+
+            
+            
 
             int pageSize = 10;//Change as required
             var pagedData = await PaginatedList<PaperInfo>.CreateAsync(papers.AsNoTracking(), page ?? 1, pageSize);
