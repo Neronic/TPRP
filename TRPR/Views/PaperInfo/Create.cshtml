@@ -40,48 +40,24 @@
                 <span asp-validation-for="PaperKeywords" class="text-danger"></span>
             </div>
             @*<div class="form-group">
-            <label asp-for="PaperLength" class="control-label"></label>
-            <input asp-for="PaperLength" class="form-control" />
-            <span asp-validation-for="PaperLength" class="text-danger"></span>
-        </div>*@
+                    <label asp-for="PaperLength" class="control-label"></label>
+                    <input asp-for="PaperLength" class="form-control" />
+                    <span asp-validation-for="PaperLength" class="text-danger"></span>
+                </div>*@
             @*<div class="form-group">
-            <label asp-for="StatusID" class="control-label"></label>
-            <select asp-for="StatusID" class="form-control" asp-items="ViewBag.StatusID">
-                <option>Select a Status</option>
-            </select>
-            <span asp-validation-for="StatusID" class="text-danger"></span>
-        </div>*@
+                    <label asp-for="StatusID" class="control-label"></label>
+                    <select asp-for="StatusID" class="form-control" asp-items="ViewBag.StatusID">
+                        <option>Select a Status</option>
+                    </select>
+                    <span asp-validation-for="StatusID" class="text-danger"></span>
+                </div>*@
             <h5>Co-Author</h5>
+            @Html.TextBox("SearchString", null, new { @class = "form-control" });
             <input type="text" placeholder="Email" class="form-control" style="width:250px; display:inline; margin-top:8px;">
-            <button class="btnMedG">Search</button>
+            <input type="submit" name="authorSearch" value="Search" class="btnMedG" />
             <button class="btnMedP" id="addNewCoAuthor" data-toggle="modal" data-target="#addCoAuthorModal" type="button">Add New Author</button>
 
 
-            <!-----------------------------------------------Modal Popup--------------------------------------------------------->
-
-
-            <div class="modal fade" id="addCoAuthorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 class="modal-title" style="display:inline;">REGISTER</h3>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            @{
-                                var doc = new TRPR.Models.Researcher();
-                                Html.RenderPartial("_coAuthorRegistration", doc);
-                            }
-                        </div>
-                        <div class="modal-footer">
-                            <input type="submit" value="Cancel" class="btn btnMedG" />
-                            <input type="submit" value="Save" class="btn btnMedP" id="btnCoAuthCreate" />
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             @*<div class="modal-fade" id="addCoAuthorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
@@ -99,9 +75,9 @@
                             }
                         </div>
                         @*<div class="modal-footer"></div>*@
-                    @*</div>
-                </div>
-            </div>*@
+            @*</div>
+                    </div>
+                </div>*@
             <h4>My Co-Authors</h4>
 
             <div class="form-group">
@@ -109,10 +85,10 @@
                 <input type="file" class="" multiple="multiple" name="theFiles" /><br />
             </div>
 
-            <div id="fileUploader">
+            @*<div id="fileUploader" class="form-group">
 
                 <partial name="~/Views/Shared/_fileUploader.cshtml" />
-            </div>
+            </div>*@
 
             <div class="form-group">
                 <input type="submit" value="Save and Close" class="btnMedG" />
@@ -121,6 +97,33 @@
         </form>
     </div>
 </div>
+
+<!-----------------------------------------------Modal Popup--------------------------------------------------------->
+
+
+<div class="modal fade" id="addCoAuthorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" style="display:inline;">REGISTER</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @{
+                    var doc = new TRPR.Models.Researcher();
+                    Html.RenderPartial("_coAuthorRegistration", doc);
+                }
+            </div>
+            <div class="modal-footer">
+                <input type="submit" value="Cancel" class="btn btnMedG" />
+                <input type="submit" value="Save" class="btn btnMedP" id="btnCoAuthCreate" />
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script type="text/javascript">
     $("#addCoAuthorModal").on("hidden.bs.modal", function () {

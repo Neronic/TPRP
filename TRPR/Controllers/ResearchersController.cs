@@ -33,6 +33,8 @@ namespace TRPR.Controllers
                 .Include(ri => ri.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
+                .Include(a => a.AuthoredPapers)            
+                .ThenInclude(pa => pa.PaperInfoID)
                 select r;
 
             int pageSize = 20;//Change as required

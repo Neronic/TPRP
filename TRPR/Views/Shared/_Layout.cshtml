@@ -111,7 +111,7 @@
                     </a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
-                            <a asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLg">Submitted</a>
+                            <a asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLg" asp-route-ResearcherID="@User.Identity">Submitted</a>
                         </li>
                         <li>
                             <a asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLg">Drafts</a>
@@ -128,7 +128,7 @@
                 {
                     <li>
 
-                        <a asp-area="" asp-controller="ReviewAssigns" asp-action="Index">
+                        <a asp-area="" asp-controller="Researchers" asp-action="Index">
                             <i class="fas fa-user-edit"></i>
                             Editors
                         </a>
