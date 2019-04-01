@@ -34,14 +34,8 @@ namespace TRPR.Controllers
                 .ThenInclude(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
                 .Include(r => r.PaperInfo)
-                select r;
+                select r;           
 
-            //var researcher = await _context.Researchers
-            //    .SingleOrDefaultAsync(m => m.ID == reviewAssigns.ResearcherID);
-
-            //var research = researcher.ResEmail.ToString();
-
-            //var username = User.Identity.Name;
 
             if (User.IsInRole("Researcher"))
             {
@@ -51,7 +45,7 @@ namespace TRPR.Controllers
                .ThenInclude(r => r.ResearchExpertises)
                .ThenInclude(re => re.Expertise)
                .Include(r => r.PaperInfo)
-               //.Where(res = username)
+               .Where(c => c.Researcher.ResEmail == User.Identity.Name)
                select r;
             }
             
@@ -108,7 +102,7 @@ namespace TRPR.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-            catch (DbUpdateException)
+            catch (Exception)
             {
                  ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
@@ -117,36 +111,36 @@ namespace TRPR.Controllers
 
 
             // Email coding
-            var researcher = await _context.Researchers
-                    .SingleOrDefaultAsync(m => m.ID == reviewAssign.ResearcherID);
+            //var researcher = await _context.Researchers
+            //        .SingleOrDefaultAsync(m => m.ID == reviewAssign.ResearcherID);
 
-            var resEmail = researcher.ResEmail.ToString();
-            var resName = researcher.FullName.ToString();
+            //var resEmail = researcher.ResEmail.ToString();
+            //var resName = researcher.FullName.ToString();
 
 
-            var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("TRPR", "TRPRDoNotReply@outlook.com"));
-            message.To.Add(new MailboxAddress(resName, "firebee13@outlook.com"));
-            message.Subject = "TRPR - New Review";
+            //var message = new MimeMessage();
+            //message.From.Add(new MailboxAddress("TRPR", "TRPRDoNotReply@outlook.com"));
+            //message.To.Add(new MailboxAddress(resName, resEmail));
+            //message.Subject = "TRPR - New Review";
 
-            message.Body = new TextPart("plain")
-            {
-                Text = @"You've been assigned to a new review, head to TRPR to check it out!"
-            };
+            //message.Body = new TextPart("plain")
+            //{
+            //    Text = @"You've been assigned to a new review, head to TRPR to check it out!"
+            //};
 
-            using (var client = new SmtpClient())
-            {
-                // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+            //using (var client = new SmtpClient())
+            //{
+            //    // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
+            //    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                client.Connect("smtp-mail.outlook.com", 587, false);
+            //    client.Connect("smtp-mail.outlook.com", 587, false);
 
-                // Note: only needed if the SMTP server requires authentication
-                client.Authenticate("TRPRDoNotReply@outlook.com", "Tq8uwocBDC");
+            //    // Note: only needed if the SMTP server requires authentication
+            //    client.Authenticate("TRPRDoNotReply@outlook.com", "Tq8uwocBDC");
 
-                client.Send(message);
-                client.Disconnect(true);
-            }
+            //    client.Send(message);
+            //    client.Disconnect(true);
+            //}
 
 
             return View(reviewAssign);
