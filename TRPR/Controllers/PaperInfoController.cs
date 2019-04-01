@@ -22,7 +22,7 @@ namespace TRPR.Controllers
         }
 
         // GET: PaperInfo
-        public async Task<IActionResult> Index(string SearchString, int? PaperTypeID, int? StatusID, int? KeywordID, int? page, string sortDirection, string actionButton, string sortField = "Title")
+        public async Task<IActionResult> Index(string SearchString, int? CreatedOn, int? PaperTypeID, int? StatusID, int? KeywordID, int? page, string sortDirection, string actionButton, string sortField = "CreatedOn")
         {
             var papers = from p in _context.PaperInfos
                 .Include(p => p.Status)
@@ -45,17 +45,12 @@ namespace TRPR.Controllers
             PopulateDropDownLists();
             ViewData["KeywordID"] = new SelectList(_context.Keywords.OrderBy(p => p.KeyWord), "ID", "KeyWord");
             ViewData["Filtering"] = "";
-
-            
-            
-
-            int pageSize = 10;//Change as required
-            var pagedData = await PaginatedList<PaperInfo>.CreateAsync(papers.AsNoTracking(), page ?? 1, pageSize);
-
+                      
             //Add as many filters as needed
             if (PaperTypeID.HasValue)
             {
                 papers = papers.Where(p => p.PaperTypeID == PaperTypeID);
+                ViewData["PaperTypeIDFilter"] = PaperTypeID;
                 ViewData["Filtering"] = " in";
             }
             if (StatusID.HasValue)
@@ -90,7 +85,7 @@ namespace TRPR.Controllers
             }
             //Now we know which field and direction to sort by, but a Switch is hard to use for 2 criteria
             //so we will use an if() structure instead.
-            if (sortField == "Status")//Sorting by Patient Name
+            if (sortField == "Status")//Sorting by Status
             {
                 if (String.IsNullOrEmpty(sortDirection))
                 {
@@ -129,7 +124,7 @@ namespace TRPR.Controllers
                         .OrderByDescending(p => p.PaperLength);
                 }
             }
-            else //Sorting by Title - the default sort order
+            else if (sortField == "Title")//Sorting by Title - the default sort order
             {
                 if (String.IsNullOrEmpty(sortDirection))
                 {
@@ -142,9 +137,26 @@ namespace TRPR.Controllers
                        .OrderByDescending(p => p.PaperTitle);
                 }
             }
+            else
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    papers = papers
+                        .OrderByDescending(p => p.CreatedOn);
+                }
+                else
+                {
+                    papers = papers
+                       .OrderBy(p => p.CreatedOn);
+                }
+            }
             //Set sort for next time
             ViewData["sortField"] = sortField;
             ViewData["sortDirection"] = sortDirection;
+
+            int pageSize = 10;//Change as required
+            var pagedData = await PaginatedList<PaperInfo>.CreateAsync(papers.AsNoTracking(), page ?? 1, pageSize);
+
 
             return View(pagedData);
 
