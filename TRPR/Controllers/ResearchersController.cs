@@ -138,7 +138,7 @@ namespace TRPR.Controllers
         // GET: Researchers/Create
         public IActionResult Create()
         {
-            Researcher researcher = new Researcher();
+            var researcher = new Researcher();
             PopulateAssignedExpertiseData(researcher);
             PopulateDropDownLists();
             return View();
