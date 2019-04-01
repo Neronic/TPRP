@@ -16,7 +16,7 @@ namespace TRPR.Data.TRPRMigrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("TRPR")
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -339,7 +339,7 @@ namespace TRPR.Data.TRPRMigrations
 
                     b.Property<int>("PaperInfoID");
 
-                    b.Property<int>("RecommendID");
+                    b.Property<int?>("RecommendID");
 
                     b.Property<int>("ResearcherID");
 
@@ -353,7 +353,7 @@ namespace TRPR.Data.TRPRMigrations
 
                     b.Property<string>("RevLengthReview");
 
-                    b.Property<int>("ReviewAgainID");
+                    b.Property<int?>("ReviewAgainID");
 
                     b.Property<int>("RoleID");
 
@@ -518,8 +518,7 @@ namespace TRPR.Data.TRPRMigrations
 
                     b.HasOne("TRPR.Models.Recommend", "Recommend")
                         .WithMany()
-                        .HasForeignKey("RecommendID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("RecommendID");
 
                     b.HasOne("TRPR.Models.Researcher", "Researcher")
                         .WithMany("ReviewAssigns")
@@ -528,8 +527,7 @@ namespace TRPR.Data.TRPRMigrations
 
                     b.HasOne("TRPR.Models.ReviewAgain", "ReviewAgain")
                         .WithMany()
-                        .HasForeignKey("ReviewAgainID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ReviewAgainID");
 
                     b.HasOne("TRPR.Models.Role", "Roles")
                         .WithMany()
