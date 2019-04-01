@@ -35,10 +35,7 @@ namespace TRPR.Controllers
                 .ThenInclude(re => re.Expertise)
                 .Include(r => r.Title)
                 .Include(r => r.Institutes)
-                select r;
-
-            int pageSize = 20;//Change as required
-            var pagedData = await PaginatedList<Researcher>.CreateAsync(researcher.AsNoTracking(), page ?? 1, pageSize);
+                select r;           
 
             if (InstituteID.HasValue)
             {
@@ -109,6 +106,9 @@ namespace TRPR.Controllers
             ViewData["sortField"] = sortField;
             ViewData["sortDirection"] = sortDirection;
 
+            int pageSize = 20;//Change as required
+            var pagedData = await PaginatedList<Researcher>.CreateAsync(researcher.AsNoTracking(), page ?? 1, pageSize);
+
             return View(pagedData);
         }
 
@@ -138,7 +138,7 @@ namespace TRPR.Controllers
         // GET: Researchers/Create
         public IActionResult Create()
         {
-            Researcher researcher = new Researcher();
+            var researcher = new Researcher();
             PopulateAssignedExpertiseData(researcher);
             PopulateDropDownLists();
             return View();
@@ -149,7 +149,7 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,TitleID,ResFirst,ResMiddle,ResLast,ResEmail,ResBio,ItituteID")] Researcher researcher, string[] selectedOptions)
+        public async Task<IActionResult> Create([Bind("ID,TitleID,ResFirst,ResMiddle,ResLast,ResEmail,ResBio,InstituteID")] Researcher researcher, string[] selectedOptions)
         {
             try
             {

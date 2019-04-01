@@ -55,22 +55,25 @@
                     <input type="submit" name="actionButton" value="Paper Title" class="btn btn-link" style="color:#F5F6FA;" />
                 </th>
                 @*<th>
-                    <input type="submit" disabled="disabled" value="Abstract" class="btn btn-link" />
-                </th>*@
+            <input type="submit" disabled="disabled" value="Abstract" class="btn btn-link" />
+        </th>*@
                 <th>
                     <input type="submit" name="actionButton" value="Paper Type" class="btn btn-link" style="color:#F5F6FA;" />
                 </th>
                 <th>
-                    <input type="submit" name="actionButton" value="Length" class="btn btn-link" style="color:#F5F6FA;"/>
+                    <input type="submit" name="actionButton" value="Length" class="btn btn-link" style="color:#F5F6FA;" />
                 </th>
                 <th>
-                    <input type="submit" name="actionButton" value="Status" class="btn btn-link" style="color:#F5F6FA;"/>
+                    <input type="submit" name="actionButton" value="Status" class="btn btn-link" style="color:#F5F6FA;" />
                 </th>
                 <th>
-                    <input type="submit" disabled="disabled" value="Uploaded Files" class="btn btn-link" style="color:#F5F6FA;"/>
+                    <input type="submit" disabled="disabled" value="Uploaded Files" class="btn btn-link" style="color:#F5F6FA;" />
                 </th>
                 <th>
-                    <input type="submit" disabled="disabled" value="Files" class="btn btn-link" style="color:#F5F6FA;"/>
+                    <input type="submit" disabled="disabled" value="Files" class="btn btn-link" style="color:#F5F6FA;" />
+                </th>
+                <th>
+                    <input type="submit" name="actionButton" value="Submitted On" class="btn btn-link" style="color:#F5F6FA;" />
                 </th>
                 <th></th>
             </tr>
@@ -78,43 +81,46 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PaperTitle)
-                    </td>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.PaperAbstract)
-                    </td>*@
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PaperType.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PaperLength)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status.StatName)
-                    </td>
-                    <td>
-                        @{
-                            foreach (var f in item.Files)
-                            {
-                                <a asp-action="Download" title="@f.FileName" asp-route-id="@f.ID">@f.FileName</a>
-                                <br />
-                            }
-                        }
-                    </td>
-                    <td>
-                        @foreach (var o in item.Files)
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaperTitle)
+                </td>
+                @*<td>
+            @Html.DisplayFor(modelItem => item.PaperAbstract)
+        </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaperType.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaperLength)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status.StatName)
+                </td>
+                <td>
+                    @{
+                        foreach (var f in item.Files)
                         {
-                            @o.CreatedOn <br />
+                            <a asp-action="Download" title="@f.FileName" asp-route-id="@f.ID">@f.FileName</a>
+                            <br />
                         }
-                    </td>
-                    <td>
-                        @*<a asp-action="Edit" asp-route-id="@item.ID">Review</a>*@ 
-                        <a asp-action="Details" asp-route-id="@item.ID">Review</a>
-                        @*<a asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
-                    </td>
-                </tr>
+                    }
+                </td>
+                <td>
+                    @foreach (var o in item.Files)
+                    {
+                        @o.CreatedOn <br />
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedOn)
+                </td>
+                <td>
+                    @*<a asp-action="Edit" asp-route-id="@item.ID">Review</a>*@
+                    <a asp-action="Details" asp-route-id="@item.ID">Review</a>
+                    @*<a asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
+                </td>
+            </tr>
             }
         </tbody>
     </table>

@@ -10,38 +10,48 @@
     <a asp-action="Create">Create New</a>
 </p>
 <form asp-action="Index">
+    <input type="hidden" name="sortDirection" value="@ViewData["sortDirection"]" />
+    <input type="hidden" name="sortField" value="@ViewData["sortField"]" />
+    <div class="form-horizontal">
+        <button class="btn" type="button" data-toggle="collapse" id="filterToggle" data-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
+            Filter/Search
+        </button>
+        <div class="collapse @(ViewData["Filtering"])" id="collapseFilter">
+            <div class="row well">
+                <div class="form-group col-md-4">
+                    <label class="control-label col-md-7">Search By Paper:</label>
+                    <div class="col-md-5">
+                        @Html.TextBox("SearchTitle", null, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="control-label col-md-7">Search By Researcher:</label>
+                    <div class="col-md-5">
+                        @Html.TextBox("SearchRes", null, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <input type="submit" name="actionButton" value="Filter" class="btn btn-default" />
+                    <a asp-action="Index">Clear</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.PaperInfo.PaperTitle)
+                    <input type="submit" name="actionButton" value="Paper Title" class="btn btn-link" style="color:#F5F6FA;" />
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Researcher.FullName)
+                    <input type="submit" name="actionButton" value="Researcher" class="btn btn-link" style="color:#F5F6FA;" />
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Roles)
+                    <input type="submit" disabled="disabled" value="Role" class="btn btn-link" style="color:#F5F6FA;" />
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.RevContentReview)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RevKeywordReview)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RevLengthReview)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RevFormatReview)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RevCitationReview)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Recommend.RecTitle)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ReviewAgain.ReSponse)
+                    <input type="submit" name="actionButton" value="Assigned On" class="btn btn-link" style="color:#F5F6FA;" />
                 </th>
                 <th></th>
             </tr>
@@ -60,25 +70,7 @@
                         @Html.DisplayFor(modelItem => item.Roles.RoleTitle)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.RevContentReview)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RevKeywordReview)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RevLengthReview)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RevFormatReview)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RevCitationReview)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Recommend.RecTitle)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ReviewAgain.ReSponse)
+                        @Html.DisplayFor(modelItem => item.CreatedOn)
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
