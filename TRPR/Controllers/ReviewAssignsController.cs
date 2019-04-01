@@ -26,7 +26,7 @@ namespace TRPR.Controllers
         }
 
         // GET: ReviewAssigns
-        public async Task<IActionResult> Index(int? PaperInfoID, int? ResearcherID, int? RoleID, int? page)
+        public async Task<IActionResult> Index(string SearchRes, string SearchTitle, int? CreatedOn, int? page, string sortDirection, string actionButton, string sortField = "CreatedOn")
         {
             var reviewAssigns = from r in _context.ReviewAssigns
                 .Include(ra => ra.Roles)
@@ -48,8 +48,78 @@ namespace TRPR.Controllers
                .Where(c => c.Researcher.ResEmail == User.Identity.Name)
                select r;
             }
-            
-                int pageSize = 20;//Change as required
+
+            if (!String.IsNullOrEmpty(SearchRes))
+            {
+                reviewAssigns = reviewAssigns.Where(p => p.Researcher.ResFirst.ToUpper().Contains(SearchRes.ToUpper()) || p.Researcher.ResLast.ToUpper().Contains(SearchRes.ToUpper()));
+                ViewData["Filtering"] = " in";
+            }
+            if (!String.IsNullOrEmpty(SearchTitle))
+            {
+                reviewAssigns = reviewAssigns.Where(p => p.PaperInfo.PaperTitle.ToUpper().Contains(SearchTitle.ToUpper()));
+                ViewData["Filtering"] = " in";
+            }
+
+            //Before we sort, see if we have called for a change of filtering or sorting
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted so lets sort!
+            {
+                page = 1;//Reset page to start
+                if (actionButton != "Filter")//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = String.IsNullOrEmpty(sortDirection) ? "desc" : "";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
+            //Now we know which field and direction to sort by, but a Switch is hard to use for 2 criteria
+            //so we will use an if() structure instead.
+            if (sortField == "Paper Title")//Sorting by Status
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    reviewAssigns = reviewAssigns
+                        .OrderBy(p => p.PaperInfo.PaperTitle);
+                }
+                else
+                {
+                    reviewAssigns = reviewAssigns
+                       .OrderByDescending(p => p.PaperInfo.PaperTitle);
+                }
+            }
+            else if (sortField == "Researcher")//Sorting by Status
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    reviewAssigns = reviewAssigns
+                        .OrderBy(p => p.Researcher.FullName);
+                }
+                else
+                {
+                    reviewAssigns = reviewAssigns
+                       .OrderByDescending(p => p.Researcher.FullName);
+                }
+            }
+            else
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    reviewAssigns = reviewAssigns
+                        .OrderByDescending(p => p.CreatedOn);
+                }
+                else
+                {
+                    reviewAssigns = reviewAssigns
+                       .OrderBy(p => p.CreatedOn);
+                }
+            }
+
+            //Set sort for next time
+            ViewData["sortField"] = sortField;
+            ViewData["sortDirection"] = sortDirection;
+
+            int pageSize = 20;//Change as required
             var pagedData = await PaginatedList<ReviewAssign>.CreateAsync(reviewAssigns.AsNoTracking(), page ?? 1, pageSize);
 
             return View(pagedData);
