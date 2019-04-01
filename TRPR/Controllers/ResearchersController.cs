@@ -35,10 +35,7 @@ namespace TRPR.Controllers
                 .ThenInclude(re => re.Expertise)
                 .Include(r => r.Title)
                 .Include(r => r.Institutes)
-                select r;
-
-            int pageSize = 20;//Change as required
-            var pagedData = await PaginatedList<Researcher>.CreateAsync(researcher.AsNoTracking(), page ?? 1, pageSize);
+                select r;           
 
             if (InstituteID.HasValue)
             {
@@ -108,6 +105,9 @@ namespace TRPR.Controllers
             //Set sort for next time
             ViewData["sortField"] = sortField;
             ViewData["sortDirection"] = sortDirection;
+
+            int pageSize = 20;//Change as required
+            var pagedData = await PaginatedList<Researcher>.CreateAsync(researcher.AsNoTracking(), page ?? 1, pageSize);
 
             return View(pagedData);
         }
