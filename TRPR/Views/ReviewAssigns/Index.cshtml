@@ -23,25 +23,7 @@
                     @Html.DisplayNameFor(model => model.Roles)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.RevContentReview)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RevKeywordReview)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RevLengthReview)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RevFormatReview)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RevCitationReview)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Recommend.RecTitle)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ReviewAgain.ReSponse)
+                    Assigned On
                 </th>
                 <th></th>
             </tr>
@@ -58,27 +40,9 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Roles.RoleTitle)
-                    </td>
+                    </td>                    
                     <td>
-                        @Html.DisplayFor(modelItem => item.RevContentReview)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RevKeywordReview)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RevLengthReview)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RevFormatReview)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RevCitationReview)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Recommend.RecTitle)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ReviewAgain.ReSponse)
+                        @Html.DisplayFor(modelItem => item.CreatedOn)
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
