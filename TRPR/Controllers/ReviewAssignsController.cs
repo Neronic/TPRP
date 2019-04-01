@@ -48,7 +48,7 @@ namespace TRPR.Controllers
                .ThenInclude(r => r.ResearchExpertises)
                .ThenInclude(re => re.Expertise)
                .Include(r => r.PaperInfo)
-               .Where(res = username)
+               //.Where(res = username)
                select r;
             }
             
