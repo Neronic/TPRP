@@ -116,6 +116,37 @@ namespace TRPR.Controllers
             PopulateExpertiseDropDownList();
 
 
+            // Email coding
+            var researcher = await _context.Researchers
+                    .SingleOrDefaultAsync(m => m.ID == reviewAssign.ResearcherID);
+
+            var resEmail = researcher.ResEmail.ToString();
+            var resName = researcher.FullName.ToString();
+
+
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("TRPR", "TRPRDoNotReply@outlook.com"));
+            message.To.Add(new MailboxAddress(resName, "firebee13@outlook.com"));
+            message.Subject = "TRPR - New Review";
+
+            message.Body = new TextPart("plain")
+            {
+                Text = @"You've been assigned to a new review, head to TRPR to check it out!"
+            };
+
+            using (var client = new SmtpClient())
+            {
+                // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+                client.Connect("smtp-mail.outlook.com", 587, false);
+
+                // Note: only needed if the SMTP server requires authentication
+                client.Authenticate("TRPRDoNotReply@outlook.com", "Tq8uwocBDC");
+
+                client.Send(message);
+                client.Disconnect(true);
+            }
 
 
             return View(reviewAssign);
