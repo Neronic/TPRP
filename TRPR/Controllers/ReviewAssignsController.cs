@@ -32,6 +32,14 @@ namespace TRPR.Controllers
                 .Include(r => r.PaperInfo)
                 select r;
 
+            var researchers = from d in _context.Researchers
+                      where d.ResEmail == User.Identity.Name
+                      select d.ResEmail;
+
+            string res = researchers.ToString();
+
+            var username = User.Identity.Name;
+
             if (User.IsInRole("Researcher"))
             {
                 reviewAssigns = from r in _context.ReviewAssigns
@@ -40,7 +48,7 @@ namespace TRPR.Controllers
                .ThenInclude(r => r.ResearchExpertises)
                .ThenInclude(re => re.Expertise)
                .Include(r => r.PaperInfo)
-               .Where(c => c.CreatedBy == User.Identity.Name)
+               .Where(res = username)
                select r;
             }
             
