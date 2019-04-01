@@ -9,6 +9,10 @@ using Microsoft.EntityFrameworkCore.Storage;
 using TRPR.Data;
 using TRPR.Models;
 using TRPR.Utilities;
+using MailKit.Net.Smtp;
+using MailKit;
+using MimeKit;
+
 
 namespace TRPR.Controllers
 {
@@ -32,13 +36,12 @@ namespace TRPR.Controllers
                 .Include(r => r.PaperInfo)
                 select r;
 
-            var researchers = from d in _context.Researchers
-                      where d.ResEmail == User.Identity.Name
-                      select d.ResEmail;
+            //var researcher = await _context.Researchers
+            //    .SingleOrDefaultAsync(m => m.ID == reviewAssigns.ResearcherID);
 
-            string res = researchers.ToString();
+            //var research = researcher.ResEmail.ToString();
 
-            var username = User.Identity.Name;
+            //var username = User.Identity.Name;
 
             if (User.IsInRole("Researcher"))
             {
@@ -111,6 +114,10 @@ namespace TRPR.Controllers
             }
             PopulateDropDownLists();
             PopulateExpertiseDropDownList();
+
+
+
+
             return View(reviewAssign);
         }
 
