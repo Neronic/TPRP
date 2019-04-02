@@ -149,5 +149,9 @@ namespace TRPR.Controllers
         {
             return _context.Comments.Any(e => e.ID == id);
         }
+
+
+        //Get current user info
+
     }
 }
