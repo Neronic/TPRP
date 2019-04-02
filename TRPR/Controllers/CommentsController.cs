@@ -151,5 +151,7 @@ namespace TRPR.Controllers
         }
 
 
+        //Get current user info
+
     }
 }
