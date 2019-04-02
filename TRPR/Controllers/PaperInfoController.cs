@@ -165,6 +165,7 @@ namespace TRPR.Controllers
         // GET: PaperInfo/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
@@ -177,9 +178,46 @@ namespace TRPR.Controllers
                 return NotFound();
             }
 
+            var viewerFiles = _context.Files                
+                .Where(f => f.PaperInfoID == id);// && (f.FileContent.MimeType.Contains("pdf")) || (f.FileContent.MimeType.Contains("image")));
+            ViewData["ViewerFileID"] = new SelectList(viewerFiles, "ID", "FileName");
+
             return View(paperInfo);
+
+            /*var theFile = _context.Files.Where(f => f.ID == id).SingleOrDefault();
+            
+            string fileBase64 = Convert.ToBase64String(theFile.FileContent);
+            string MimeType = theFile?.FileMimeType;
+            string downLink = "<a href='/patients/download/" + theFile.ID + "' title='Download: " + theFile.FileType + "'>" + theFile.FileName + "</a>";
+                       
+            ViewData["MimeType"] = MimeType;
+            ViewData["fileBase64"] = fileBase64;
+            ViewData["downloadLink"] = downLink;
+
+            return View(theFile);*/
+
+            
         }
 
+        public PartialViewResult GetViewerPartial(int? id)
+        {
+            string fileBase64 = "";//For our Byte[] converted to Base64 String
+            string downLink = "";//In case the file cannot be displayed
+            string MimeType = "";//So the partial view can decide what to do with the file
+
+            var theFile = _context.Files.Where(f => f.ID == id).SingleOrDefault();
+            if (theFile != null)
+            {
+                fileBase64 = Convert.ToBase64String(theFile.FileContent);
+                MimeType = theFile?.FileMimeType;
+                downLink = "<a href='/patients/download/" + theFile.ID + "' title='Download: " + theFile.FileType + "'>" + theFile.FileName + "</a>";
+            }
+            ViewData["MimeType"] = MimeType;
+            ViewData["fileBase64"] = fileBase64;
+            ViewData["downloadLink"] = downLink;
+            return PartialView("_pdfViewer");
+        }
+        
         // GET: PaperInfo/Create
         public IActionResult Create()
         {
