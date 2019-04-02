@@ -1,24 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TRPR.Data;
 using TRPR.Models;
+using TRPR.Controllers;
 
 namespace TRPR.Controllers
 {
     public class CommentsController : Controller
     {
+
+        private readonly UserManager<UserRolesController> _userManager; //added by Jacob
         private readonly TRPRContext _context;
 
-        public CommentsController(TRPRContext context)
+        public CommentsController(TRPRContext context, UserManager<UserRolesController> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
-
+        
         // GET: Comments
         public async Task<IActionResult> Index()
         {
@@ -54,14 +60,16 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,RevID,ComAccess,Comtext")] Comment comment)
+        public async Task<IActionResult> Create([Bind("ID,ResearcherID,RevID,ComAccess,Comtext")] Comment comment)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(comment);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+            int userID = Convert.ToInt32(_userManager.GetUserId(User)); //Added by Jacob
+                if (ModelState.IsValid)
+                {
+                    comment.ResearcherID = userID; //Added by Jacob
+                    _context.Add(comment);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             return View(comment);
         }
 
