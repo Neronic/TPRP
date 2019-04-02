@@ -115,16 +115,16 @@
                 </li>
                 @if (User.IsInRole("Editor"))
                 {
-                    <li>
+                    @*<li>
 
-                        <a asp-area="" asp-controller="ReviewAssigns" asp-action="Index">
-                            <i class="fas fa-user-edit"></i>
-                            Editors
-                        </a>
-                    </li>
+                            <a asp-area="" asp-controller="Researchers" asp-action="Index">
+                                <i class="fas fa-user-edit"></i>
+                                Editors
+                            </a>
+                        </li>*@
                     <li>
-                        <a asp-area="" asp-controller="Researchers" asp-action="Index" class="navbar-brand">
-                            <i class="far fa-user"></i>
+                        <a asp-area="" asp-controller="Researchers" asp-action="Index">
+                            <i class="far fa-user" style="padding-right:10px;"></i>
                             Authors
                         </a>
                     </li>
@@ -154,9 +154,13 @@
                             <span>Call for Papers</span>
                         </a>
                     </li>
+                    <li>
+                        <br />
+                    </li>
                 }
+
                 <li>
-                    <a href="#">
+                    <a href="https://www.trontario.org/education-research/trpr--journal-of-tro/index.html">
                         <i class="fas fa-briefcase"></i>
                         <span>Resources</span>
                     </a>
