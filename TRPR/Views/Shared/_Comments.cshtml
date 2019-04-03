@@ -39,9 +39,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.RevID)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.ComAccess)
             </th>
             <th>
@@ -54,9 +51,6 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RevID)
-                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ComAccess)
                 </td>
