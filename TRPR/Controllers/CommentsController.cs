@@ -60,7 +60,7 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,ResearcherID,RevID,ComAccess,Comtext")] Comment comment)
+        public async Task<IActionResult> Create([Bind("ID,ResearcherID,ComAccess,Comtext")] Comment comment)
         {
             int userID = Convert.ToInt32(_userManager.GetUserId(User)); //Added by Jacob
                 if (ModelState.IsValid)
@@ -94,7 +94,7 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,RevID,ComAccess,Comtext")] Comment comment)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,ComAccess,Comtext")] Comment comment)
         {
             if (id != comment.ID)
             {
