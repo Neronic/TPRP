@@ -84,6 +84,7 @@ namespace TRPR.Data
                 .WithMany(c => c.AuthoredPapers)
                 .HasForeignKey(pc => pc.ResearcherID)
                 .OnDelete(DeleteBehavior.Restrict);
+
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
