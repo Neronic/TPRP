@@ -30,10 +30,9 @@ namespace TRPR.Models
         {
             get
             {
-                return Title + ". " + ResFirst
+                return Title + ". " + ResLast + ((char?)ResFirst[0] + ". ").ToUpper()
                     + (string.IsNullOrEmpty(ResMiddle) ? " " :
-                        (" " + (char?)ResMiddle[0] + ". ").ToUpper())
-                    + ResLast;
+                        (" " + (char?)ResMiddle[0] + " ").ToUpper());
             }
         }
 
