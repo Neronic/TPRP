@@ -442,18 +442,6 @@ namespace TRPR.Data
                     context.Roles.AddRange(
                     new Role
                     {
-                        RoleTitle = "Author"
-                    },
-                    new Role
-                    {
-                        RoleTitle = "Associate Editor"
-                    },
-                    new Role
-                    {
-                        RoleTitle = "Editor"
-                    },
-                    new Role
-                    {
                         RoleTitle = "Reveiwer 1"
                     },
                     new Role
@@ -1129,121 +1117,121 @@ namespace TRPR.Data
                     context.Comments.AddRange(
                     new Comment
                     {
-                        RevID = 1,
+                        ResearcherID = 1,
                         ComAccess = "Editor",
                         Comtext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In imperdiet pellentesque nisl, vel efficitur risus faucibus sed. Fusce ac libero sit amet eros viverra iaculis. Aenean vestibulum, ex nec ullamcorper pharetra, libero arcu tempus ligula, vel faucibus dolor enim nec dui. Vestibulum efficitur ornare porttitor. Phasellus quis eros lacinia lectus porta laoreet vel quis metus. Maecenas pharetra dictum lorem, sed condimentum sem pharetra turpis duis."
                     },
                     new Comment
                     {
-                        RevID = 12,
+                        ResearcherID = 4,
                         ComAccess = "Author",
                         Comtext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In imperdiet pellentesque nisl, vel efficitur risus faucibus sed. Fusce ac libero sit amet eros viverra iaculis. Aenean vestibulum, ex nec ullamcorper pharetra, libero arcu tempus ligula, vel faucibus dolor enim nec dui. Vestibulum efficitur ornare porttitor. Phasellus quis eros lacinia lectus porta laoreet vel quis metus. Maecenas pharetra dictum lorem, sed condimentum sem pharetra turpis duis."
                     },
                     new Comment
                     {
-                        RevID = 7,
+                        ResearcherID = 6,
                         ComAccess = "Editor",
                         Comtext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In imperdiet pellentesque nisl, vel efficitur risus faucibus sed. Fusce ac libero sit amet eros viverra iaculis. Aenean vestibulum, ex nec ullamcorper pharetra, libero arcu tempus ligula, vel faucibus dolor enim nec dui. Vestibulum efficitur ornare porttitor. Phasellus quis eros lacinia lectus porta laoreet vel quis metus. Maecenas pharetra dictum lorem, sed condimentum sem pharetra turpis duis."
                     },
                     new Comment
                     {
-                        RevID = 4,
+                        ResearcherID = 8,
                         ComAccess = "Editor",
                         Comtext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In imperdiet pellentesque nisl, vel efficitur risus faucibus sed. Fusce ac libero sit amet eros viverra iaculis. Aenean vestibulum, ex nec ullamcorper pharetra, libero arcu tempus ligula, vel faucibus dolor enim nec dui. Vestibulum efficitur ornare porttitor. Phasellus quis eros lacinia lectus porta laoreet vel quis metus. Maecenas pharetra dictum lorem, sed condimentum sem pharetra turpis duis."
                     },
                     new Comment
                     {
-                        RevID = 3,
+                        ResearcherID = 12,
                         ComAccess = "Author",
                         Comtext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In imperdiet pellentesque nisl, vel efficitur risus faucibus sed. Fusce ac libero sit amet eros viverra iaculis. Aenean vestibulum, ex nec ullamcorper pharetra, libero arcu tempus ligula, vel faucibus dolor enim nec dui. Vestibulum efficitur ornare porttitor. Phasellus quis eros lacinia lectus porta laoreet vel quis metus. Maecenas pharetra dictum lorem, sed condimentum sem pharetra turpis duis."
                     },
                     new Comment
                     {
-                        RevID = 6,
+                        ResearcherID = 15,
                         ComAccess = "Author",
                         Comtext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In imperdiet pellentesque nisl, vel efficitur risus faucibus sed. Fusce ac libero sit amet eros viverra iaculis. Aenean vestibulum, ex nec ullamcorper pharetra, libero arcu tempus ligula, vel faucibus dolor enim nec dui. Vestibulum efficitur ornare porttitor. Phasellus quis eros lacinia lectus porta laoreet vel quis metus. Maecenas pharetra dictum lorem, sed condimentum sem pharetra turpis duis."
                     },
                     new Comment
                     {
-                        RevID = 13,
+                        ResearcherID = 17,
                         ComAccess = "Author",
                         Comtext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In imperdiet pellentesque nisl, vel efficitur risus faucibus sed. Fusce ac libero sit amet eros viverra iaculis. Aenean vestibulum, ex nec ullamcorper pharetra, libero arcu tempus ligula, vel faucibus dolor enim nec dui. Vestibulum efficitur ornare porttitor. Phasellus quis eros lacinia lectus porta laoreet vel quis metus. Maecenas pharetra dictum lorem, sed condimentum sem pharetra turpis duis."
                     },
                     new Comment
                     {
-                        RevID = 17,
+                        ResearcherID = 1,
                         ComAccess = "Author",
                         Comtext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In imperdiet pellentesque nisl, vel efficitur risus faucibus sed. Fusce ac libero sit amet eros viverra iaculis. Aenean vestibulum, ex nec ullamcorper pharetra, libero arcu tempus ligula, vel faucibus dolor enim nec dui. Vestibulum efficitur ornare porttitor. Phasellus quis eros lacinia lectus porta laoreet vel quis metus. Maecenas pharetra dictum lorem, sed condimentum sem pharetra turpis duis."
                     },
                     new Comment
                     {
-                        RevID = 1,
+                        ResearcherID = 4,
                         ComAccess = "Editor",
                         Comtext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In imperdiet pellentesque nisl, vel efficitur risus faucibus sed. Fusce ac libero sit amet eros viverra iaculis. Aenean vestibulum, ex nec ullamcorper pharetra, libero arcu tempus ligula, vel faucibus dolor enim nec dui. Vestibulum efficitur ornare porttitor. Phasellus quis eros lacinia lectus porta laoreet vel quis metus. Maecenas pharetra dictum lorem, sed condimentum sem pharetra turpis duis."
                     },
                     new Comment
                     {
-                        RevID = 12,
+                        ResearcherID = 6,
                         ComAccess = "Author",
                         Comtext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In imperdiet pellentesque nisl, vel efficitur risus faucibus sed. Fusce ac libero sit amet eros viverra iaculis. Aenean vestibulum, ex nec ullamcorper pharetra, libero arcu tempus ligula, vel faucibus dolor enim nec dui. Vestibulum efficitur ornare porttitor. Phasellus quis eros lacinia lectus porta laoreet vel quis metus. Maecenas pharetra dictum lorem, sed condimentum sem pharetra turpis duis."
                     },
                     new Comment
                     {
-                        RevID = 1,
+                        ResearcherID = 2,
                         ComAccess = "Editor",
                         Comtext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In imperdiet pellentesque nisl, vel efficitur risus faucibus sed. Fusce ac libero sit amet eros viverra iaculis. Aenean vestibulum, ex nec ullamcorper pharetra, libero arcu tempus ligula, vel faucibus dolor enim nec dui. Vestibulum efficitur ornare porttitor. Phasellus quis eros lacinia lectus porta laoreet vel quis metus. Maecenas pharetra dictum lorem, sed condimentum sem pharetra turpis duis."
                     },
                     new Comment
                     {
-                        RevID = 3,
+                        ResearcherID = 5,
                         ComAccess = "Editor",
                         Comtext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In imperdiet pellentesque nisl, vel efficitur risus faucibus sed. Fusce ac libero sit amet eros viverra iaculis. Aenean vestibulum, ex nec ullamcorper pharetra, libero arcu tempus ligula, vel faucibus dolor enim nec dui. Vestibulum efficitur ornare porttitor. Phasellus quis eros lacinia lectus porta laoreet vel quis metus. Maecenas pharetra dictum lorem, sed condimentum sem pharetra turpis duis."
                     },
                     new Comment
                     {
-                        RevID = 20,
+                        ResearcherID = 2,
                         ComAccess = "Author",
                         Comtext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In imperdiet pellentesque nisl, vel efficitur risus faucibus sed. Fusce ac libero sit amet eros viverra iaculis. Aenean vestibulum, ex nec ullamcorper pharetra, libero arcu tempus ligula, vel faucibus dolor enim nec dui. Vestibulum efficitur ornare porttitor. Phasellus quis eros lacinia lectus porta laoreet vel quis metus. Maecenas pharetra dictum lorem, sed condimentum sem pharetra turpis duis."
                     },
                     new Comment
                     {
-                        RevID = 15,
+                        ResearcherID = 7,
                         ComAccess = "Editor",
                         Comtext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In imperdiet pellentesque nisl, vel efficitur risus faucibus sed. Fusce ac libero sit amet eros viverra iaculis. Aenean vestibulum, ex nec ullamcorper pharetra, libero arcu tempus ligula, vel faucibus dolor enim nec dui. Vestibulum efficitur ornare porttitor. Phasellus quis eros lacinia lectus porta laoreet vel quis metus. Maecenas pharetra dictum lorem, sed condimentum sem pharetra turpis duis."
                     },
                     new Comment
                     {
-                        RevID = 19,
+                        ResearcherID = 14,
                         ComAccess = "Editor",
                         Comtext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In imperdiet pellentesque nisl, vel efficitur risus faucibus sed. Fusce ac libero sit amet eros viverra iaculis. Aenean vestibulum, ex nec ullamcorper pharetra, libero arcu tempus ligula, vel faucibus dolor enim nec dui. Vestibulum efficitur ornare porttitor. Phasellus quis eros lacinia lectus porta laoreet vel quis metus. Maecenas pharetra dictum lorem, sed condimentum sem pharetra turpis duis."
                     },
                     new Comment
                     {
-                        RevID = 8,
+                        ResearcherID = 11,
                         ComAccess = "Editor",
                         Comtext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In imperdiet pellentesque nisl, vel efficitur risus faucibus sed. Fusce ac libero sit amet eros viverra iaculis. Aenean vestibulum, ex nec ullamcorper pharetra, libero arcu tempus ligula, vel faucibus dolor enim nec dui. Vestibulum efficitur ornare porttitor. Phasellus quis eros lacinia lectus porta laoreet vel quis metus. Maecenas pharetra dictum lorem, sed condimentum sem pharetra turpis duis."
                     },
                     new Comment
                     {
-                        RevID = 2,
+                        ResearcherID = 6,
                         ComAccess = "Author",
                         Comtext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In imperdiet pellentesque nisl, vel efficitur risus faucibus sed. Fusce ac libero sit amet eros viverra iaculis. Aenean vestibulum, ex nec ullamcorper pharetra, libero arcu tempus ligula, vel faucibus dolor enim nec dui. Vestibulum efficitur ornare porttitor. Phasellus quis eros lacinia lectus porta laoreet vel quis metus. Maecenas pharetra dictum lorem, sed condimentum sem pharetra turpis duis."
                     },
                     new Comment
                     {
-                        RevID = 12,
+                        ResearcherID = 16,
                         ComAccess = "Editor",
                         Comtext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In imperdiet pellentesque nisl, vel efficitur risus faucibus sed. Fusce ac libero sit amet eros viverra iaculis. Aenean vestibulum, ex nec ullamcorper pharetra, libero arcu tempus ligula, vel faucibus dolor enim nec dui. Vestibulum efficitur ornare porttitor. Phasellus quis eros lacinia lectus porta laoreet vel quis metus. Maecenas pharetra dictum lorem, sed condimentum sem pharetra turpis duis."
                     },
                     new Comment
                     {
-                        RevID = 17,
+                        ResearcherID = 17,
                         ComAccess = "Editor",
                         Comtext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In imperdiet pellentesque nisl, vel efficitur risus faucibus sed. Fusce ac libero sit amet eros viverra iaculis. Aenean vestibulum, ex nec ullamcorper pharetra, libero arcu tempus ligula, vel faucibus dolor enim nec dui. Vestibulum efficitur ornare porttitor. Phasellus quis eros lacinia lectus porta laoreet vel quis metus. Maecenas pharetra dictum lorem, sed condimentum sem pharetra turpis duis."
                     },
                     new Comment
                     {
-                        RevID = 13,
+                        ResearcherID = 12,
                         ComAccess = "Author",
                         Comtext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In imperdiet pellentesque nisl, vel efficitur risus faucibus sed. Fusce ac libero sit amet eros viverra iaculis. Aenean vestibulum, ex nec ullamcorper pharetra, libero arcu tempus ligula, vel faucibus dolor enim nec dui. Vestibulum efficitur ornare porttitor. Phasellus quis eros lacinia lectus porta laoreet vel quis metus. Maecenas pharetra dictum lorem, sed condimentum sem pharetra turpis duis."
                     }
