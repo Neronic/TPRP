@@ -40,12 +40,57 @@ namespace TRPR.Data
                     userManager.AddToRoleAsync(user, "Editor").Wait();
                 }
             }
+            if (userManager.FindByEmailAsync("editor2@outlook.com").Result == null)
+            {
+                IdentityUser user = new IdentityUser
+                {
+                    UserName = "editor2@outlook.com",
+                    Email = "editor2@outlook.com"
+                };
+
+                IdentityResult result = userManager.CreateAsync(user, "password").Result;
+
+                if (result.Succeeded)
+                {
+                    userManager.AddToRoleAsync(user, "Editor").Wait();
+                }
+            }
             if (userManager.FindByEmailAsync("res1@outlook.com").Result == null)
             {
                 IdentityUser user = new IdentityUser
                 {
                     UserName = "res1@outlook.com",
                     Email = "res1@outlook.com"
+                };
+
+                IdentityResult result = userManager.CreateAsync(user, "password").Result;
+
+                if (result.Succeeded)
+                {
+                    userManager.AddToRoleAsync(user, "Researcher").Wait();
+                }
+            }
+            if (userManager.FindByEmailAsync("res2@outlook.com").Result == null)
+            {
+                IdentityUser user = new IdentityUser
+                {
+                    UserName = "res2@outlook.com",
+                    Email = "res2@outlook.com"
+                };
+
+                IdentityResult result = userManager.CreateAsync(user, "password").Result;
+
+                if (result.Succeeded)
+                {
+                    userManager.AddToRoleAsync(user, "Researcher").Wait();
+                }
+            }
+            if (userManager.FindByEmailAsync("res3@outlook.com").Result == null)
+            {
+                IdentityUser user = new IdentityUser
+                {
+                    UserName = "res3@outlook.com",
+                    Email = "res3@outlook.com"
                 };
 
                 IdentityResult result = userManager.CreateAsync(user, "password").Result;
