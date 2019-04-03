@@ -10,12 +10,9 @@ namespace TRPR.Models
     {
         public int ID { get; set; }
 
+        [Display(Name = "Researcher")]
         public int ResearcherID { get; set; }
-
-        [Display(Name = "Review")]
-        [Range(1, int.MaxValue, ErrorMessage = "You must select the review.")]
-        public int RevID { get; set; }
-        public ReviewAssign ReviewAssign { get; set; }
+        public Researcher Researcher { get; set; }
 
         [Display(Name = "Access")]
         [Required(ErrorMessage = "You must select who this comment is dirrected to.")]
