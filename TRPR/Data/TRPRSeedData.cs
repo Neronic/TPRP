@@ -487,7 +487,7 @@ namespace TRPR.Data
                         TitleID = 3,
                         ResFirst = "Alicia",
                         ResLast = "Keys",
-                        ResEmail = "akeys@outlook.com",
+                        ResEmail = "res2@outlook.com",
                         ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec.",
                         InstituteID = 1
                     },
@@ -497,7 +497,7 @@ namespace TRPR.Data
                         ResFirst = "Alexander",
                         ResMiddle = "R",
                         ResLast = "Junior",
-                        ResEmail = "arjunior@outlook.com",
+                        ResEmail = "editor2@outlook.com",
                         ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec.",
                         InstituteID = 5
                     },
@@ -507,7 +507,7 @@ namespace TRPR.Data
                         ResFirst = "Hannah",
                         ResMiddle = "Y",
                         ResLast = "Kim",
-                        ResEmail = "hanahkim@outlook.com",
+                        ResEmail = "res3@outlook.com",
                         ResBio = "Lorem ipsum dolor sit am consectetur adipiscing elit.Praesent blandit non eros ac suscipit.Ut vitae est aliquam arcu gravida tempus ac a urna.Curabitur dictum,ligula eu molestie pulvina nisi dolor dignissim massa, quis tincidunt urna tellus ut enim.Aenean mattis purus sit amet urna ornare tempus.Pellentesque diam magna,mollis a molestie eget elementum tempus tellus.Quisque nec.",
                         InstituteID = 12
                     },
