@@ -54,9 +54,7 @@ namespace TRPR.Data.TRPRMigrations
 
                     b.Property<DateTime?>("CreatedOn");
 
-                    b.Property<int>("RevID");
-
-                    b.Property<int?>("ReviewAssignID");
+                    b.Property<int>("ResearcherID");
 
                     b.Property<string>("UpdatedBy")
                         .HasMaxLength(256);
@@ -65,7 +63,7 @@ namespace TRPR.Data.TRPRMigrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ReviewAssignID");
+                    b.HasIndex("ResearcherID");
 
                     b.ToTable("Comments");
                 });
@@ -437,9 +435,10 @@ namespace TRPR.Data.TRPRMigrations
 
             modelBuilder.Entity("TRPR.Models.Comment", b =>
                 {
-                    b.HasOne("TRPR.Models.ReviewAssign", "ReviewAssign")
+                    b.HasOne("TRPR.Models.Researcher", "Researcher")
                         .WithMany()
-                        .HasForeignKey("ReviewAssignID");
+                        .HasForeignKey("ResearcherID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TRPR.Models.File", b =>
