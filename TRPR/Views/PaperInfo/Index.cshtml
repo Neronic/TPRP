@@ -125,11 +125,12 @@
 
                     else if (User.IsInRole("Researcher"))
                     {
-                        <a asp-action="Edit" asp-route-id="@item.ID">Review</a>
+                        <a asp-controller="ReviewAssigns" asp-action="Edit" asp-route-id="@item.ID">Review |</a>
                         <a asp-action="Details" asp-route-id="@item.ID">Details</a>
                     }
                     else
                     {
+                        <a asp-action="Edit" asp-route-id="@item.ID">Edit |</a>
                         <a asp-action="Details" asp-route-id="@item.ID">Details</a>
                     }
                 </td>

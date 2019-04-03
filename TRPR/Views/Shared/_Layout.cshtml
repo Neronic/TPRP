@@ -115,13 +115,13 @@
                 </li>
                 @if (User.IsInRole("Editor"))
                 {
-                    @*<li>
+                    <li>
 
-                            <a asp-area="" asp-controller="Researchers" asp-action="Index">
+                            <a asp-area="" asp-controller="UserRoles" asp-action="Index">
                                 <i class="fas fa-user-edit"></i>
-                                Editors
+                                Roles
                             </a>
-                        </li>*@
+                        </li>
                     <li>
                         <a asp-area="" asp-controller="Researchers" asp-action="Index">
                             <i class="far fa-user" style="padding-right:10px;"></i>

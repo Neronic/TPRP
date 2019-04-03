@@ -78,11 +78,9 @@
     </div>
 
     <div style="width:50%;">
-        @{var c = Enumerable.Empty<Comment>();
-                <prtial name = "_Comments" model = "c"/>}
-        @{ var p = new List<Comment>();
-            <partial name="_Comments" model="p" />
-        }
+        @{var c = new List<Comment>();
+             
+            }
 
         @*@{ var p = new TRPR.Models.ReviewAssign();
             <partial name="_reviewAssignEditor" model="p" />
@@ -104,4 +102,4 @@
         });
     </script>
 }
-=
+
