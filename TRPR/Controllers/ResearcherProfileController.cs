@@ -74,8 +74,8 @@ namespace TRPR.Controllers
                 {
                     _context.Add(researcher);
                     await _context.SaveChangesAsync();
-                    UpdateUserNameCookie(researcher.ResEmail);
-                    return RedirectToAction(nameof(Index));
+                    UpdateUserNameCookie(researcher.FullName);
+                    return RedirectToAction(nameof(Details));
                 }
             }
             catch (RetryLimitExceededException /* dex */)
