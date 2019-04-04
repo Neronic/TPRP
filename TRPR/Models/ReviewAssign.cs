@@ -45,6 +45,12 @@ namespace TRPR.Models
         [Display(Name = "Citation Review")]
         public string RevCitationReview { get; set; }
 
+        [Display(Name = "Comment")]
+        public string Comment1 { get; set; }
+
+        [Display(Name = "Comment")]
+        public string Comment2 { get; set; }
+
         [Display(Name = "Recommendation")]
         public int? RecommendID { get; set; }
         public Recommend Recommend { get; set; }
