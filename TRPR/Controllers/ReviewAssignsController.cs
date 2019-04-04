@@ -264,9 +264,13 @@ namespace TRPR.Controllers
             {
                 try
                 { ////////////////////////////////////////////////////////////// STILL NEED WHERE LOGIC
-                    //var paperID = _context.ReviewAssigns.Include(r => r.PaperInfo);
+                  //var paperID = _context.ReviewAssigns.Include(r => r.PaperInfo);
+                    var reviewList = from r in _context.ReviewAssigns
+                       .Include(r => r.PaperInfo)
+                       .Where(c => c.PaperInfoID == reviewToUpdate.PaperInfoID)
+                                        select r;
                     //foreach (var PaperInfoID in reviewToUpdate.PaperInfoID) {
-                        var count = 0;
+                    var count = 0;
                         while (reviewToUpdate.Recommend != null && count < 2)
                         {
                             count++;
