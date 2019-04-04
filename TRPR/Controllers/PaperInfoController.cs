@@ -44,7 +44,7 @@ namespace TRPR.Controllers
             //             select p;
             //}
 
-            if (User.IsInRole("Editor"))
+            if (User.IsInRole("Researcher"))
             {
                 papers = from p in _context.PaperInfos
                 .Include(p => p.Status)
@@ -52,7 +52,7 @@ namespace TRPR.Controllers
                 .Include(p => p.ReviewAssigns)
                 .ThenInclude(pc => pc.Researcher)
                 .ThenInclude(pc => pc.ResEmail)
-                //.Where(pc.ResEmail == User.Identity.Name)
+                //.Where(p => p == User.Identity.Name)
                          select p;
             }
 
@@ -62,12 +62,10 @@ namespace TRPR.Controllers
                 .Include(p => p.Status)
                 .Include(p => p.Files)
                 .Include(p => p.AuthoredPapers)
-                .ThenInclude(pc => pc.Researcher)
-                
+                .ThenInclude(pc => pc.Researcher)                
                          select p;
             }
             else
-
             {
                 papers = from p in _context.PaperInfos
                 .Include(p => p.Status)
@@ -75,8 +73,9 @@ namespace TRPR.Controllers
                 .Include(p => p.AuthoredPapers)
                 .ThenInclude(pc => pc.Researcher)
                 .Include(p => p.PaperKeywords)
-                .ThenInclude(pk => pk.Keyword)                
-                         select p;
+                .ThenInclude(pk => pk.Keyword)
+                .Where(c => c.CreatedBy == User.Identity.Name)
+                select p;
             } 
             
 
