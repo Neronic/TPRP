@@ -8,6 +8,11 @@ namespace TRPR.Models
 {
     public class Keyword
     {
+        public Keyword()
+        {
+            PaperKeywords = new HashSet<PaperKeyword>();
+        }
+
         public int ID { get; set; }
 
         [Display(Name = "Keyword")]
