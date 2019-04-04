@@ -159,7 +159,8 @@ namespace TRPR.Controllers
                 {
                     _context.Add(researcher);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    var url = "/details/" + researcher.ID;
+                    return RedirectToAction(url);
                 }
             }
             catch (Exception /* dex */)
@@ -168,7 +169,7 @@ namespace TRPR.Controllers
             }
             PopulateAssignedExpertiseData(researcher);
             PopulateDropDownLists();
-            return RedirectToPage("~/Home/Index");
+            return RedirectToAction("~/Home/Index");
         }
 
         // GET: Researchers/Edit/5
