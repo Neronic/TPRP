@@ -270,7 +270,7 @@ namespace TRPR.Controllers
                                         select r;
                     foreach(var PaperInfoID in reviewList) {
                     var count = 0;
-                        while (reviewToUpdate.Recommend != null && count < 2)
+                        while (reviewToUpdate.RecommendID != null && count < 2)
                         {
                             count++;
                         }
