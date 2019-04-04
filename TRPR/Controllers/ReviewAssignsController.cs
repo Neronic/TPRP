@@ -263,7 +263,19 @@ namespace TRPR.Controllers
                 s => s.RevFormatReview, s => s.RevCitationReview, s => s.RecommendID, s => s.ReviewAgainID))
             {
                 try
-                {
+                { ////////////////////////////////////////////////////////////// STILL NEED WHERE LOGIC
+                    //var paperID = _context.ReviewAssigns.Include(r => r.PaperInfo);
+                    //foreach (var PaperInfoID in reviewToUpdate.PaperInfoID) {
+                        var count = 0;
+                        while (reviewToUpdate.Recommend != null && count < 2)
+                        {
+                            count++;
+                        }
+                        if (count == 2)
+                        {
+                            reviewToUpdate.PaperInfo.StatusID = 1;
+                        }
+                   //}
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
