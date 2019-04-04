@@ -276,7 +276,7 @@ namespace TRPR.Controllers
                         }
                         if (count == 2)
                         {
-                            reviewToUpdate.PaperInfo.StatusID = 1;
+                            reviewToUpdate.PaperInfo.StatusID = 4;
                         }
                    }
                     await _context.SaveChangesAsync();
