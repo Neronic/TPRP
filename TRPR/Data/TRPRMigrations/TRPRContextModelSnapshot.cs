@@ -16,7 +16,7 @@ namespace TRPR.Data.TRPRMigrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("TRPR")
-                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -334,6 +334,10 @@ namespace TRPR.Data.TRPRMigrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Comment1");
+
+                    b.Property<string>("Comment2");
+
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(256);
 
@@ -514,7 +518,7 @@ namespace TRPR.Data.TRPRMigrations
             modelBuilder.Entity("TRPR.Models.ReviewAssign", b =>
                 {
                     b.HasOne("TRPR.Models.PaperInfo", "PaperInfo")
-                        .WithMany()
+                        .WithMany("ReviewAssigns")
                         .HasForeignKey("PaperInfoID")
                         .OnDelete(DeleteBehavior.Cascade);
 
