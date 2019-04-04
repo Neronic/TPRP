@@ -49,6 +49,12 @@ namespace TRPR.Models
         public int? RecommendID { get; set; }
         public Recommend Recommend { get; set; }
 
+        [Display(Name = "Comment")]
+        public string Comment1 { get; set; }
+
+        [Display(Name = "Comment")]
+        public string Comment2 { get; set; }
+
         [Display(Name = "Review Again")]
         public int? ReviewAgainID { get; set; }
         public ReviewAgain ReviewAgain { get; set; }
