@@ -78,16 +78,14 @@
     </div>
 
     <div style="width:50%;">
-        @{var c = new List<Comment>();
-             <partial name="_Comments" model="c" />
-            }
+        @Html.Partial("_Comment", new List<TRPR.Models.Comment>())
 
         @*@{ var p = new TRPR.Models.ReviewAssign();
             <partial name="_reviewAssign" model="p" />
 
         }*@
         @*<a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
-            <a asp-action="Index">Back to List</a>*@
+        <a asp-action="Index">Back to List</a>*@
 
     </div>
 
