@@ -263,13 +263,12 @@ namespace TRPR.Controllers
                 s => s.RevFormatReview, s => s.RevCitationReview, s => s.RecommendID, s => s.ReviewAgainID))
             {
                 try
-                { ////////////////////////////////////////////////////////////// STILL NEED WHERE LOGIC
-                  //var paperID = _context.ReviewAssigns.Include(r => r.PaperInfo);
+                {
                     var reviewList = from r in _context.ReviewAssigns
                        .Include(r => r.PaperInfo)
                        .Where(c => c.PaperInfoID == reviewToUpdate.PaperInfoID)
                                         select r;
-                    //foreach (var PaperInfoID in reviewToUpdate.PaperInfoID) {
+                    foreach(var PaperInfoID in _context.ReviewAssigns) {
                     var count = 0;
                         while (reviewToUpdate.Recommend != null && count < 2)
                         {
@@ -279,7 +278,7 @@ namespace TRPR.Controllers
                         {
                             reviewToUpdate.PaperInfo.StatusID = 1;
                         }
-                   //}
+                   }
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
