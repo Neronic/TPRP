@@ -203,10 +203,17 @@ namespace TRPR.Controllers
             //    // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
             //    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
+<<<<<<< HEAD
             //    client.Connect("smtp-relay.gmail.com", 587, false);
 
             //    // Note: only needed if the SMTP server requires authentication
             //    client.Authenticate("TRPRDoNotReply@gmail.com", "Tq8uwocBDC");
+=======
+            //    client.Connect("smtp-mail.outlook.com", 587, false);
+
+            //    // Note: only needed if the SMTP server requires authentication
+            //    client.Authenticate("TRPRDoNotReply@outlook.com", "Tq8uwocBDC");
+>>>>>>> victoriaNew
 
             //    client.Send(message);
             //    client.Disconnect(true);

@@ -12,6 +12,7 @@ namespace TRPR.Models
         {
             PaperKeywords = new HashSet<PaperKeyword>();
             Files = new HashSet<File>();
+            ReviewAssigns = new HashSet<ReviewAssign>();
         }
 
         public int ID { get; set; }
@@ -51,5 +52,8 @@ namespace TRPR.Models
 
         [Display(Name = "Authored Papers")]
         public ICollection<AuthoredPaper> AuthoredPapers { get; set; }
+
+        [Display(Name = "Reviewers")]
+        public ICollection<ReviewAssign> ReviewAssigns { get; set; }
     }
 }

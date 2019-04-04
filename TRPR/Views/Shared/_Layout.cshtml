@@ -117,16 +117,25 @@
                 {
                     <li>
 
-                            <a asp-area="" asp-controller="UserRoles" asp-action="Index">
-                                <i class="fas fa-user-edit"></i>
-                                Roles
-                            </a>
-                        </li>
-                    <li>
-                        <a asp-area="" asp-controller="Researchers" asp-action="Index">
-                            <i class="far fa-user" style="padding-right:10px;"></i>
-                            Authors
+                        <a asp-area="" asp-controller="UserRoles" asp-action="Index">
+                            <i class="fas fa-user-edit"></i>
+                            Roles
                         </a>
+                    </li>
+                    <li>
+
+                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="far fa-user"></i>
+                            <span>Authors</span>
+                        </a>
+                        <ul class="collapse list-unstyled" id="pageSubmenu">
+                            <li>
+                                <a asp-area="" asp-controller="Researchers" asp-action="Index">Existing</a>
+                            </li>
+                            <li>
+                                <a asp-area="Identity" asp-page="/Account/Register">New</a>
+                            </li>
+                        </ul>
                     </li>
                 }
                 else
