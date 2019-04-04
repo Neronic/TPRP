@@ -52,7 +52,7 @@ namespace TRPR.Controllers
                 .Include(p => p.ReviewAssigns)
                 .ThenInclude(pc => pc.Researcher)
                 .ThenInclude(pc => pc.ResEmail)
-                .Where(p => p == User.Identity.Name)
+                //.Where(p => p == User.Identity.Name)
                          select p;
             }
 
