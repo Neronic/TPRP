@@ -268,7 +268,7 @@ namespace TRPR.Controllers
                        .Include(r => r.PaperInfo)
                        .Where(c => c.PaperInfoID == reviewToUpdate.PaperInfoID)
                                         select r;
-                    foreach(var PaperInfoID in _context.ReviewAssigns) {
+                    foreach(var PaperInfoID in reviewList) {
                     var count = 0;
                         while (reviewToUpdate.Recommend != null && count < 2)
                         {
