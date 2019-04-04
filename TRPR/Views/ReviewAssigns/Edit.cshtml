@@ -97,11 +97,21 @@
                 </select>
                 <span asp-validation-for="ReviewAgainID" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                @if (User.IsInRole("Editor"))
+                {
+                    <label asp-for="PaperInfo.StatusID" class="control-label"></label>
+                    <select asp-for="PaperInfo.StatusID" class="form-control" asp-items="ViewBag.PaperInfo.StatusID">
+                        <option value=null>Select an option</option>
+                    </select>
+                    <span asp-validation-for="PaperInfo.StatusID" class="text-danger"></span>
+                }
+            </div>
 
             @*<div id="comments">
-                @Html.Partial("_Comments", new List<Comment>());
+            @Html.Partial("_Comments", new List<Comment>());
 
-            </div>*@
+        </div>*@
 
 
             <div id="fileUploader">
