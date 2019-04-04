@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -149,7 +150,7 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,TitleID,ResFirst,ResMiddle,ResLast,ResEmail,ResBio,InstituteID")] Researcher researcher, string[] selectedOptions)
+        public async Task<IActionResult> Create([Bind("TitleID,ResFirst,ResMiddle,ResLast,ResEmail,ResBio,InstituteID")] Researcher researcher, string[] selectedOptions)
         {
             try
             {
@@ -158,7 +159,8 @@ namespace TRPR.Controllers
                 {
                     _context.Add(researcher);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    var url = "/details/" + researcher.ID;
+                    return RedirectToAction(url);
                 }
             }
             catch (Exception /* dex */)
@@ -167,7 +169,7 @@ namespace TRPR.Controllers
             }
             PopulateAssignedExpertiseData(researcher);
             PopulateDropDownLists();
-            return View(researcher);
+            return RedirectToAction("~/Home/Index");
         }
 
         // GET: Researchers/Edit/5

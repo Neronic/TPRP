@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TRPR.Data;
 
 namespace TRPR.Data.TRPRMigrations
 {
     [DbContext(typeof(TRPRContext))]
-    partial class TRPRContextModelSnapshot : ModelSnapshot
+    [Migration("20190404161009_commetns")]
+    partial class commetns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,7 +69,7 @@ namespace TRPR.Data.TRPRMigrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ResearcherID");
+                    b.HasIndex("ReviewAssignID");
 
                     b.ToTable("Comments");
                 });
@@ -443,10 +445,9 @@ namespace TRPR.Data.TRPRMigrations
 
             modelBuilder.Entity("TRPR.Models.Comment", b =>
                 {
-                    b.HasOne("TRPR.Models.Researcher", "Researcher")
+                    b.HasOne("TRPR.Models.ReviewAssign", "ReviewAssign")
                         .WithMany()
-                        .HasForeignKey("ResearcherID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ReviewAssignID");
                 });
 
             modelBuilder.Entity("TRPR.Models.File", b =>

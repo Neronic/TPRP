@@ -31,11 +31,41 @@ namespace TRPR.Controllers
                 .Include(p => p.Files)
                 .Include(p => p.AuthoredPapers)
                 .ThenInclude(pc => pc.Researcher)
-                .Include(p => p.PaperKeywords)
-                .ThenInclude(pk => pk.Keyword)
                          select p;
 
+            //if (User.IsInRole("Researcher"))
+            //{
+            //    papers = from p in _context.PaperInfos
+            //    .Include(p => p.Status)
+            //    .Include(p => p.Files)
+            //    .Include(p => p.AuthoredPapers)
+            //    .ThenInclude(pc => pc.Researcher)
+            //    .Where(c => c.CreatedBy == User.Identity.Name)
+            //             select p;
+            //}
+
             if (User.IsInRole("Researcher"))
+            {
+                papers = from p in _context.PaperInfos
+                .Include(p => p.Status)
+                .Include(p => p.Files)
+                .Include(p => p.ReviewAssigns)
+                .ThenInclude(pc => pc.Researcher)
+                .ThenInclude(pc => pc.ResEmail)
+                //.Where(p => p == User.Identity.Name)
+                         select p;
+            }
+
+            else if (User.IsInRole("Editor"))
+            {
+                papers = from p in _context.PaperInfos
+                .Include(p => p.Status)
+                .Include(p => p.Files)
+                .Include(p => p.AuthoredPapers)
+                .ThenInclude(pc => pc.Researcher)                
+                         select p;
+            }
+            else
             {
                 papers = from p in _context.PaperInfos
                 .Include(p => p.Status)
@@ -45,13 +75,14 @@ namespace TRPR.Controllers
                 .Include(p => p.PaperKeywords)
                 .ThenInclude(pk => pk.Keyword)
                 .Where(c => c.CreatedBy == User.Identity.Name)
-                         select p;
-            }
+                select p;
+            } 
+            
 
             PopulateDropDownLists();
             ViewData["KeywordID"] = new SelectList(_context.Keywords.OrderBy(p => p.KeyWord), "ID", "KeyWord");
             ViewData["Filtering"] = "";
-                      
+
             //Add as many filters as needed
             if (PaperTypeID.HasValue)
             {
@@ -184,7 +215,7 @@ namespace TRPR.Controllers
                 return NotFound();
             }
 
-            var viewerFiles = _context.Files                
+            var viewerFiles = _context.Files
                 .Where(f => f.PaperInfoID == id);// && (f.FileContent.MimeType.Contains("pdf")) || (f.FileContent.MimeType.Contains("image")));
             ViewData["ViewerFileID"] = new SelectList(viewerFiles, "ID", "FileName");
 
@@ -202,7 +233,7 @@ namespace TRPR.Controllers
 
             return View(theFile);*/
 
-            
+
         }
 
         public PartialViewResult GetViewerPartial(int? id)
@@ -223,16 +254,17 @@ namespace TRPR.Controllers
             ViewData["downloadLink"] = downLink;
             return PartialView("_pdfViewer");
         }
-        
+
         // GET: PaperInfo/Create
         public IActionResult Create()
         {
             var paperInfo = new PaperInfo();
             PopulateAssignedKeywordData(paperInfo);
+
             PopulateDropDownLists();
             return View();
         }
-        
+
 
         // POST: PaperInfo/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -247,7 +279,7 @@ namespace TRPR.Controllers
                 if (ModelState.IsValid)
                 {
                     await AddDocuments(paperInfo, theFiles);
-                    paperInfo.StatusID = 2;
+                    paperInfo.StatusID = 3;
                     _context.Add(paperInfo);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -277,12 +309,12 @@ namespace TRPR.Controllers
                             await f.CopyToAsync(memoryStream);
                             File newFile = new File
                             {
-                                
-                                    FileContent = memoryStream.ToArray(),
-                                    FileMimeType = mimeType,
-                                    FileName = f.FileName
-                                
-                                
+
+                                FileContent = memoryStream.ToArray(),
+                                FileMimeType = mimeType,
+                                FileName = f.FileName
+
+
                             };
                             paperInfo.Files.Add(newFile);
                         }

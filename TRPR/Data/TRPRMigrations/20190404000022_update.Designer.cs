@@ -3,20 +3,22 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TRPR.Data;
 
 namespace TRPR.Data.TRPRMigrations
 {
     [DbContext(typeof(TRPRContext))]
-    partial class TRPRContextModelSnapshot : ModelSnapshot
+    [Migration("20190404000022_update")]
+    partial class update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("TRPR")
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -67,7 +69,7 @@ namespace TRPR.Data.TRPRMigrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ResearcherID");
+                    b.HasIndex("ReviewAssignID");
 
                     b.ToTable("Comments");
                 });
@@ -334,10 +336,6 @@ namespace TRPR.Data.TRPRMigrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Comment1");
-
-                    b.Property<string>("Comment2");
-
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(256);
 
@@ -443,10 +441,9 @@ namespace TRPR.Data.TRPRMigrations
 
             modelBuilder.Entity("TRPR.Models.Comment", b =>
                 {
-                    b.HasOne("TRPR.Models.Researcher", "Researcher")
+                    b.HasOne("TRPR.Models.ReviewAssign", "ReviewAssign")
                         .WithMany()
-                        .HasForeignKey("ResearcherID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ReviewAssignID");
                 });
 
             modelBuilder.Entity("TRPR.Models.File", b =>
@@ -519,7 +516,7 @@ namespace TRPR.Data.TRPRMigrations
             modelBuilder.Entity("TRPR.Models.ReviewAssign", b =>
                 {
                     b.HasOne("TRPR.Models.PaperInfo", "PaperInfo")
-                        .WithMany("ReviewAssigns")
+                        .WithMany()
                         .HasForeignKey("PaperInfoID")
                         .OnDelete(DeleteBehavior.Cascade);
 

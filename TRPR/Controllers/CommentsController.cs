@@ -16,10 +16,10 @@ namespace TRPR.Controllers
     public class CommentsController : Controller
     {
 
-        private readonly UserManager<UserRolesController> _userManager; //added by Jacob
+        private readonly UserManager<IdentityUser> _userManager; //added by Jacob
         private readonly TRPRContext _context;
 
-        public CommentsController(TRPRContext context, UserManager<UserRolesController> userManager)
+        public CommentsController(TRPRContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _userManager = userManager;
