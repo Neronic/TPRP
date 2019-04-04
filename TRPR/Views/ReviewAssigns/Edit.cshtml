@@ -23,7 +23,7 @@
         <div id="showViewer" class="form-group">
 
             @*---------------------------------------- pdf view here ------------------------------------------------------------*@
-       
+
         </div>
 
     </div>
@@ -106,12 +106,22 @@
                     </select>
                     <span asp-validation-for="PaperInfo.StatusID" class="text-danger"></span>
                 }
+                else if (User.IsInRole("Researcher"))
+                {
+                    @Html.DisplayFor(model => model.Comment1)
+                    @Html.DisplayFor(model => model.Comment2)
+                }
+                else
+                {
+                    <label asp-for="Comment2" class="control-label"></label>
+                    <input asp-for="Comment2" class="form-control" />
+                    <span asp-validation-for="Comment2" class="text-danger"></span>
+                }
+            </div>
+            <div id="comments">
+                <a asp-action="_Comments" id="Comments">Comments</a>
             </div>
 
-            @*<div id="comments">
-            @Html.Partial("_Comments", new List<Comment>());
-
-        </div>*@
 
 
             <div id="fileUploader">
@@ -150,7 +160,12 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        $('#Comments').load('/ReviewAssign/ListOfComments/@Model.ID');
+    </script>
 }
+
 
 @*@section Scripts {
         <script type="text/javascript">

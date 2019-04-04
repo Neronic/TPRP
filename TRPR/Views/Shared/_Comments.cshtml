@@ -1,6 +1,35 @@
 ﻿@model IEnumerable<TRPR.Models.Comment>
 
+@if(Model != null)
+{
+    @if(User.Identity.IsAuthenticated)
+    {
+        @foreach(var item in Model)
+        {
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="userCard">
+                        @item.CreatedBy<br />
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="commentDetails">
+                        @item.Comtext
+                    </div>
+                </div>
+                <div class="commentDate">
+                    <time class="timeago" datetime="@item.CreatedOn">@item.CreatedOn</time>
+                </div>
+            </div>
+            <br /><br />
+        }
+            <p>
+                <a asp-action="~Views/Comments/Create">Create New comment</a>
+            </p>
+    }
+}
 
+@*
 @if (Model != null)
             {
                 foreach (Comment comment in Model)
@@ -27,8 +56,8 @@
         <p>
             <a asp-action="~/Comments/Create">Create New comment</a>
         </p>
-}
-
+    }
+}*@
 
 <!--<p>
     <a asp-action="Create">Create New</a>

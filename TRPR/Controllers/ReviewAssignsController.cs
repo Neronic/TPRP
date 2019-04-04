@@ -148,6 +148,14 @@ namespace TRPR.Controllers
             return View(reviewAssign);
         }
 
+        public PartialViewResult ListOfComments(int id)
+        {
+            var query = from s in _context.Comments
+                        where s.RevID == id
+                        select s;
+            return PartialView("_Comments", query.ToList());
+        }
+
         // GET: ReviewAssigns/Create
         public IActionResult Create()
         {
