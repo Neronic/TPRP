@@ -79,7 +79,7 @@
 
     <div style="width:50%;">
         @{var c = new List<Comment>();
-             
+             <partial name="_Comments" model="c" />
             }
 
         @*@{ var p = new TRPR.Models.ReviewAssign();
