@@ -184,7 +184,7 @@ namespace TRPR.Controllers
             {
                 fileBase64 = Convert.ToBase64String(theFile.FileContent);
                 MimeType = theFile?.FileMimeType;
-                downLink = "<a href='/patients/download/" + theFile.ID + "' title='Download: " + theFile.FileType + "'>" + theFile.FileName + "</a>";
+                downLink = "<a href='/paperinfo/download/" + theFile.ID + "' title='Download: " + theFile.FileType + "'>" + theFile.FileName + "</a>";
             }
             ViewData["MimeType"] = MimeType;
             ViewData["fileBase64"] = fileBase64;
