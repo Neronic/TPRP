@@ -169,6 +169,40 @@ namespace TRPR.Controllers
                 {
                     _context.Add(reviewAssign);
                     await _context.SaveChangesAsync();
+
+                    // Email coding
+                    var researcher = await _context.Researchers
+                    .SingleOrDefaultAsync(m => m.ID == reviewAssign.ResearcherID);
+
+                    var resEmail = researcher.ResEmail.ToString();
+                    var resName = researcher.FullName.ToString();
+
+
+                    var message = new MimeMessage();
+                    message.From.Add(new MailboxAddress("TRPR", "TRPRDoNotReply@gmail.com"));
+                    message.To.Add(new MailboxAddress(resName, "davilee.maitre@gmail.com"));
+                    message.Subject = "TRPR - New Review";
+
+                    message.Body = new TextPart("plain")
+                    {
+                        Text = @"You've been assigned to a new review, head to TRPR to check it out!"
+                    };
+
+                    using (var client = new SmtpClient())
+                    {
+                        // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
+                        client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+
+                        client.Connect("smtp-relay.gmail.com", 587, false);
+
+                        // Note: only needed if the SMTP server requires authentication
+                        client.Authenticate("TRPRDoNotReply@gmail.com", "Tq8uwocBDC");
+
+                        client.Send(message);
+                        client.Disconnect(true);
+                    }
+
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -177,49 +211,7 @@ namespace TRPR.Controllers
                  ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
             PopulateDropDownLists();
-            PopulateExpertiseDropDownList();
-
-
-            // Email coding
-            //var researcher = await _context.Researchers
-            //        .SingleOrDefaultAsync(m => m.ID == reviewAssign.ResearcherID);
-
-            //var resEmail = researcher.ResEmail.ToString();
-            //var resName = researcher.FullName.ToString();
-
-
-            //var message = new MimeMessage();
-            //message.From.Add(new MailboxAddress("TRPR", "TRPRDoNotReply@gmail.com"));
-            //message.To.Add(new MailboxAddress(resName, "davilee.maitre@gmail.com"));
-            //message.Subject = "TRPR - New Review";
-
-            //message.Body = new TextPart("plain")
-            //{
-            //    Text = @"You've been assigned to a new review, head to TRPR to check it out!"
-            //};
-
-            //using (var client = new SmtpClient())
-            //{
-            //    // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
-            //    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-
-
-            //    client.Connect("smtp-relay.gmail.com", 587, false);
-
-            //    // Note: only needed if the SMTP server requires authentication
-            //    client.Authenticate("TRPRDoNotReply@gmail.com", "Tq8uwocBDC");
-
-            //    client.Connect("smtp-mail.outlook.com", 587, false);
-
-            //    // Note: only needed if the SMTP server requires authentication
-            //    client.Authenticate("TRPRDoNotReply@outlook.com", "Tq8uwocBDC");
-
-
-            //    client.Send(message);
-            //    client.Disconnect(true);
-            //}
-
-
+            PopulateExpertiseDropDownList();            
             return View(reviewAssign);
         }
 
