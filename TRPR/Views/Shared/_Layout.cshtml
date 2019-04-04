@@ -99,9 +99,19 @@
                         <span>My Papers</span>
                     </a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li>
-                            <a asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLg">Submitted</a>
-                        </li>
+                        @if (User.IsInRole("Researcher"))
+                        {
+                            <li>
+                                <a asp-area="" asp-controller="ReviewAssigns" asp-action="Index" class="btnLg">Submitted</a>
+                            </li>
+                        }
+
+                        else
+                        {
+                            <li>
+                                <a asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLg">Submitted</a>
+                            </li>
+                        }
                         <li>
                             <a asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLg">Drafts</a>
                         </li>
