@@ -34,18 +34,18 @@ namespace TRPR.Controllers
                 .ThenInclude(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
                 .Include(r => r.PaperInfo)
+                .Where(c => c.Researcher.ResEmail == User.Identity.Name)
                 select r;           
 
 
-            if (User.IsInRole("Researcher"))
+            if (User.IsInRole("Editor"))
             {
                 reviewAssigns = from r in _context.ReviewAssigns
                .Include(ra => ra.Roles)
                .Include(ra => ra.Researcher)
                .ThenInclude(r => r.ResearchExpertises)
                .ThenInclude(re => re.Expertise)
-               .Include(r => r.PaperInfo)
-               .Where(c => c.Researcher.ResEmail == User.Identity.Name)
+               .Include(r => r.PaperInfo)              
                select r;
             }
 
@@ -189,8 +189,8 @@ namespace TRPR.Controllers
 
 
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("TRPR", "TRPRDoNotReply@outlook.com"));
-            message.To.Add(new MailboxAddress(resName, resEmail));
+            message.From.Add(new MailboxAddress("TRPR", "TRPRDoNotReply@gmail.com"));
+            message.To.Add(new MailboxAddress(resName, "davilee.maitre@gmail.com"));
             message.Subject = "TRPR - New Review";
 
             message.Body = new TextPart("plain")
@@ -203,10 +203,10 @@ namespace TRPR.Controllers
                 // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
                 client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                client.Connect("smtp-mail.outlook.com", 587, false);
+                client.Connect("smtp-relay.gmail.com", 587, false);
 
                 // Note: only needed if the SMTP server requires authentication
-                client.Authenticate("TRPRDoNotReply@outlook.com", "Tq8uwocBDC");
+                client.Authenticate("TRPRDoNotReply@gmail.com", "Tq8uwocBDC");
 
                 client.Send(message);
                 client.Disconnect(true);
