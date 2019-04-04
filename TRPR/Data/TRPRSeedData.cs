@@ -442,18 +442,6 @@ namespace TRPR.Data
                     context.Roles.AddRange(
                     new Role
                     {
-                        RoleTitle = "Author"
-                    },
-                    new Role
-                    {
-                        RoleTitle = "Associate Editor"
-                    },
-                    new Role
-                    {
-                        RoleTitle = "Editor"
-                    },
-                    new Role
-                    {
                         RoleTitle = "Reveiwer 1"
                     },
                     new Role
