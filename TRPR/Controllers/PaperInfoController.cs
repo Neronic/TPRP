@@ -259,12 +259,9 @@ namespace TRPR.Controllers
         // GET: PaperInfo/Create
         public IActionResult Create()
         {
-<<<<<<< HEAD
             var paperInfo = new PaperInfo();
             PopulateAssignedKeywordData(paperInfo);
-=======
 
->>>>>>> victoriaNew
             PopulateDropDownLists();
             return View();
         }
