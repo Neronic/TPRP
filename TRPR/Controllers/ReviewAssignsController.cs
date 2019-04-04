@@ -260,7 +260,7 @@ namespace TRPR.Controllers
 
             if (await TryUpdateModelAsync<ReviewAssign>(reviewToUpdate, "",
                 s => s.PaperInfoID, s => s.ResearcherID, s => s.RoleID, s => s.RevContentReview, s => s.RevKeywordReview, s => s.RevLengthReview, 
-                s => s.RevFormatReview, s => s.RevCitationReview, s => s.RecommendID, s => s.ReviewAgainID))
+                s => s.RevFormatReview, s => s.RevCitationReview, s => s.Comment1, s => s.Comment2, s => s.RecommendID, s => s.ReviewAgainID))
             {
                 try
                 {
