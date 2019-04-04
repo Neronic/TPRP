@@ -321,6 +321,10 @@ namespace TRPR.Data
                     new Status
                     {
                         StatName = "Awaiting Review"
+                    },
+                    new Status
+                    {
+                        StatName = "Reviews Complete"
                     }
                 );
                     context.SaveChanges();
