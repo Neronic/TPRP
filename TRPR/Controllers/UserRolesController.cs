@@ -11,7 +11,7 @@ using TRPR.ViewModels;
 
 namespace TRPR.Controllers
 {
-    [Authorize(Roles = "Editor")]
+    //[Authorize(Roles = "Editor")]
     public class UserRolesController : Controller
     {
         private readonly ApplicationDbContext _context;

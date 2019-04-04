@@ -36,27 +36,27 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ID" />
             @*<div class="form-group">
-                    <dl class="dl-horizontal">
-                        <dt>
-                                @Html.DisplayNameFor(model => model.PaperInfo)
-                            </dt>
-                            <dd>
-                                @Html.DisplayFor(model => model.PaperInfo.PaperTitle)
-                            </dd>
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Researcher)
-                            </dt>
-                            <dd>
-                                @Html.DisplayFor(model => model.Researcher.FullName)
-                            </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Roles)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.Roles.RoleTitle)
-                        </dd>
-                    </dl>
-                </div>*@
+            <dl class="dl-horizontal">
+                <dt>
+                        @Html.DisplayNameFor(model => model.PaperInfo)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PaperInfo.PaperTitle)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Researcher)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Researcher.FullName)
+                    </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Roles)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Roles.RoleTitle)
+                </dd>
+            </dl>
+        </div>*@
             @Html.DisplayFor(model => model.Roles.RoleTitle)
             <div class="form-group">
                 <label asp-for="RevContentReview" class="control-label"></label>
@@ -98,7 +98,10 @@
                 <span asp-validation-for="ReviewAgainID" class="text-danger"></span>
             </div>
 
+            @*<div id="comments">
+                @Html.Partial("_Comments", new List<Comment>());
 
+            </div>*@
 
 
             <div id="fileUploader">
@@ -110,8 +113,8 @@
 
 
             @*<div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-default" />
-                </div>*@
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>*@
             <div id="buttons">
                 <div class="dropdown" id="btnSave">
                     <a class="btn btnMedG dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

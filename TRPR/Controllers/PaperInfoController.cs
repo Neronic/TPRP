@@ -33,9 +33,10 @@ namespace TRPR.Controllers
                 .ThenInclude(pc => pc.Researcher)
                 .Include(p => p.PaperKeywords)
                 .ThenInclude(pk => pk.Keyword)
+                .Where(c => c.CreatedBy == User.Identity.Name)
                          select p;
 
-            if (User.IsInRole("Researcher"))
+            if (User.IsInRole("Editor"))
             {
                 papers = from p in _context.PaperInfos
                 .Include(p => p.Status)
@@ -43,10 +44,10 @@ namespace TRPR.Controllers
                 .Include(p => p.AuthoredPapers)
                 .ThenInclude(pc => pc.Researcher)
                 .Include(p => p.PaperKeywords)
-                .ThenInclude(pk => pk.Keyword)
-                .Where(c => c.CreatedBy == User.Identity.Name)
+                .ThenInclude(pk => pk.Keyword)                
                          select p;
-            }
+            } 
+            
 
             PopulateDropDownLists();
             ViewData["KeywordID"] = new SelectList(_context.Keywords.OrderBy(p => p.KeyWord), "ID", "KeyWord");
