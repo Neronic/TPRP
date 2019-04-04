@@ -248,7 +248,7 @@ namespace TRPR.Controllers
                 if (ModelState.IsValid)
                 {
                     await AddDocuments(paperInfo, theFiles);
-                    paperInfo.StatusID = 2;
+                    paperInfo.StatusID = 3;
                     _context.Add(paperInfo);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
