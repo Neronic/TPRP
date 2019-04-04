@@ -116,10 +116,9 @@
                     <span asp-validation-for="Comment2" class="text-danger"></span>
                 }
             </div>
-            @*<div id="comments">
-            @Html.Partial("_Comments", new List<Comment>());
-
-        </div>*@
+            <div id="comments">
+                <a asp-action="_Comments" id="Comments">Comments</a>
+            </div>
 
 
             <div id="fileUploader">
@@ -158,7 +157,12 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        $('#Comments').load('/ReviewAssign/ListOfComments/@Model.ID');
+    </script>
 }
+
 
 @*@section Scripts {
         <script type="text/javascript">
