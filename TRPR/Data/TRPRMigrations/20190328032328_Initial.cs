@@ -68,6 +68,20 @@ namespace TRPR.Data.TRPRMigrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PaperTypes",
+                schema: "TRPR",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PaperTypes", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Recommends",
                 schema: "TRPR",
                 columns: table => new
@@ -79,25 +93,6 @@ namespace TRPR.Data.TRPRMigrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Recommends", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Researchers",
-                schema: "TRPR",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ResTitle = table.Column<string>(maxLength: 10, nullable: true),
-                    ResFirst = table.Column<string>(maxLength: 50, nullable: false),
-                    ResMiddle = table.Column<string>(maxLength: 50, nullable: true),
-                    ResLast = table.Column<string>(maxLength: 50, nullable: false),
-                    ResEmail = table.Column<string>(maxLength: 320, nullable: false),
-                    ResBio = table.Column<string>(maxLength: 500, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Researchers", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -143,59 +138,17 @@ namespace TRPR.Data.TRPRMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ResearchExpertises",
+                name: "Titles",
                 schema: "TRPR",
                 columns: table => new
                 {
-                    ExpertiseID = table.Column<int>(nullable: false),
-                    ResearcherID = table.Column<int>(nullable: false)
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ResearchExpertises", x => new { x.ResearcherID, x.ExpertiseID });
-                    table.ForeignKey(
-                        name: "FK_ResearchExpertises_Expertises_ExpertiseID",
-                        column: x => x.ExpertiseID,
-                        principalSchema: "TRPR",
-                        principalTable: "Expertises",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ResearchExpertises_Researchers_ResearcherID",
-                        column: x => x.ResearcherID,
-                        principalSchema: "TRPR",
-                        principalTable: "Researchers",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ResearchInstitutes",
-                schema: "TRPR",
-                columns: table => new
-                {
-                    InstituteID = table.Column<int>(nullable: false),
-                    ResearcherID = table.Column<int>(nullable: false),
-                    ResInstStartDate = table.Column<DateTime>(nullable: true),
-                    ResInstEndDate = table.Column<DateTime>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ResearchInstitutes", x => new { x.ResearcherID, x.InstituteID });
-                    table.ForeignKey(
-                        name: "FK_ResearchInstitutes_Institutes_InstituteID",
-                        column: x => x.InstituteID,
-                        principalSchema: "TRPR",
-                        principalTable: "Institutes",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ResearchInstitutes_Researchers_ResearcherID",
-                        column: x => x.ResearcherID,
-                        principalSchema: "TRPR",
-                        principalTable: "Researchers",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_Titles", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -203,11 +156,15 @@ namespace TRPR.Data.TRPRMigrations
                 schema: "TRPR",
                 columns: table => new
                 {
+                    CreatedBy = table.Column<string>(maxLength: 256, nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: true),
+                    UpdatedBy = table.Column<string>(maxLength: 256, nullable: true),
+                    UpdatedOn = table.Column<DateTime>(nullable: true),
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     PaperTitle = table.Column<string>(maxLength: 200, nullable: false),
                     PaperAbstract = table.Column<string>(maxLength: 500, nullable: false),
-                    PaperType = table.Column<string>(maxLength: 30, nullable: false),
+                    PaperTypeID = table.Column<int>(nullable: false),
                     PaperLength = table.Column<int>(nullable: false),
                     StatusID = table.Column<int>(nullable: false)
                 },
@@ -215,10 +172,79 @@ namespace TRPR.Data.TRPRMigrations
                 {
                     table.PrimaryKey("PK_PaperInfos", x => x.ID);
                     table.ForeignKey(
+                        name: "FK_PaperInfos_PaperTypes_PaperTypeID",
+                        column: x => x.PaperTypeID,
+                        principalSchema: "TRPR",
+                        principalTable: "PaperTypes",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_PaperInfos_Statuses_StatusID",
                         column: x => x.StatusID,
                         principalSchema: "TRPR",
                         principalTable: "Statuses",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Researchers",
+                schema: "TRPR",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    TitleID = table.Column<int>(nullable: false),
+                    ResFirst = table.Column<string>(maxLength: 50, nullable: false),
+                    ResMiddle = table.Column<string>(maxLength: 50, nullable: true),
+                    ResLast = table.Column<string>(maxLength: 50, nullable: false),
+                    ResEmail = table.Column<string>(maxLength: 320, nullable: false),
+                    ResBio = table.Column<string>(maxLength: 500, nullable: true),
+                    InstituteID = table.Column<int>(nullable: false),
+                    Active = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Researchers", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Researchers_Institutes_InstituteID",
+                        column: x => x.InstituteID,
+                        principalSchema: "TRPR",
+                        principalTable: "Institutes",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Researchers_Titles_TitleID",
+                        column: x => x.TitleID,
+                        principalSchema: "TRPR",
+                        principalTable: "Titles",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PaperKeywords",
+                schema: "TRPR",
+                columns: table => new
+                {
+                    PaperInfoID = table.Column<int>(nullable: false),
+                    KeywordID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PaperKeywords", x => new { x.PaperInfoID, x.KeywordID });
+                    table.ForeignKey(
+                        name: "FK_PaperKeywords_Keywords_KeywordID",
+                        column: x => x.KeywordID,
+                        principalSchema: "TRPR",
+                        principalTable: "Keywords",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PaperKeywords_PaperInfos_PaperInfoID",
+                        column: x => x.PaperInfoID,
+                        principalSchema: "TRPR",
+                        principalTable: "PaperInfos",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -252,28 +278,28 @@ namespace TRPR.Data.TRPRMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PaperKeywords",
+                name: "ResearchExpertises",
                 schema: "TRPR",
                 columns: table => new
                 {
-                    PaperInfoID = table.Column<int>(nullable: false),
-                    KeywordID = table.Column<int>(nullable: false)
+                    ExpertiseID = table.Column<int>(nullable: false),
+                    ResearcherID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PaperKeywords", x => new { x.PaperInfoID, x.KeywordID });
+                    table.PrimaryKey("PK_ResearchExpertises", x => new { x.ResearcherID, x.ExpertiseID });
                     table.ForeignKey(
-                        name: "FK_PaperKeywords_Keywords_KeywordID",
-                        column: x => x.KeywordID,
+                        name: "FK_ResearchExpertises_Expertises_ExpertiseID",
+                        column: x => x.ExpertiseID,
                         principalSchema: "TRPR",
-                        principalTable: "Keywords",
+                        principalTable: "Expertises",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PaperKeywords_PaperInfos_PaperInfoID",
-                        column: x => x.PaperInfoID,
+                        name: "FK_ResearchExpertises_Researchers_ResearcherID",
+                        column: x => x.ResearcherID,
                         principalSchema: "TRPR",
-                        principalTable: "PaperInfos",
+                        principalTable: "Researchers",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -283,6 +309,10 @@ namespace TRPR.Data.TRPRMigrations
                 schema: "TRPR",
                 columns: table => new
                 {
+                    CreatedBy = table.Column<string>(maxLength: 256, nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: true),
+                    UpdatedBy = table.Column<string>(maxLength: 256, nullable: true),
+                    UpdatedOn = table.Column<DateTime>(nullable: true),
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     PaperInfoID = table.Column<int>(nullable: false),
@@ -341,16 +371,16 @@ namespace TRPR.Data.TRPRMigrations
                 schema: "TRPR",
                 columns: table => new
                 {
+                    CreatedBy = table.Column<string>(maxLength: 256, nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: true),
+                    UpdatedBy = table.Column<string>(maxLength: 256, nullable: true),
+                    UpdatedOn = table.Column<DateTime>(nullable: true),
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     RevID = table.Column<int>(nullable: false),
                     ReviewAssignID = table.Column<int>(nullable: true),
                     ComAccess = table.Column<string>(maxLength: 50, nullable: false),
-                    Comtext = table.Column<string>(maxLength: 500, nullable: false),
-                    CreatedBy = table.Column<string>(maxLength: 256, nullable: true),
-                    CreatedOn = table.Column<DateTime>(nullable: true),
-                    UpdatedBy = table.Column<string>(maxLength: 256, nullable: true),
-                    UpdatedOn = table.Column<DateTime>(nullable: true)
+                    Comtext = table.Column<string>(maxLength: 500, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -441,6 +471,12 @@ namespace TRPR.Data.TRPRMigrations
                 column: "ReviewAssignID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PaperInfos_PaperTypeID",
+                schema: "TRPR",
+                table: "PaperInfos",
+                column: "PaperTypeID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PaperInfos_StatusID",
                 schema: "TRPR",
                 table: "PaperInfos",
@@ -453,6 +489,12 @@ namespace TRPR.Data.TRPRMigrations
                 column: "KeywordID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Researchers_InstituteID",
+                schema: "TRPR",
+                table: "Researchers",
+                column: "InstituteID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Researchers_ResEmail",
                 schema: "TRPR",
                 table: "Researchers",
@@ -460,16 +502,16 @@ namespace TRPR.Data.TRPRMigrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Researchers_TitleID",
+                schema: "TRPR",
+                table: "Researchers",
+                column: "TitleID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ResearchExpertises_ExpertiseID",
                 schema: "TRPR",
                 table: "ResearchExpertises",
                 column: "ExpertiseID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ResearchInstitutes_InstituteID",
-                schema: "TRPR",
-                table: "ResearchInstitutes",
-                column: "InstituteID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ReviewAssigns_PaperInfoID",
@@ -525,10 +567,6 @@ namespace TRPR.Data.TRPRMigrations
                 schema: "TRPR");
 
             migrationBuilder.DropTable(
-                name: "ResearchInstitutes",
-                schema: "TRPR");
-
-            migrationBuilder.DropTable(
                 name: "FileTypes",
                 schema: "TRPR");
 
@@ -542,10 +580,6 @@ namespace TRPR.Data.TRPRMigrations
 
             migrationBuilder.DropTable(
                 name: "Expertises",
-                schema: "TRPR");
-
-            migrationBuilder.DropTable(
-                name: "Institutes",
                 schema: "TRPR");
 
             migrationBuilder.DropTable(
@@ -569,7 +603,19 @@ namespace TRPR.Data.TRPRMigrations
                 schema: "TRPR");
 
             migrationBuilder.DropTable(
+                name: "PaperTypes",
+                schema: "TRPR");
+
+            migrationBuilder.DropTable(
                 name: "Statuses",
+                schema: "TRPR");
+
+            migrationBuilder.DropTable(
+                name: "Institutes",
+                schema: "TRPR");
+
+            migrationBuilder.DropTable(
+                name: "Titles",
                 schema: "TRPR");
         }
     }

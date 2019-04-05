@@ -8,6 +8,11 @@ namespace TRPR.Models
 {
     public class Expertise
     {
+        public Expertise()
+        {
+            ResearchExpertises = new HashSet<ResearchExpertise>();
+        }
+
         public int ID { get; set; }
 
         [Display(Name = "Expertise Name")]

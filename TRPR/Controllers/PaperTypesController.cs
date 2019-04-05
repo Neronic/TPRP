@@ -1,37 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TRPR.Data;
 using TRPR.Models;
-using TRPR.Controllers;
 
 namespace TRPR.Controllers
 {
-    public class CommentsController : Controller
+    public class PaperTypesController : Controller
     {
-
-        private readonly UserManager<IdentityUser> _userManager; //added by Jacob
         private readonly TRPRContext _context;
 
-        public CommentsController(TRPRContext context, UserManager<IdentityUser> userManager)
+        public PaperTypesController(TRPRContext context)
         {
             _context = context;
-            _userManager = userManager;
-        }
-        
-        // GET: Comments
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Comments.ToListAsync());
         }
 
-        // GET: Comments/Details/5
+        // GET: PaperTypes
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.PaperTypes.ToListAsync());
+        }
+
+        // GET: PaperTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -39,41 +33,39 @@ namespace TRPR.Controllers
                 return NotFound();
             }
 
-            var comment = await _context.Comments
+            var paperType = await _context.PaperTypes
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (comment == null)
+            if (paperType == null)
             {
                 return NotFound();
             }
 
-            return View(comment);
+            return View(paperType);
         }
 
-        // GET: Comments/Create
+        // GET: PaperTypes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Comments/Create
+        // POST: PaperTypes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,ResearcherID,RevID,ComAccess,Comtext")] Comment comment)
+        public async Task<IActionResult> Create([Bind("ID,Name")] PaperType paperType)
         {
-            int userID = Convert.ToInt32(_userManager.GetUserId(User)); //Added by Jacob
-                if (ModelState.IsValid)
-                {
-                    comment.ResearcherID = userID; //Added by Jacob
-                    _context.Add(comment);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-            return View(comment);
+            if (ModelState.IsValid)
+            {
+                _context.Add(paperType);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(paperType);
         }
 
-        // GET: Comments/Edit/5
+        // GET: PaperTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,22 +73,22 @@ namespace TRPR.Controllers
                 return NotFound();
             }
 
-            var comment = await _context.Comments.FindAsync(id);
-            if (comment == null)
+            var paperType = await _context.PaperTypes.FindAsync(id);
+            if (paperType == null)
             {
                 return NotFound();
             }
-            return View(comment);
+            return View(paperType);
         }
 
-        // POST: Comments/Edit/5
+        // POST: PaperTypes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,RevID,ComAccess,Comtext")] Comment comment)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] PaperType paperType)
         {
-            if (id != comment.ID)
+            if (id != paperType.ID)
             {
                 return NotFound();
             }
@@ -105,12 +97,12 @@ namespace TRPR.Controllers
             {
                 try
                 {
-                    _context.Update(comment);
+                    _context.Update(paperType);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CommentExists(comment.ID))
+                    if (!PaperTypeExists(paperType.ID))
                     {
                         return NotFound();
                     }
@@ -121,10 +113,10 @@ namespace TRPR.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(comment);
+            return View(paperType);
         }
 
-        // GET: Comments/Delete/5
+        // GET: PaperTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -132,34 +124,30 @@ namespace TRPR.Controllers
                 return NotFound();
             }
 
-            var comment = await _context.Comments
+            var paperType = await _context.PaperTypes
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (comment == null)
+            if (paperType == null)
             {
                 return NotFound();
             }
 
-            return View(comment);
+            return View(paperType);
         }
 
-        // POST: Comments/Delete/5
+        // POST: PaperTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var comment = await _context.Comments.FindAsync(id);
-            _context.Comments.Remove(comment);
+            var paperType = await _context.PaperTypes.FindAsync(id);
+            _context.PaperTypes.Remove(paperType);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CommentExists(int id)
+        private bool PaperTypeExists(int id)
         {
-            return _context.Comments.Any(e => e.ID == id);
+            return _context.PaperTypes.Any(e => e.ID == id);
         }
-
-
-        //Get current user info
-
     }
 }

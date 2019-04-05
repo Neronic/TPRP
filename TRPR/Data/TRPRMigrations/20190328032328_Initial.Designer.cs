@@ -10,8 +10,8 @@ using TRPR.Data;
 namespace TRPR.Data.TRPRMigrations
 {
     [DbContext(typeof(TRPRContext))]
-    [Migration("20190328022125_Audit")]
-    partial class Audit
+    [Migration("20190328032328_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

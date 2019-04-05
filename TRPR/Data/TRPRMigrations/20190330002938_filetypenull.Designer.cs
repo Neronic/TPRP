@@ -10,15 +10,15 @@ using TRPR.Data;
 namespace TRPR.Data.TRPRMigrations
 {
     [DbContext(typeof(TRPRContext))]
-    [Migration("20190323174303_Identity")]
-    partial class Identity
+    [Migration("20190330002938_filetypenull")]
+    partial class filetypenull
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("TRPR")
-                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -114,7 +114,7 @@ namespace TRPR.Data.TRPRMigrations
 
                     b.Property<int?>("ReviewAssignID");
 
-                    b.Property<int>("TypeID");
+                    b.Property<int?>("TypeID");
 
                     b.Property<string>("UpdatedBy")
                         .HasMaxLength(256);
@@ -183,6 +183,11 @@ namespace TRPR.Data.TRPRMigrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime?>("CreatedOn");
+
                     b.Property<string>("PaperAbstract")
                         .IsRequired()
                         .HasMaxLength(500);
@@ -193,13 +198,18 @@ namespace TRPR.Data.TRPRMigrations
                         .IsRequired()
                         .HasMaxLength(200);
 
-                    b.Property<string>("PaperType")
-                        .IsRequired()
-                        .HasMaxLength(30);
+                    b.Property<int>("PaperTypeID");
 
                     b.Property<int>("StatusID");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime?>("UpdatedOn");
+
                     b.HasKey("ID");
+
+                    b.HasIndex("PaperTypeID");
 
                     b.HasIndex("StatusID");
 
@@ -217,6 +227,21 @@ namespace TRPR.Data.TRPRMigrations
                     b.HasIndex("KeywordID");
 
                     b.ToTable("PaperKeywords");
+                });
+
+            modelBuilder.Entity("TRPR.Models.PaperType", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.HasKey("ID");
+
+                    b.ToTable("PaperTypes");
                 });
 
             modelBuilder.Entity("TRPR.Models.Recommend", b =>
@@ -240,6 +265,10 @@ namespace TRPR.Data.TRPRMigrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Active");
+
+                    b.Property<int>("InstituteID");
+
                     b.Property<string>("ResBio")
                         .IsRequired()
                         .HasMaxLength(500);
@@ -259,13 +288,16 @@ namespace TRPR.Data.TRPRMigrations
                     b.Property<string>("ResMiddle")
                         .HasMaxLength(50);
 
-                    b.Property<string>("ResTitle")
-                        .HasMaxLength(10);
+                    b.Property<int>("TitleID");
 
                     b.HasKey("ID");
 
+                    b.HasIndex("InstituteID");
+
                     b.HasIndex("ResEmail")
                         .IsUnique();
+
+                    b.HasIndex("TitleID");
 
                     b.ToTable("Researchers");
                 });
@@ -281,23 +313,6 @@ namespace TRPR.Data.TRPRMigrations
                     b.HasIndex("ExpertiseID");
 
                     b.ToTable("ResearchExpertises");
-                });
-
-            modelBuilder.Entity("TRPR.Models.ResearchInstitute", b =>
-                {
-                    b.Property<int>("ResearcherID");
-
-                    b.Property<int>("InstituteID");
-
-                    b.Property<DateTime?>("ResInstEndDate");
-
-                    b.Property<DateTime?>("ResInstStartDate");
-
-                    b.HasKey("ResearcherID", "InstituteID");
-
-                    b.HasIndex("InstituteID");
-
-                    b.ToTable("ResearchInstitutes");
                 });
 
             modelBuilder.Entity("TRPR.Models.ReviewAgain", b =>
@@ -319,6 +334,11 @@ namespace TRPR.Data.TRPRMigrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime?>("CreatedOn");
+
                     b.Property<int>("PaperInfoID");
 
                     b.Property<int>("RecommendID");
@@ -338,6 +358,11 @@ namespace TRPR.Data.TRPRMigrations
                     b.Property<int>("ReviewAgainID");
 
                     b.Property<int>("RoleID");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime?>("UpdatedOn");
 
                     b.HasKey("ID");
 
@@ -384,6 +409,21 @@ namespace TRPR.Data.TRPRMigrations
                     b.ToTable("Statuses");
                 });
 
+            modelBuilder.Entity("TRPR.Models.Title", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(10);
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Titles");
+                });
+
             modelBuilder.Entity("TRPR.Models.AuthoredPaper", b =>
                 {
                     b.HasOne("TRPR.Models.PaperInfo", "PaperInfo")
@@ -421,6 +461,11 @@ namespace TRPR.Data.TRPRMigrations
 
             modelBuilder.Entity("TRPR.Models.PaperInfo", b =>
                 {
+                    b.HasOne("TRPR.Models.PaperType", "PaperType")
+                        .WithMany("PaperInfos")
+                        .HasForeignKey("PaperTypeID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("TRPR.Models.Status", "Status")
                         .WithMany("PaperInfos")
                         .HasForeignKey("StatusID")
@@ -440,6 +485,19 @@ namespace TRPR.Data.TRPRMigrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("TRPR.Models.Researcher", b =>
+                {
+                    b.HasOne("TRPR.Models.Institute", "Institutes")
+                        .WithMany("Researchers")
+                        .HasForeignKey("InstituteID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("TRPR.Models.Title", "Title")
+                        .WithMany("Researchers")
+                        .HasForeignKey("TitleID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("TRPR.Models.ResearchExpertise", b =>
                 {
                     b.HasOne("TRPR.Models.Expertise", "Expertise")
@@ -449,19 +507,6 @@ namespace TRPR.Data.TRPRMigrations
 
                     b.HasOne("TRPR.Models.Researcher", "Researcher")
                         .WithMany("ResearchExpertises")
-                        .HasForeignKey("ResearcherID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("TRPR.Models.ResearchInstitute", b =>
-                {
-                    b.HasOne("TRPR.Models.Institute", "Institute")
-                        .WithMany("ResearchInstitutes")
-                        .HasForeignKey("InstituteID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("TRPR.Models.Researcher", "Researcher")
-                        .WithMany("ResearchInstitutes")
                         .HasForeignKey("ResearcherID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

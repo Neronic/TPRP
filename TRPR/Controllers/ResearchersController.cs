@@ -23,7 +23,7 @@ namespace TRPR.Controllers
         }
 
         // GET: Researchers
-        public async Task<IActionResult> Index(string SearchString, string SearchEmail, int? InstituteID, int? ExpertiseID, int? page, string sortDirection, string actionButton, string sortField = "FullName")
+        public async Task<IActionResult> Index(string SearchString, string SearchEmail, int? TitleID, int? InstituteID, int? ExpertiseID, int? page, string sortDirection, string actionButton, string sortField = "FullName")
         {
             PopulateDropDownLists();
             ViewData["ExpertiseID"] = new SelectList(_context.Expertises.OrderBy(p => p.ExpName), "ID", "ExpName");
@@ -33,12 +33,18 @@ namespace TRPR.Controllers
                 .Include(ri => ri.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
+<<<<<<< HEAD
                 .Include(a => a.AuthoredPapers)            
                 .ThenInclude(pa => pa.PaperInfoID)
                 select r;
 
             int pageSize = 20;//Change as required
             var pagedData = await PaginatedList<Researcher>.CreateAsync(researcher.AsNoTracking(), page ?? 1, pageSize);
+=======
+                .Include(r => r.Title)
+                .Include(r => r.Institutes)
+                select r;           
+>>>>>>> victoriaNew
 
             if (InstituteID.HasValue)
             {
@@ -109,6 +115,9 @@ namespace TRPR.Controllers
             ViewData["sortField"] = sortField;
             ViewData["sortDirection"] = sortDirection;
 
+            int pageSize = 20;//Change as required
+            var pagedData = await PaginatedList<Researcher>.CreateAsync(researcher.AsNoTracking(), page ?? 1, pageSize);
+
             return View(pagedData);
         }
 
@@ -124,6 +133,8 @@ namespace TRPR.Controllers
                 .Include(ri => ri.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
+                .Include(r => r.Institutes)
+                .Include(r => r.Title)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (researcher == null)
             {
@@ -136,7 +147,7 @@ namespace TRPR.Controllers
         // GET: Researchers/Create
         public IActionResult Create()
         {
-            Researcher researcher = new Researcher();
+            var researcher = new Researcher();
             PopulateAssignedExpertiseData(researcher);
             PopulateDropDownLists();
             return View();
@@ -147,7 +158,7 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,ResTitle,ResFirst,ResMiddle,ResLast,ResEmail,ResBio")] Researcher researcher, string[] selectedOptions)
+        public async Task<IActionResult> Create([Bind("TitleID,ResFirst,ResMiddle,ResLast,ResEmail,ResBio,InstituteID")] Researcher researcher, string[] selectedOptions)
         {
             try
             {
@@ -159,7 +170,7 @@ namespace TRPR.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-            catch (RetryLimitExceededException /* dex */)
+            catch (Exception /* dex */)
             {
                 ModelState.AddModelError("", "Unable to save changes after multiple attempts. Try again, and if the problem persists, see your system administrator.");
             }
@@ -180,6 +191,8 @@ namespace TRPR.Controllers
                 .Include(r => r.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
+                .Include(r => r.Institutes)
+                .Include(r => r.Title)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
 
@@ -203,6 +216,8 @@ namespace TRPR.Controllers
                 .Include(ri => ri.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
+                .Include(r => r.Institutes)
+                .Include(r => r.Title)
                 .SingleOrDefaultAsync(m => m.ID == id);
 
             if (researcherToUpdate == null)
@@ -214,7 +229,7 @@ namespace TRPR.Controllers
 
 
             if (await TryUpdateModelAsync<Researcher>(researcherToUpdate, "", 
-                r => r.TitleID, r => r.ResFirst, r => r.ResMiddle, r => r.ResLast, r => r.ResBio, r => r.ResEmail))
+                r => r.TitleID, r => r.ResFirst, r => r.ResMiddle, r => r.ResLast, r => r.ResBio, r => r.ResEmail, r => r.InstituteID))
             {
                 try
                 {
@@ -258,6 +273,8 @@ namespace TRPR.Controllers
                 .Include(r => r.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
+                .Include(r => r.Institutes)
+                .Include(r => r.Title)
                 .FirstOrDefaultAsync(m => m.ID == id);
 
             if (researcher == null)

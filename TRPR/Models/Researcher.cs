@@ -30,17 +30,16 @@ namespace TRPR.Models
         {
             get
             {
-                return Title + ". " + ResFirst
+                return Title + ". " + ResLast + ((char?)ResFirst[0] + ". ").ToUpper()
                     + (string.IsNullOrEmpty(ResMiddle) ? " " :
-                        (" " + (char?)ResMiddle[0] + ". ").ToUpper())
-                    + ResLast;
+                        (" " + (char?)ResMiddle[0] + " ").ToUpper());
             }
         }
 
         public int ID { get; set; }
 
         [Display(Name = "Title")]
-        [Range(1, int.MaxValue, ErrorMessage = "You must select a title.")]
+        //[Range(1, int.MaxValue, ErrorMessage = "You must select a title.")]
         public int TitleID { get; set; }
         public Title Title { get; set; }
 
@@ -65,7 +64,7 @@ namespace TRPR.Models
         public string ResEmail { get; set; }
 
         [Display(Name = "Professional Biography")]
-        //[Required(ErrorMessage = "You cannot leave the biography blank.")]
+        [Required(ErrorMessage = "You cannot leave the biography blank.")]
         [StringLength(500, ErrorMessage = "Biography cannot be more than 500 characters long.")]
         public string ResBio { get; set; }
 

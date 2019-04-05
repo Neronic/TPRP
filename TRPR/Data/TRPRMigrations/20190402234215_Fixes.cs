@@ -2,7 +2,7 @@
 
 namespace TRPR.Data.TRPRMigrations
 {
-    public partial class Identity : Migration
+    public partial class Fixes : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -10,6 +10,8 @@ namespace TRPR.Models
     {
         public int ID { get; set; }
 
+        public int ResearcherID { get; set; }
+
         [Display(Name = "Review")]
         [Range(1, int.MaxValue, ErrorMessage = "You must select the review.")]
         public int RevID { get; set; }

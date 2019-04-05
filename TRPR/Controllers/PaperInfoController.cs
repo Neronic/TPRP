@@ -22,26 +22,69 @@ namespace TRPR.Controllers
         }
 
         // GET: PaperInfo
-        public async Task<IActionResult> Index(string SearchString, int? PaperTypeID, int? StatusID, int? KeywordID, int? page, string sortDirection, string actionButton, string sortField = "Title")
+        public async Task<IActionResult> Index(string SearchString, int? CreatedOn, int? PaperTypeID, int? StatusID, int? KeywordID, int? page, string sortDirection, string actionButton, string sortField = "CreatedOn")
         {
-            PopulateDropDownLists();
-            ViewData["KeywordID"] = new SelectList(_context.Keywords.OrderBy(p => p.KeyWord), "ID", "KeyWord");
-            ViewData["Filtering"] = "";           
-
             var papers = from p in _context.PaperInfos
                 .Include(p => p.Status)
                 .Include(p => p.Files)
                 .Include(p => p.AuthoredPapers)
                 .ThenInclude(pc => pc.Researcher)
-                select p;
+                         select p;
 
-            int pageSize = 10;//Change as required
-            var pagedData = await PaginatedList<PaperInfo>.CreateAsync(papers.AsNoTracking(), page ?? 1, pageSize);
+            //if (User.IsInRole("Researcher"))
+            //{
+            //    papers = from p in _context.PaperInfos
+            //    .Include(p => p.Status)
+            //    .Include(p => p.Files)
+            //    .Include(p => p.AuthoredPapers)
+            //    .ThenInclude(pc => pc.Researcher)
+            //    .Where(c => c.CreatedBy == User.Identity.Name)
+            //             select p;
+            //}
+
+            if (User.IsInRole("Researcher"))
+            {
+                papers = from p in _context.PaperInfos
+                .Include(p => p.Status)
+                .Include(p => p.Files)
+                .Include(p => p.ReviewAssigns)
+                .ThenInclude(pc => pc.Researcher)
+                .ThenInclude(pc => pc.ResEmail)
+                //.Where(pc.ResEmail == User.Identity.Name)
+                         select p;
+            }
+
+            else if (User.IsInRole("Editor"))
+            {
+                papers = from p in _context.PaperInfos
+                .Include(p => p.Status)
+                .Include(p => p.Files)
+                .Include(p => p.AuthoredPapers)
+                .ThenInclude(pc => pc.Researcher)
+                
+                         select p;
+            }
+            else
+
+            {
+                papers = from p in _context.PaperInfos
+                .Include(p => p.Status)
+                .Include(p => p.Files)
+                .Include(p => p.AuthoredPapers)
+                .ThenInclude(pc => pc.Researcher)
+                .Where(c => c.CreatedBy == User.Identity.Name)
+                         select p;
+            }
+
+            PopulateDropDownLists();
+            ViewData["KeywordID"] = new SelectList(_context.Keywords.OrderBy(p => p.KeyWord), "ID", "KeyWord");
+            ViewData["Filtering"] = "";
 
             //Add as many filters as needed
             if (PaperTypeID.HasValue)
             {
                 papers = papers.Where(p => p.PaperTypeID == PaperTypeID);
+                ViewData["PaperTypeIDFilter"] = PaperTypeID;
                 ViewData["Filtering"] = " in";
             }
             if (StatusID.HasValue)
@@ -76,7 +119,7 @@ namespace TRPR.Controllers
             }
             //Now we know which field and direction to sort by, but a Switch is hard to use for 2 criteria
             //so we will use an if() structure instead.
-            if (sortField == "Status")//Sorting by Patient Name
+            if (sortField == "Status")//Sorting by Status
             {
                 if (String.IsNullOrEmpty(sortDirection))
                 {
@@ -115,7 +158,7 @@ namespace TRPR.Controllers
                         .OrderByDescending(p => p.PaperLength);
                 }
             }
-            else //Sorting by Title - the default sort order
+            else if (sortField == "Title")//Sorting by Title - the default sort order
             {
                 if (String.IsNullOrEmpty(sortDirection))
                 {
@@ -128,9 +171,26 @@ namespace TRPR.Controllers
                        .OrderByDescending(p => p.PaperTitle);
                 }
             }
+            else
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    papers = papers
+                        .OrderByDescending(p => p.CreatedOn);
+                }
+                else
+                {
+                    papers = papers
+                       .OrderBy(p => p.CreatedOn);
+                }
+            }
             //Set sort for next time
             ViewData["sortField"] = sortField;
             ViewData["sortDirection"] = sortDirection;
+
+            int pageSize = 10;//Change as required
+            var pagedData = await PaginatedList<PaperInfo>.CreateAsync(papers.AsNoTracking(), page ?? 1, pageSize);
+
 
             return View(pagedData);
 
@@ -139,6 +199,7 @@ namespace TRPR.Controllers
         // GET: PaperInfo/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
@@ -151,32 +212,76 @@ namespace TRPR.Controllers
                 return NotFound();
             }
 
+            var viewerFiles = _context.Files
+                .Where(f => f.PaperInfoID == id);// && (f.FileContent.MimeType.Contains("pdf")) || (f.FileContent.MimeType.Contains("image")));
+            ViewData["ViewerFileID"] = new SelectList(viewerFiles, "ID", "FileName");
+
             return View(paperInfo);
+
+            /*var theFile = _context.Files.Where(f => f.ID == id).SingleOrDefault();
+            
+            string fileBase64 = Convert.ToBase64String(theFile.FileContent);
+            string MimeType = theFile?.FileMimeType;
+            string downLink = "<a href='/patients/download/" + theFile.ID + "' title='Download: " + theFile.FileType + "'>" + theFile.FileName + "</a>";
+                       
+            ViewData["MimeType"] = MimeType;
+            ViewData["fileBase64"] = fileBase64;
+            ViewData["downloadLink"] = downLink;
+
+            return View(theFile);*/
+
+
+        }
+
+        public PartialViewResult GetViewerPartial(int? id)
+        {
+            string fileBase64 = "";//For our Byte[] converted to Base64 String
+            string downLink = "";//In case the file cannot be displayed
+            string MimeType = "";//So the partial view can decide what to do with the file
+
+            var theFile = _context.Files.Where(f => f.ID == id).SingleOrDefault();
+            if (theFile != null)
+            {
+                fileBase64 = Convert.ToBase64String(theFile.FileContent);
+                MimeType = theFile?.FileMimeType;
+                downLink = "<a href='/patients/download/" + theFile.ID + "' title='Download: " + theFile.FileType + "'>" + theFile.FileName + "</a>";
+            }
+            ViewData["MimeType"] = MimeType;
+            ViewData["fileBase64"] = fileBase64;
+            ViewData["downloadLink"] = downLink;
+            return PartialView("_pdfViewer");
         }
 
         // GET: PaperInfo/Create
         public IActionResult Create()
         {
-            
+
             PopulateDropDownLists();
             return View();
         }
-        
+
 
         // POST: PaperInfo/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,PaperTitle,PaperAbstract,PaperType,PaperLength,StatusID")] PaperInfo paperInfo, IEnumerable<IFormFile> theFiles)
+        public async Task<IActionResult> Create([Bind("ID,PaperTitle,PaperAbstract,PaperTypeID,PaperLength,StatusID")] PaperInfo paperInfo, IEnumerable<IFormFile> theFiles)
         {
-            
-            if (ModelState.IsValid)
+            try
             {
-                await AddDocuments(paperInfo, theFiles);
-                _context.Add(paperInfo);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    await AddDocuments(paperInfo, theFiles);
+                    paperInfo.StatusID = 2;
+                    _context.Add(paperInfo);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (Exception /* dex */)
+            {
+                ModelState.AddModelError("", "Unable to save changes after multiple attempts. Try again, and if the problem persists, see your system administrator.");
             }
             PopulateDropDownLists(paperInfo);
             return View(paperInfo);
@@ -197,12 +302,12 @@ namespace TRPR.Controllers
                             await f.CopyToAsync(memoryStream);
                             File newFile = new File
                             {
-                                
-                                    FileContent = memoryStream.ToArray(),
-                                    FileMimeType = mimeType,
-                                    FileName = f.FileName
-                                
-                                
+
+                                FileContent = memoryStream.ToArray(),
+                                FileMimeType = mimeType,
+                                FileName = f.FileName
+
+
                             };
                             paperInfo.Files.Add(newFile);
                         }
