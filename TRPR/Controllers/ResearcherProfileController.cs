@@ -64,7 +64,7 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,TitleID,ResFirst,ResLast,ResEmail,ResBio,InstituteID")] Researcher researcher, string[] selectedOptions)
+        public async Task<IActionResult> Create([Bind("ID, TitleID,ResFirst,ResLast,ResBio,InstituteID, ResEmail")] Researcher researcher, string[] selectedOptions)
         {
             researcher.ResEmail = User.Identity.Name;
             try
