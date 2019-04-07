@@ -44,34 +44,18 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a href="#">
-                            <i class="far fa-envelope">
+                            <span class="far fa-envelope">
                                 <span class="label" style="color: #8EA03E;"> 23 </span>
-                            </i>
+                            </span>
                         </a>
                     </li>
                     <li>
-                        <i class="far fa-bell">
+                        <span class="far fa-bell">
                             <span class="label" style="color: #8EA03E;"> &nbsp; </span>
-                        </i>
+                        </span>
                     </li>
-<<<<<<< HEAD
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="far fa-user"></i>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a asp-area="" asp-page="/Home/IndexAdmin">Admin</a></li>
-                            <li><a asp-area="" asp-page="/Home/IndexEditor">Editor</a></li>
-                            <li><a href="#">Account</a></li>
-                            <li class="divider"></li>
-                            <li>
-                                <partial name="_LoginPartial" />
-                            </li>
-                        </ul>
-=======
                     <li>
                         <partial name="_LoginPartial" />
->>>>>>> victoriaNew
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -113,11 +97,11 @@
                         <span>My Papers</span>
                     </a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
-<<<<<<< HEAD
+
                         <li>
                             <a asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLg" asp-route-ResearcherID="@User.Identity">Submitted</a>
                         </li>
-=======
+
                         @if (User.IsInRole("Researcher"))
                         {
                             <li>
@@ -131,7 +115,7 @@
                                 <a asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLg">Submitted</a>
                             </li>
                         }
->>>>>>> victoriaNew
+
                         <li>
                             <a asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLg">Drafts</a>
                         </li>
@@ -147,11 +131,11 @@
                 {
                     <li>
 
-<<<<<<< HEAD
-                        <a asp-area="" asp-controller="Researchers" asp-action="Index">
-=======
+
+                        <a asp-area="" asp-controller="Researchers" asp-action="Index">Researchers</a>
+
                         <a asp-area="" asp-controller="UserRoles" asp-action="Index">
->>>>>>> victoriaNew
+
                             <i class="fas fa-user-edit"></i>
                             Roles
                         </a>

@@ -39,7 +39,7 @@
                 <textarea asp-for="PaperKeywords" class="form-control" typeof="text"></textarea>
                 <span asp-validation-for="PaperKeywords" class="text-danger"></span>
             </div>
-<<<<<<< HEAD
+
             @*<div class="form-group">
                     <label asp-for="PaperLength" class="control-label"></label>
                     <input asp-for="PaperLength" class="form-control" />
@@ -52,14 +52,14 @@
                     </select>
                     <span asp-validation-for="StatusID" class="text-danger"></span>
                 </div>*@
-=======
+
             <div class="form-group">
                 <label asp-for="PaperLength" class="control-label"></label>
                 <textarea asp-for="PaperLength" class="form-control" typeof="text"></textarea>
                 <span asp-validation-for="PaperLength" class="text-danger"></span>
             </div>
                 <input type="hidden" name="StatusID" value="3" />
->>>>>>> victoriaNew
+
             <h5>Co-Author</h5>
             @Html.TextBox("SearchString", null, new { @class = "form-control" });
             <input type="text" placeholder="Email" class="form-control" style="width:250px; display:inline; margin-top:8px;">
@@ -67,11 +67,9 @@
             <button class="btnMedP" id="addNewCoAuthor" data-toggle="modal" data-target="#addCoAuthorModal" type="button">Add New Author</button>
 
 
-<<<<<<< HEAD
 
-=======
             <!-----------------------------------------------Modal Popup--------------------------------------------------------->
->>>>>>> victoriaNew
+
             @*<div class="modal-fade" id="addCoAuthorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -89,11 +87,10 @@
                             </div>
                             <div class="modal-footer"></div>
                         </div>
-<<<<<<< HEAD
+
                         @*<div class="modal-footer"></div>*@
             @*</div>
-=======
->>>>>>> victoriaNew
+
                     </div>
                 </div>*@
             <h4>My Co-Authors</h4>
@@ -155,8 +152,8 @@
             </div>
             <div class="modal-body">
                 @{
-                    var doc = new TRPR.Models.Researcher();
-                    Html.RenderPartial("_coAuthorRegistration", doc);
+                    var res = new TRPR.Models.Researcher();
+                    Html.RenderPartial("_coAuthorRegistration", res);
                 }
             </div>
             <div class="modal-footer">

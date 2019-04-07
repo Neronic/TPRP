@@ -33,18 +33,9 @@ namespace TRPR.Controllers
                 .Include(ri => ri.Institutes)
                 .Include(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
-<<<<<<< HEAD
-                .Include(a => a.AuthoredPapers)            
-                .ThenInclude(pa => pa.PaperInfoID)
-                select r;
-
-            int pageSize = 20;//Change as required
-            var pagedData = await PaginatedList<Researcher>.CreateAsync(researcher.AsNoTracking(), page ?? 1, pageSize);
-=======
                 .Include(r => r.Title)
                 .Include(r => r.Institutes)
-                select r;           
->>>>>>> victoriaNew
+                             select r;
 
             if (InstituteID.HasValue)
             {
@@ -228,7 +219,7 @@ namespace TRPR.Controllers
             UpdateResearcherExpertises(selectedOptions, researcherToUpdate);
 
 
-            if (await TryUpdateModelAsync<Researcher>(researcherToUpdate, "", 
+            if (await TryUpdateModelAsync<Researcher>(researcherToUpdate, "",
                 r => r.TitleID, r => r.ResFirst, r => r.ResMiddle, r => r.ResLast, r => r.ResBio, r => r.ResEmail, r => r.InstituteID))
             {
                 try
@@ -300,7 +291,7 @@ namespace TRPR.Controllers
             catch (DbUpdateException)
             {
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
-                
+
             }
             return RedirectToAction(nameof(Index));
         }

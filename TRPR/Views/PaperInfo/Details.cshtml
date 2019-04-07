@@ -8,7 +8,7 @@
     <div id="paper">
         <div class="paperDetail">
             <div class="form-group">
-               
+
                 <div class="">
                     @Html.DropDownList("ViewerFileID", null, htmlAttributes: new { @style = "display:none" })
                 </div>
@@ -78,33 +78,34 @@
     </div>
 
     <div style="width:50%;">
-<<<<<<< HEAD
+
         @{ var p = new TRPR.Models.ReviewAssign();
             <partial name="View" model="p" />
-=======
-        @{var c = new List<Comment>();
-             
             }
 
-        @*@{ var p = new TRPR.Models.ReviewAssign();
-            <partial name="_reviewAssign" model="p" />
->>>>>>> victoriaNew
+            @{var c = new List<Comment>();
 
-        }*@
-        @*<a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
-            <a asp-action="Index">Back to List</a>*@
+            }
+
+            @*@{ var p = new TRPR.Models.ReviewAssign();
+                        <partial name="_reviewAssign" model="p" />
+
+
+                    }
+                <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+                    <a asp-action="Index">Back to List</a>*@
+
+        </div>
 
     </div>
 
-</div>
 
-
-@section Scripts {
-    <script type="text/javascript">
-        $('#ViewerFileID').ready(function () {
-            var selectedOption = $("#ViewerFileID").val();
-            $('#showViewer').load('/PaperInfo/GetViewerPartial/' + selectedOption);
-        });
-    </script>
-}
+    @section Scripts {
+        <script type="text/javascript">
+            $('#ViewerFileID').ready(function () {
+                var selectedOption = $("#ViewerFileID").val();
+                $('#showViewer').load('/PaperInfo/GetViewerPartial/' + selectedOption);
+            });
+        </script>
+    }
 
