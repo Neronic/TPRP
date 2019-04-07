@@ -7,6 +7,11 @@
 <div class="page" id="detailsPage">
     <div id="paper">
         <div class="paperDetail">
+            <div class="form-group">
+                <div class="">
+                    @Html.DropDownList("ViewerFileID", null, htmlAttributes: new { @style = "display:none" })
+                </div>
+            </div>
             <div id="header1">
                 <h6 id="status">Pending</h6>
                 <h5 id="reference code">@Html.DisplayFor(model => model.PaperInfo.ID)</h5>
@@ -21,12 +26,9 @@
             </div>
         </div>
         <hr />
-        <div>
 
-            @*--partial view of file/index or paper/index not sure which one shows the pdf*@
+        @*--partial view of file/index or paper/index not sure which one shows the pdf*@
 
-
-        </div>
     </div>
     <div id="navbar2">
 
@@ -163,3 +165,13 @@
         <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
         <a asp-action="Index">Back to List</a>
     </div>*@
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $('#ViewerFileID').ready(function () {
+            var selectedOption = $("#ViewerFileID").val();
+            $('#showViewer').load('/PaperInfo/GetViewerPartial/' + selectedOption);
+        });
+    </script>
+}
