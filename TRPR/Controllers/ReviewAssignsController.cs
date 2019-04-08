@@ -145,6 +145,11 @@ namespace TRPR.Controllers
                 return NotFound();
             }
 
+
+            var viewerFiles = _context.Files
+                .Where(f => f.PaperInfoID == id);// && (f.FileContent.MimeType.Contains("pdf")) || (f.FileContent.MimeType.Contains("image")));
+            ViewData["ViewerFileID"] = new SelectList(viewerFiles, "ID", "FileName");
+
             return View(reviewAssign);
         }
 
@@ -238,6 +243,11 @@ namespace TRPR.Controllers
             {
                 return NotFound();
             }
+
+            var viewerFiles = _context.Files
+              .Where(f => f.PaperInfoID == id);// && (f.FileContent.MimeType.Contains("pdf")) || (f.FileContent.MimeType.Contains("image")));
+            ViewData["ViewerFileID"] = new SelectList(viewerFiles, "ID", "FileName");
+
             PopulateDropDownLists(reviewassign);
             return View(reviewassign);
         }
@@ -310,6 +320,10 @@ namespace TRPR.Controllers
                 }
                 
             }
+            //var viewerFiles = _context.Files
+            //  .Where(f => f.PaperInfoID == id);// && (f.FileContent.MimeType.Contains("pdf")) || (f.FileContent.MimeType.Contains("image")));
+            //ViewData["ViewerFileID"] = new SelectList(viewerFiles, "ID", "FileName");
+
             PopulateDropDownLists(reviewToUpdate);
             return View(reviewToUpdate);
         }
