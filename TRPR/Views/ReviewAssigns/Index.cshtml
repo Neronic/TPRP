@@ -38,8 +38,8 @@
             </div>
         </div>
     </div>
-    <table class="table">
-        <thead>
+    <table class="table table-striped">
+        <thead class="thead">
             <tr>
                 <th>
                     <input type="submit" name="actionButton" value="Paper Title" class="btn btn-link" style="color:#F5F6FA;" />
@@ -53,31 +53,36 @@
                 <th>
                     <input type="submit" name="actionButton" value="Assigned On" class="btn btn-link" style="color:#F5F6FA;" />
                 </th>
-                <th></th>
+                <th>
+                    Recommendation
+                </th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PaperInfo.PaperTitle)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Researcher.FullName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Roles.RoleTitle)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreatedOn)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.ID">Review</a> |
-                        <a asp-controller="PaperInfo" asp-action="Details" asp-route-id="@item.ID">Details |</a>
-                        @*<a asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaperInfo.PaperTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Researcher.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Roles.RoleTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedOn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Recommend.RecTitle)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Review</a> |
+                    <a asp-controller="PaperInfo" asp-action="Details" asp-route-id="@item.ID">Details |</a>
+                    @*<a asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
+                </td>
+            </tr>
             }
         </tbody>
     </table>
