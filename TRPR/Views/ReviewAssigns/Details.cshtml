@@ -8,9 +8,9 @@
     <div id="paper">
         <div class="paperDetail">
             <div class="form-group">
-                <div class="">
+                @*<div class="">
                     @Html.DropDownList("ViewerFileID", null, htmlAttributes: new { @style = "display:none" })
-                </div>
+                </div>*@
             </div>
             <div id="header1">
                 <h6 id="status">Pending</h6>
@@ -167,11 +167,11 @@
     </div>*@
 
 
-@section Scripts {
+@*@section Scripts {
     <script type="text/javascript">
         $('#ViewerFileID').ready(function () {
             var selectedOption = $("#ViewerFileID").val();
             $('#showViewer').load('/PaperInfo/GetViewerPartial/' + selectedOption);
         });
     </script>
-}
+}*@

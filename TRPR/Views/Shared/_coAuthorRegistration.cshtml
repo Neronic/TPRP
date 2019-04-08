@@ -2,7 +2,7 @@
 
 @using (Html.BeginForm("Create", "Researchers", FormMethod.Post, htmlAttributes: new { id = "createCoAuthorForm" }))
 {
-<div class="row" style="margin:0;">
+    <div class="row" style="margin:0;">
         <form asp-action="_coAuthorRegistration">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -39,8 +39,30 @@
                 <span asp-validation-for="ResBio" class="text-danger"></span>
             </div>
             <div class="form-group">
-                
+
             </div>
         </form>
     </div>
 }
+<script type="text/javascript">
+    $("#addCoAuthorModal").on("hidden.bs.modal", function () {
+    });
+    $("#btnCoAuthCreate").click(function (event) {
+        event.preventDefault();
+        var form = $("#createCoAuthorForm");
+        if (form.valid()) {
+            $a.ajax({
+                type: "POST",
+                url: form.attr("action"),
+                data: form.serialize()
+            })
+                .success(function () {
+                    $("#addCoAuthorModal").modal(hide);
+                })
+                .error(function () {
+                    alert("Create Failed. There was a problem adding the Co-Author.");
+                });
+        }
+        return false;
+    });
+</script>

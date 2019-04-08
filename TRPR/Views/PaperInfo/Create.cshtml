@@ -62,7 +62,7 @@
                     <span asp-validation-for="PaperLength" class="text-danger"></span>
                 </div>*@
             <input type="hidden" name="StatusID" value="3" />
-            <div>
+            @*<div>
                 <br /><h5>Co-Author</h5>
                 <input type="text" placeholder="Email" class="form-control" style="width:250px; display:inline; margin-top:8px;">
                 <button class="btnMedG">Search</button>
@@ -71,7 +71,7 @@
 
 
 
-            <h4>My Co-Authors</h4>
+            <h4>My Co-Authors</h4>*@
 
             <div class="form-group">
                 <label class="control-label">Related File:</label>
@@ -117,7 +117,7 @@
     </div>
 </div>
 
-<script type="text/javascript">
+@*<script type="text/javascript">
     $("#addCoAuthorModal").on("hidden.bs.modal", function () {
     });
     $("#btnCoAuthCreate").click(function (event) {
@@ -137,7 +137,7 @@
                 });
         }
         return false;
-    });
+    });*@
 
 </script>
 @section Scripts {

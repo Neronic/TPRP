@@ -43,7 +43,7 @@
 <div id="editorReview">
     <form asp-action="Edit" id="reviewSection">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="hidden" asp-for="ID" />
+        <input type="hidden" asp-for="PaperInfoID" />
         @*<div class="form-group">
                 <dl class="dl-horizontal">
                     <dt>
@@ -92,16 +92,17 @@
             <input asp-for="RevCitationReview" class="form-control" />
             <span asp-validation-for="RevCitationReview" class="text-danger"></span>
         </div>
+
         <div class="form-group">
             <label asp-for="RecommendID" class="control-label"></label>
-            <select asp-for="RecommendID" class="form-control" asp-items="ViewBag.RecID">
+            <select asp-for="RecommendID" class="form-control" asp-items="ViewBag.RecommendID">
                 <option value=null>Select an option</option>
             </select>
             <span asp-validation-for="RecommendID" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="ReviewAgainID" class="control-label"></label>
-            <select asp-for="ReviewAgainID" class="form-control" asp-items="ViewBag.ReRevID">
+            <select asp-for="ReviewAgainID" class="form-control" asp-items="ViewBag.ReviewAgainID">
                 <option value=null>Select an option</option>
             </select>
             <span asp-validation-for="ReviewAgainID" class="text-danger"></span>
@@ -113,10 +114,10 @@
             </div>*@
 
 
-        <div id="fileUploader">
+        @*<div id="fileUploader">
 
             <partial name="~/Views/Shared/_fileUploader.cshtml" />
-        </div>
+        </div>*@
 
 
 

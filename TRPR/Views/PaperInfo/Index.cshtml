@@ -128,6 +128,7 @@
                 <td>
                     @if (User.IsInRole("Editor"))
                     {
+                      @*<a href="@Url.Action("create", "reviewassigns", new { id = item.ID })">Assign |</a>*@
                         <a asp-controller="ReviewAssigns" asp-action="Create" asp-route-id="@item.ID">Assign |</a>
                         <a asp-action="Details" asp-route-id="@item.ID">Details |</a>
                         <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
