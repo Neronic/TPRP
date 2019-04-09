@@ -64,8 +64,12 @@
                     <input type="submit" name="actionButton" value="Length" class="btn btn-link" style="color:#F5F6FA;" />
                 </th>
                 <th>
+                    Keywords
+                </th>
+                <th>
                     <input type="submit" name="actionButton" value="Status" class="btn btn-link" style="color:#F5F6FA;" />
                 </th>
+
                 <th>
                     <input type="submit" disabled="disabled" value="Uploaded Files" class="btn btn-link" style="color:#F5F6FA;" />
                 </th>
@@ -95,6 +99,12 @@
                     @Html.DisplayFor(modelItem => item.PaperLength)
                 </td>
                 <td>
+                    @foreach (var k in item.PaperKeywords)
+                    {
+                        @k.Keyword.KeyWord<br/>
+                    }
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Status.StatName)
                 </td>
                 <td>
@@ -118,8 +128,9 @@
                 <td>
                     @if (User.IsInRole("Editor"))
                     {
+                        @*<a href="@Url.Action("create", "reviewassigns", new { id = item.ID })">Assign |</a>*@
                         <a asp-controller="ReviewAssigns" asp-action="Create" asp-route-id="@item.ID">Assign |</a>
-                        <a asp-action="Details" asp-route-id="@item.ID">Details |</a>
+                        <a asp-controller="ReviewAssigns" asp-action="Details" asp-route-id="@item.ID">Details |</a>
                         <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
                     }
 
@@ -131,7 +142,7 @@
                     else
                     {
                         <a asp-action="Edit" asp-route-id="@item.ID">Edit |</a>
-                        <a asp-action="Details" asp-route-id="@item.ID">Details</a>
+                        <a asp-controller="ReviewAssigns" asp-action="Details" asp-route-id="@item.ID">Details</a>
                     }
                 </td>
             </tr>

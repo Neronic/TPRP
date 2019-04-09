@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using TRPR.Data;
 using TRPR.Models;
 using TRPR.Utilities;
+using TRPR.ViewModels;
 
 namespace TRPR.Controllers
 {
@@ -29,6 +30,8 @@ namespace TRPR.Controllers
                 .Include(p => p.Files)
                 .Include(p => p.AuthoredPapers)
                 .ThenInclude(pc => pc.Researcher)
+                .Include(p => p.PaperKeywords)
+                .ThenInclude(p => p.Keyword)
                          select p;
 
             //if (User.IsInRole("Researcher"))
@@ -50,7 +53,9 @@ namespace TRPR.Controllers
                 .Include(p => p.ReviewAssigns)
                 .ThenInclude(pc => pc.Researcher)
                 .ThenInclude(pc => pc.ResEmail)
-                //.Where(pc.ResEmail == User.Identity.Name)
+                .Include(p => p.PaperKeywords)
+                .ThenInclude(p => p.Keyword)
+                             //.Where(pc.ResEmail == User.Identity.Name)
                          select p;
             }
 
@@ -61,7 +66,9 @@ namespace TRPR.Controllers
                 .Include(p => p.Files)
                 .Include(p => p.AuthoredPapers)
                 .ThenInclude(pc => pc.Researcher)
-                
+                      .Include(p => p.PaperKeywords)
+                .ThenInclude(p => p.Keyword)
+
                          select p;
             }
             else
@@ -73,6 +80,8 @@ namespace TRPR.Controllers
                 .Include(p => p.AuthoredPapers)
                 .ThenInclude(pc => pc.Researcher)
                 .Where(c => c.CreatedBy == User.Identity.Name)
+                                   .Include(p => p.PaperKeywords)
+                .ThenInclude(p => p.Keyword)
                          select p;
             }
 
@@ -255,7 +264,8 @@ namespace TRPR.Controllers
         // GET: PaperInfo/Create
         public IActionResult Create()
         {
-
+            PaperInfo paperInfo = new PaperInfo();
+            PopulatePaperKeywordData(paperInfo);
             PopulateDropDownLists();
             return View();
         }
@@ -266,10 +276,11 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,PaperTitle,PaperAbstract,PaperTypeID,PaperLength,StatusID")] PaperInfo paperInfo, IEnumerable<IFormFile> theFiles)
+        public async Task<IActionResult> Create([Bind("ID,PaperTitle,PaperAbstract,PaperTypeID,PaperLength, StatusID")] PaperInfo paperInfo, string[] selectedOptions, IEnumerable<IFormFile> theFiles)
         {
             try
             {
+                UpdatePaperKeywords(selectedOptions, paperInfo);
                 if (ModelState.IsValid)
                 {
                     await AddDocuments(paperInfo, theFiles);
@@ -284,6 +295,7 @@ namespace TRPR.Controllers
                 ModelState.AddModelError("", "Unable to save changes after multiple attempts. Try again, and if the problem persists, see your system administrator.");
             }
             PopulateDropDownLists(paperInfo);
+            PopulatePaperKeywordData(paperInfo);
             return View(paperInfo);
         }
 
@@ -428,6 +440,70 @@ namespace TRPR.Controllers
         {
             ViewData["StatusID"] = StatusSelectList(infos?.StatusID);
             ViewData["PaperTypeID"] = PaperTypeSelectList(infos?.PaperTypeID);
+        }
+
+        private void PopulatePaperKeywordData(PaperInfo paperInfo)
+        {
+            var allKeywords = _context.Keywords;
+            var papKey = new HashSet<int>(paperInfo.PaperKeywords.Select(b => b.KeywordID));
+            var selected = new List<KeywordVM>();
+            var available = new List<KeywordVM>();
+            foreach (var s in allKeywords)
+            {
+                if (papKey.Contains(s.ID))
+                {
+                    selected.Add(new KeywordVM
+                    {
+                        KeywordsID = s.ID,
+                        KeywordName = s.KeyWord
+                    });
+                }
+                else
+                {
+                    available.Add(new KeywordVM
+                    {
+                        KeywordsID = s.ID,
+                        KeywordName = s.KeyWord
+                    });
+                }
+            }
+
+            ViewData["selOpts"] = new MultiSelectList(selected.OrderBy(s => s.KeywordName), "KeywordsID", "KeywordName");
+            ViewData["availOpts"] = new MultiSelectList(available.OrderBy(s => s.KeywordName), "KeywordsID", "KeywordName");
+        }
+
+        private void UpdatePaperKeywords(string[] selectedOptions, PaperInfo paperInfoToUpdate)
+        {
+            if (selectedOptions == null)
+            {
+                paperInfoToUpdate.PaperKeywords = new List<PaperKeyword>();
+                return;
+            }
+
+            var selectedOptionsHS = new HashSet<string>(selectedOptions);
+            var papKey = new HashSet<int>(paperInfoToUpdate.PaperKeywords.Select(b => b.KeywordID));
+            foreach (var s in _context.Keywords)
+            {
+                if (selectedOptionsHS.Contains(s.ID.ToString()))
+                {
+                    if (!papKey.Contains(s.ID))
+                    {
+                        paperInfoToUpdate.PaperKeywords.Add(new PaperKeyword
+                        {
+                            KeywordID = s.ID,
+                            PaperInfoID = paperInfoToUpdate.ID
+                        });
+                    }
+                }
+                else
+                {
+                    if (papKey.Contains(s.ID))
+                    {
+                        PaperKeyword specToRemove = paperInfoToUpdate.PaperKeywords.SingleOrDefault(d => d.KeywordID == s.ID);
+                        _context.Remove(specToRemove);
+                    }
+                }
+            }
         }
 
         [HttpGet]

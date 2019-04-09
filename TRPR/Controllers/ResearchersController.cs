@@ -35,7 +35,7 @@ namespace TRPR.Controllers
                 .ThenInclude(re => re.Expertise)
                 .Include(r => r.Title)
                 .Include(r => r.Institutes)
-                             select r;
+                select r;           
 
             if (InstituteID.HasValue)
             {
@@ -219,7 +219,7 @@ namespace TRPR.Controllers
             UpdateResearcherExpertises(selectedOptions, researcherToUpdate);
 
 
-            if (await TryUpdateModelAsync<Researcher>(researcherToUpdate, "",
+            if (await TryUpdateModelAsync<Researcher>(researcherToUpdate, "", 
                 r => r.TitleID, r => r.ResFirst, r => r.ResMiddle, r => r.ResLast, r => r.ResBio, r => r.ResEmail, r => r.InstituteID))
             {
                 try
@@ -291,7 +291,7 @@ namespace TRPR.Controllers
             catch (DbUpdateException)
             {
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
-
+                
             }
             return RedirectToAction(nameof(Index));
         }

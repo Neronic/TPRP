@@ -44,15 +44,15 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a href="#">
-                            <span class="far fa-envelope">
+                            <i class="far fa-envelope">
                                 <span class="label" style="color: #8EA03E;"> 23 </span>
-                            </span>
+                            </i>
                         </a>
                     </li>
                     <li>
-                        <span class="far fa-bell">
+                        <i class="far fa-bell">
                             <span class="label" style="color: #8EA03E;"> &nbsp; </span>
-                        </span>
+                        </i>
                     </li>
                     <li>
                         <partial name="_LoginPartial" />
@@ -97,11 +97,6 @@
                         <span>My Papers</span>
                     </a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
-
-                        <li>
-                            <a asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLg" asp-route-ResearcherID="@User.Identity">Submitted</a>
-                        </li>
-
                         @if (User.IsInRole("Researcher"))
                         {
                             <li>
@@ -115,7 +110,6 @@
                                 <a asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLg">Submitted</a>
                             </li>
                         }
-
                         <li>
                             <a asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLg">Drafts</a>
                         </li>
@@ -131,11 +125,7 @@
                 {
                     <li>
 
-
-                        <a asp-area="" asp-controller="Researchers" asp-action="Index">Researchers</a>
-
                         <a asp-area="" asp-controller="UserRoles" asp-action="Index">
-
                             <i class="fas fa-user-edit"></i>
                             Roles
                         </a>

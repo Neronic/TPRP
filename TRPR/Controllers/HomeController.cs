@@ -11,7 +11,7 @@ using TRPR.Models;
 
 namespace TRPR.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class HomeController : Controller
     {
 
