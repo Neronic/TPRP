@@ -34,40 +34,33 @@
 
         </div>
         <hr />
-
-
     </div>
-
-    @*<div id="navbar2">
-
-            <partial name="~/Views/Shared/_navbar.cshtml" />
-        </div>*@
     <div id="editorReview">
         <form asp-action="Edit" id="reviewSection">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="PaperInfoID" />
             @*<div class="form-group">
-                    <dl class="dl-horizontal">
-                        <dt>
-                                @Html.DisplayNameFor(model => model.PaperInfo)
-                            </dt>
-                            <dd>
-                                @Html.DisplayFor(model => model.PaperInfo.PaperTitle)
-                            </dd>
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Researcher)
-                            </dt>
-                            <dd>
-                                @Html.DisplayFor(model => model.Researcher.FullName)
-                            </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Roles)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.Roles.RoleTitle)
-                        </dd>
-                    </dl>
-                </div>*@
+            <dl class="dl-horizontal">
+                <dt>
+                        @Html.DisplayNameFor(model => model.PaperInfo)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PaperInfo.PaperTitle)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Researcher)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Researcher.FullName)
+                    </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Roles)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Roles.RoleTitle)
+                </dd>
+            </dl>
+        </div>*@
             @Html.DisplayFor(model => model.Roles.RoleTitle)
             <div class="form-group">
                 <label asp-for="RevContentReview" class="control-label"></label>
@@ -94,6 +87,16 @@
                 <input asp-for="RevCitationReview" class="form-control" />
                 <span asp-validation-for="RevCitationReview" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="EiCComment" class="control-label"></label>
+                <input asp-for="EiCComment" class="form-control" />
+                <span asp-validation-for="EiCComment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AuthorComment" class="control-label"></label>
+                <input asp-for="AuthorComment" class="form-control" />
+                <span asp-validation-for="AuthorComment" class="text-danger"></span>
+            </div>
 
             <div class="form-group">
                 <label asp-for="RecommendID" class="control-label"></label>
@@ -111,22 +114,22 @@
             </div>
 
             @*<div id="comments">
-                    @Html.Partial("_Comments", new List<Comment>());
+            @Html.Partial("_Comments", new List<Comment>());
 
-                </div>*@
+        </div>*@
 
 
             @*<div id="fileUploader">
 
-                    <partial name="~/Views/Shared/_fileUploader.cshtml" />
-                </div>*@
+            <partial name="~/Views/Shared/_fileUploader.cshtml" />
+        </div>*@
 
 
 
 
             @*<div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-default" />
-                </div>*@
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>*@
             <div id="buttons">
                 <div class="dropdown" id="btnSave">
                     <a class="btn btnMedG dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -171,7 +171,7 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int id, [Bind("PaperInfoID, ResearcherID,RoleID,RevContentReview,RevKeywordReview,RevLengthReview,RevFormatReview,RevCitationReview,RecommendID,ReviewAgainID")] ReviewAssign reviewAssign)
+        public async Task<IActionResult> Create(int id, [Bind("PaperInfoID, ResearcherID,RoleID,RevContentReview,RevKeywordReview,RevLengthReview,RevFormatReview,RevCitationReview, EiCComment, AuthorComment, RecommendID,ReviewAgainID")] ReviewAssign reviewAssign)
         {
             var reviewAssigns = from r in _context.ReviewAssigns
                .Include(r => r.PaperInfo)
@@ -288,7 +288,7 @@ namespace TRPR.Controllers
 
             if (await TryUpdateModelAsync<ReviewAssign>(reviewToUpdate, "",
              s => s.PaperInfoID, s => s.ResearcherID, s => s.RoleID, s => s.RevContentReview, s => s.RevKeywordReview, s => s.RevLengthReview,
-                s => s.RevFormatReview, s => s.RevCitationReview, s => s.RecommendID, s => s.ReviewAgainID))
+                s => s.RevFormatReview, s => s.RevCitationReview, s=> s.EiCComment, s=> s.AuthorComment, s => s.RecommendID, s => s.ReviewAgainID))
             {
                 try
                 {
