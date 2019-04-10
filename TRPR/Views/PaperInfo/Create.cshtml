@@ -93,30 +93,6 @@
         </form>
     </div>
 
-    <div class="modal fade" id="addCoAuthorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" style="display:inline;">REGISTER</h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    @{
-                        var doc = new TRPR.Models.Researcher();
-                        Html.RenderPartial("_coAuthorRegistration", doc);
-                    }
-                </div>
-                <div class="modal-footer">
-                    <input type="submit" value="Cancel" class="btn btnMedG" />
-                    <input type="submit" value="Save" class="btn btnMedP" id="btnCoAuthCreate" />
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-----------------------------------------------Modal Popup--------------------------------------------------------->
 
 

@@ -7,7 +7,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="TitleID" class="control-label"></label>
-                <select asp-for="TitleID" class ="form-control" asp-items="ViewBag.TitleID"></select>
+                <select asp-for="TitleID" class="form-control" asp-items="ViewBag.TitleID"></select>
             </div>
             <div class="form-group">
                 <label asp-for="ResFirst" class="control-label"></label>
@@ -35,9 +35,8 @@
                 <span asp-validation-for="ResBio" class="text-danger"></span>
             </div>
             <div class="form-group">
-<<<<<<< HEAD
                 <label asp-for="InstituteID" class="control-label"></label>
-                <select asp-for="InstituteID" class ="form-control" asp-items="ViewBag.InstituteID"></select>
+                <select asp-for="InstituteID" class="form-control" asp-items="ViewBag.InstituteID"></select>
             </div>
             <div class="form-group">
                 <div class="checkbox">
@@ -48,40 +47,38 @@
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
-=======
 
->>>>>>> victoriaNew
             </div>
         </form>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
 }
-<script type="text/javascript">
-    $("#addCoAuthorModal").on("hidden.bs.modal", function () {
-    });
-    $("#btnCoAuthCreate").click(function (event) {
-        event.preventDefault();
-        var form = $("#createCoAuthorForm");
-        if (form.valid()) {
-            $a.ajax({
-                type: "POST",
-                url: form.attr("action"),
-                data: form.serialize()
-            })
-                .success(function () {
-                    $("#addCoAuthorModal").modal(hide);
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+    @*<script type="text/javascript">
+        $("#addCoAuthorModal").on("hidden.bs.modal", function () {
+        });
+        $("#btnCoAuthCreate").click(function (event) {
+            event.preventDefault();
+            var form = $("#createCoAuthorForm");
+            if (form.valid()) {
+                $a.ajax({
+                    type: "POST",
+                    url: form.attr("action"),
+                    data: form.serialize()
                 })
-                .error(function () {
-                    alert("Create Failed. There was a problem adding the Co-Author.");
-                });
-        }
-        return false;
-    });
-</script>
+                    .success(function () {
+                        $("#addCoAuthorModal").modal(hide);
+                    })
+                    .error(function () {
+                        alert("Create Failed. There was a problem adding the Co-Author.");
+                    });
+            }
+            return false;
+        });
+    </script>*@
+            
