@@ -11,9 +11,8 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
+            @*<input type="hidden" name="PaperID" value="@Model.PaperInfoID">*@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @*<input type="hidden" asp-for="ID" />*@
-            @Html.HiddenFor(model => model.PaperInfo.ID)
             <h4>
                 @Html.DisplayNameFor(model => model.PaperInfo.PaperTitle)
             </h4>
@@ -21,9 +20,6 @@
                 @Html.DisplayFor(model => model.PaperInfo.PaperTitle)
             </h4>
             <div class="form-group">
-                @*<label asp-for="PaperInfoID" class="control-label"></label>
-            <input type="hidden" asp-for="PaperInfoID" class="form-control" asp-items="ViewBag.PaperInfoID"/>*@
-
 
                 <span asp-validation-for="PaperInfoID" class="text-danger"></span>
                 <label asp-for="PaperInfoID" class="control-label"></label>

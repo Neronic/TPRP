@@ -12,17 +12,23 @@ using TRPR.Utilities;
 using MailKit.Net.Smtp;
 using MailKit;
 using MimeKit;
-
+using TRPR.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace TRPR.Controllers
 {
     public class ReviewAssignsController : Controller
     {
         private readonly TRPRContext _context;
+        private readonly ApplicationDbContext _dbcontext;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public ReviewAssignsController(TRPRContext context)
+        public ReviewAssignsController(ApplicationDbContext dbcontext, UserManager<IdentityUser> userManager, TRPRContext context)
         {
             _context = context;
+            _dbcontext = dbcontext;
+            _userManager = userManager;// serviceProvider.GetRequiredService<UserManager<IdentityRole>>();
         }
 
         // GET: ReviewAssigns
@@ -156,6 +162,7 @@ namespace TRPR.Controllers
         // GET: ReviewAssigns/Create
         public IActionResult Create(int? id)
         {
+
             var reviewAssigns = from r in _context.ReviewAssigns
                 .Include(r => r.PaperInfo)
                .ThenInclude(r => r.PaperTitle)
@@ -437,9 +444,28 @@ namespace TRPR.Controllers
 
         private SelectList ResearcherSelectList(int? id)
         {
-            var dQuery = from d in _context.Researchers
-                         orderby d.ResLast, d.ResFirst
-                         select d;
+            //users in "Admin role
+            var uInRole = (from u in _dbcontext.Users
+                           join ur in _dbcontext.UserRoles on u.Id equals ur.UserId
+                           join r in _dbcontext.Roles on ur.RoleId equals r.Id
+                           where r.Name == "Researcher"
+                           select u.UserName).ToList(); 
+
+
+            var dQuery = (from d in _context.Researchers
+                          orderby d.ResLast, d.ResFirst
+
+
+                          select d).ToList();
+
+           dQuery = dQuery.Where(d => uInRole.Contains(d.ResEmail)).ToList();
+
+
+
+          
+                         //select d;
+              
+
             return new SelectList(dQuery, "ID", "FullName", id);
         }
 

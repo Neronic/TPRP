@@ -53,7 +53,7 @@ namespace TRPR.Models
         [Display(Name = "Authored Papers")]
         public ICollection<AuthoredPaper> AuthoredPapers { get; set; }
 
-        [Display(Name = "Reviewers")]
+        [Display(Name = "Reviews")]
         public ICollection<ReviewAssign> ReviewAssigns { get; set; }
     }
 }
