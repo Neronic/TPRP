@@ -294,9 +294,9 @@ namespace TRPR.Controllers
             return View(paperInfo);
         }
 
-        private async Task AddDocuments(PaperInfo paperInfo, IEnumerable<IFormFile> theFiles)
+        private async Task AddDocuments(PaperInfo paperInfo, IEnumerable<IFormFile> docs)
         {
-            foreach (var f in theFiles)
+            foreach (var f in docs)
             {
                 if (f != null)
                 {

@@ -10,7 +10,7 @@
             <div class="form-group">
                 <label class="control-label">View File:</label>
                 <div class="">
-                    @Html.DropDownList("ViewerFileID", null, htmlAttributes: new { @style = "display:none" })
+                    @Html.DropDownList("ViewerFileID", null, "Select a File", htmlAttributes: new { @class = "form-control" })
                 </div>
             </div>
 
@@ -168,7 +168,7 @@
 
 @section Scripts {
     <script type="text/javascript">
-        $('#ViewerFileID').ready(function () {
+        $('#ViewerFileID').change(function () {
             var selectedOption = $("#ViewerFileID").val();
             $('#showViewer').load('/ReviewAssigns/GetViewerPartial/' + selectedOption);
         });
