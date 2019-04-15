@@ -23,7 +23,7 @@
         <div id="showViewer" class="form-group">
 
             @*---------------------------------------- pdf view here ------------------------------------------------------------*@
-       
+
         </div>
 
     </div>
@@ -36,27 +36,27 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ID" />
             @*<div class="form-group">
-                    <dl class="dl-horizontal">
-                        <dt>
-                                @Html.DisplayNameFor(model => model.PaperInfo)
-                            </dt>
-                            <dd>
-                                @Html.DisplayFor(model => model.PaperInfo.PaperTitle)
-                            </dd>
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Researcher)
-                            </dt>
-                            <dd>
-                                @Html.DisplayFor(model => model.Researcher.FullName)
-                            </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Roles)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.Roles.RoleTitle)
-                        </dd>
-                    </dl>
-                </div>*@
+            <dl class="dl-horizontal">
+                <dt>
+                        @Html.DisplayNameFor(model => model.PaperInfo)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PaperInfo.PaperTitle)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Researcher)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Researcher.FullName)
+                    </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Roles)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Roles.RoleTitle)
+                </dd>
+            </dl>
+        </div>*@
             @Html.DisplayFor(model => model.Roles.RoleTitle)
             <div class="form-group">
                 <label asp-for="RevContentReview" class="control-label"></label>
@@ -85,19 +85,42 @@
             </div>
             <div class="form-group">
                 <label asp-for="RecommendID" class="control-label"></label>
-                <select asp-for="RecommendID" class="form-control" asp-items="ViewBag.RecID">
+                <select asp-for="RecommendID" class="form-control" asp-items="ViewBag.RecommendID">
                     <option value=null>Select an option</option>
                 </select>
                 <span asp-validation-for="RecommendID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ReviewAgainID" class="control-label"></label>
-                <select asp-for="ReviewAgainID" class="form-control" asp-items="ViewBag.ReRevID">
+                <select asp-for="ReviewAgainID" class="form-control" asp-items="ViewBag.ReviewAgainID">
                     <option value=null>Select an option</option>
                 </select>
                 <span asp-validation-for="ReviewAgainID" class="text-danger"></span>
             </div>
-
+            <div class="form-group">
+                @if (User.IsInRole("Editor"))
+                {
+                    <label asp-for="PaperInfo.StatusID" class="control-label"></label>
+                    <select asp-for="PaperInfo.StatusID" class="form-control" asp-items="ViewBag.PaperInfo.StatusID">
+                        <option value=null>Select an option</option>
+                    </select>
+                    <span asp-validation-for="PaperInfo.StatusID" class="text-danger"></span>
+                }
+                else if (User.IsInRole("Researcher"))
+                {
+                    @Html.DisplayFor(model => model.Comment1)
+                    @Html.DisplayFor(model => model.Comment2)
+                }
+                else
+                {
+                    <label asp-for="Comment2" class="control-label"></label>
+                    <input asp-for="Comment2" class="form-control" />
+                    <span asp-validation-for="Comment2" class="text-danger"></span>
+                }
+            </div>
+            <div id="comments">
+                <a asp-action="_Comments" id="Comments">Comments</a>
+            </div>
 
 
 
@@ -110,8 +133,8 @@
 
 
             @*<div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-default" />
-                </div>*@
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>*@
             <div id="buttons">
                 <div class="dropdown" id="btnSave">
                     <a class="btn btnMedG dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -137,7 +160,12 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        $('#Comments').load('/ReviewAssign/ListOfComments/@Model.ID');
+    </script>
 }
+
 
 @*@section Scripts {
         <script type="text/javascript">

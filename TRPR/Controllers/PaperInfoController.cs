@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using TRPR.Data;
 using TRPR.Models;
 using TRPR.Utilities;
+using TRPR.ViewModels;
 
 namespace TRPR.Controllers
 {
@@ -22,26 +24,70 @@ namespace TRPR.Controllers
         }
 
         // GET: PaperInfo
-        public async Task<IActionResult> Index(string SearchString, int? PaperTypeID, int? StatusID, int? KeywordID, int? page, string sortDirection, string actionButton, string sortField = "Title")
+        public async Task<IActionResult> Index(string SearchString, int? CreatedOn, int? PaperTypeID, int? StatusID, int? KeywordID, int? page, string sortDirection, string actionButton, string sortField = "CreatedOn")
         {
-            PopulateDropDownLists();
-            ViewData["KeywordID"] = new SelectList(_context.Keywords.OrderBy(p => p.KeyWord), "ID", "KeyWord");
-            ViewData["Filtering"] = "";           
-
             var papers = from p in _context.PaperInfos
                 .Include(p => p.Status)
                 .Include(p => p.Files)
                 .Include(p => p.AuthoredPapers)
                 .ThenInclude(pc => pc.Researcher)
-                select p;
+                         select p;
 
-            int pageSize = 10;//Change as required
-            var pagedData = await PaginatedList<PaperInfo>.CreateAsync(papers.AsNoTracking(), page ?? 1, pageSize);
+            //if (User.IsInRole("Researcher"))
+            //{
+            //    papers = from p in _context.PaperInfos
+            //    .Include(p => p.Status)
+            //    .Include(p => p.Files)
+            //    .Include(p => p.AuthoredPapers)
+            //    .ThenInclude(pc => pc.Researcher)
+            //    .Where(c => c.CreatedBy == User.Identity.Name)
+            //             select p;
+            //}
+
+            if (User.IsInRole("Researcher"))
+            {
+                papers = from p in _context.PaperInfos
+                .Include(p => p.Status)
+                .Include(p => p.Files)
+                .Include(p => p.ReviewAssigns)
+                .ThenInclude(pc => pc.Researcher)
+                .ThenInclude(pc => pc.ResEmail)
+                //.Where(p => p == User.Identity.Name)
+                         select p;
+            }
+
+            else if (User.IsInRole("Editor"))
+            {
+                papers = from p in _context.PaperInfos
+                .Include(p => p.Status)
+                .Include(p => p.Files)
+                .Include(p => p.AuthoredPapers)
+                .ThenInclude(pc => pc.Researcher)                
+                         select p;
+            }
+            else
+            {
+                papers = from p in _context.PaperInfos
+                .Include(p => p.Status)
+                .Include(p => p.Files)
+                .Include(p => p.AuthoredPapers)
+                .ThenInclude(pc => pc.Researcher)
+                .Include(p => p.PaperKeywords)
+                .ThenInclude(pk => pk.Keyword)
+                .Where(c => c.CreatedBy == User.Identity.Name)
+                select p;
+            } 
+            
+
+            PopulateDropDownLists();
+            ViewData["KeywordID"] = new SelectList(_context.Keywords.OrderBy(p => p.KeyWord), "ID", "KeyWord");
+            ViewData["Filtering"] = "";
 
             //Add as many filters as needed
             if (PaperTypeID.HasValue)
             {
                 papers = papers.Where(p => p.PaperTypeID == PaperTypeID);
+                ViewData["PaperTypeIDFilter"] = PaperTypeID;
                 ViewData["Filtering"] = " in";
             }
             if (StatusID.HasValue)
@@ -76,7 +122,7 @@ namespace TRPR.Controllers
             }
             //Now we know which field and direction to sort by, but a Switch is hard to use for 2 criteria
             //so we will use an if() structure instead.
-            if (sortField == "Status")//Sorting by Patient Name
+            if (sortField == "Status")//Sorting by Status
             {
                 if (String.IsNullOrEmpty(sortDirection))
                 {
@@ -115,7 +161,7 @@ namespace TRPR.Controllers
                         .OrderByDescending(p => p.PaperLength);
                 }
             }
-            else //Sorting by Title - the default sort order
+            else if (sortField == "Title")//Sorting by Title - the default sort order
             {
                 if (String.IsNullOrEmpty(sortDirection))
                 {
@@ -128,9 +174,26 @@ namespace TRPR.Controllers
                        .OrderByDescending(p => p.PaperTitle);
                 }
             }
+            else
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    papers = papers
+                        .OrderByDescending(p => p.CreatedOn);
+                }
+                else
+                {
+                    papers = papers
+                       .OrderBy(p => p.CreatedOn);
+                }
+            }
             //Set sort for next time
             ViewData["sortField"] = sortField;
             ViewData["sortDirection"] = sortDirection;
+
+            int pageSize = 10;//Change as required
+            var pagedData = await PaginatedList<PaperInfo>.CreateAsync(papers.AsNoTracking(), page ?? 1, pageSize);
+
 
             return View(pagedData);
 
@@ -152,7 +215,7 @@ namespace TRPR.Controllers
                 return NotFound();
             }
 
-            var viewerFiles = _context.Files                
+            var viewerFiles = _context.Files
                 .Where(f => f.PaperInfoID == id);// && (f.FileContent.MimeType.Contains("pdf")) || (f.FileContent.MimeType.Contains("image")));
             ViewData["ViewerFileID"] = new SelectList(viewerFiles, "ID", "FileName");
 
@@ -170,7 +233,7 @@ namespace TRPR.Controllers
 
             return View(theFile);*/
 
-            
+
         }
 
         public PartialViewResult GetViewerPartial(int? id)
@@ -191,29 +254,32 @@ namespace TRPR.Controllers
             ViewData["downloadLink"] = downLink;
             return PartialView("_pdfViewer");
         }
-        
+
         // GET: PaperInfo/Create
         public IActionResult Create()
         {
-            
+            var paperInfo = new PaperInfo();
+            PopulateAssignedKeywordData(paperInfo);
+
             PopulateDropDownLists();
             return View();
         }
-        
+
 
         // POST: PaperInfo/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,PaperTitle,PaperAbstract,PaperTypeID,PaperLength,StatusID")] PaperInfo paperInfo, IEnumerable<IFormFile> theFiles)
+        public async Task<IActionResult> Create([Bind("ID,PaperTitle,PaperAbstract,PaperTypeID,PaperLength,StatusID")] PaperInfo paperInfo, IEnumerable<IFormFile> theFiles, string[] selectedOptions)
         {
             try
             {
+                UpdatePaperKeywords(selectedOptions, paperInfo);
                 if (ModelState.IsValid)
                 {
                     await AddDocuments(paperInfo, theFiles);
-                    paperInfo.StatusID = 2;
+                    paperInfo.StatusID = 3;
                     _context.Add(paperInfo);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -224,6 +290,7 @@ namespace TRPR.Controllers
                 ModelState.AddModelError("", "Unable to save changes after multiple attempts. Try again, and if the problem persists, see your system administrator.");
             }
             PopulateDropDownLists(paperInfo);
+            PopulateAssignedKeywordData(paperInfo);
             return View(paperInfo);
         }
 
@@ -242,12 +309,12 @@ namespace TRPR.Controllers
                             await f.CopyToAsync(memoryStream);
                             File newFile = new File
                             {
-                                
-                                    FileContent = memoryStream.ToArray(),
-                                    FileMimeType = mimeType,
-                                    FileName = f.FileName
-                                
-                                
+
+                                FileContent = memoryStream.ToArray(),
+                                FileMimeType = mimeType,
+                                FileName = f.FileName
+
+
                             };
                             paperInfo.Files.Add(newFile);
                         }
@@ -264,11 +331,22 @@ namespace TRPR.Controllers
                 return NotFound();
             }
 
-            var paperInfo = await _context.PaperInfos.FindAsync(id);
+            var paperInfo = await _context.PaperInfos
+                .Include(p => p.Status)
+                .Include(p => p.Files)
+                .Include(p => p.AuthoredPapers)
+                .ThenInclude(pc => pc.Researcher)
+                .Include(p => p.PaperKeywords)
+                .ThenInclude(pk => pk.Keyword)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.ID == id);
+
             if (paperInfo == null)
             {
                 return NotFound();
             }
+            PopulateDropDownLists();
+            PopulateAssignedKeywordData(paperInfo);
             return View(paperInfo);
         }
 
@@ -277,23 +355,39 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,PaperTitle,PaperAbstract,PaperType,PaperLength,StatID")] PaperInfo paperInfo)
+        public async Task<IActionResult> Edit(int id, string[] selectedOptions)
         {
-            if (id != paperInfo.ID)
+            var paperToUpdate = await _context.PaperInfos
+               .Include(p => p.Status)
+               .Include(p => p.Files)
+               .Include(p => p.AuthoredPapers)
+               .ThenInclude(pc => pc.Researcher)
+               .Include(p => p.PaperKeywords)
+               .ThenInclude(pk => pk.Keyword)
+               .SingleOrDefaultAsync(m => m.ID == id);
+
+            if (id != paperToUpdate.ID)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            UpdatePaperKeywords(selectedOptions, paperToUpdate);
+
+            if (await TryUpdateModelAsync<PaperInfo>(paperToUpdate, "",
+                            r => r.PaperTitle, r => r.PaperAbstract, r => r.PaperTypeID, r => r.PaperLength, r => r.StatusID))
             {
                 try
                 {
-                    _context.Update(paperInfo);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (RetryLimitExceededException /* dex */)
+                {
+                    ModelState.AddModelError("", "Unable to save changes after multiple attempts. Try again, and if the problem persists, see your system administrator.");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PaperInfoExists(paperInfo.ID))
+                    if (!PaperInfoExists(paperToUpdate.ID))
                     {
                         return NotFound();
                     }
@@ -302,9 +396,14 @@ namespace TRPR.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                catch (DbUpdateException)
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                }
             }
-            return View(paperInfo);
+            PopulateDropDownLists();
+            PopulateAssignedKeywordData(paperToUpdate);
+            return View(paperToUpdate);
         }
 
         // GET: PaperInfo/Delete/5
@@ -316,7 +415,15 @@ namespace TRPR.Controllers
             }
 
             var paperInfo = await _context.PaperInfos
+                .Include(p => p.Status)
+                .Include(p => p.Files)
+                .Include(p => p.AuthoredPapers)
+                .ThenInclude(pc => pc.Researcher)
+                .Include(p => p.PaperKeywords)
+                .ThenInclude(pk => pk.Keyword)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
+
             if (paperInfo == null)
             {
                 return NotFound();
@@ -374,6 +481,70 @@ namespace TRPR.Controllers
         public JsonResult GetStatuses(int? id)
         {
             return Json(StatusSelectList(id));
+        }
+
+        private void PopulateAssignedKeywordData(PaperInfo paper)
+        {
+            var allKeywords = _context.Keywords;
+            var papKeywords = new HashSet<int>(paper.PaperKeywords.Select(b => b.KeywordID));
+            var selected = new List<KeywordVM>();
+            var available = new List<KeywordVM>();
+            foreach (var s in allKeywords)
+            {
+                if (papKeywords.Contains(s.ID))
+                {
+                    selected.Add(new KeywordVM
+                    {
+                        KeywordID = s.ID,
+                        KeyWord = s.KeyWord
+                    });
+                }
+                else
+                {
+                    available.Add(new KeywordVM
+                    {
+                        KeywordID = s.ID,
+                        KeyWord = s.KeyWord
+                    });
+                }
+            }
+
+            ViewData["selOpts"] = new MultiSelectList(selected.OrderBy(s => s.KeyWord), "KeywordID", "KeyWord");
+            ViewData["availOpts"] = new MultiSelectList(available.OrderBy(s => s.KeyWord), "KeywordID", "KeyWord");
+        }
+
+        private void UpdatePaperKeywords(string[] selectedOptions, PaperInfo paperToUpdate)
+        {
+            if (selectedOptions == null)
+            {
+                paperToUpdate.PaperKeywords = new List<PaperKeyword>();
+                return;
+            }
+
+            var selectedOptionsHS = new HashSet<string>(selectedOptions);
+            var papKeywords = new HashSet<int>(paperToUpdate.PaperKeywords.Select(b => b.KeywordID));
+            foreach (var s in _context.Keywords)
+            {
+                if (selectedOptionsHS.Contains(s.ID.ToString()))
+                {
+                    if (!papKeywords.Contains(s.ID))
+                    {
+                        paperToUpdate.PaperKeywords.Add(new PaperKeyword
+                        {
+                            PaperInfoID = paperToUpdate.ID,
+                            KeywordID = s.ID,
+                        });
+                    }
+                }
+                else
+                {
+                    if (papKeywords.Contains(s.ID))
+                    {
+                        PaperKeyword specToRemove = paperToUpdate.PaperKeywords.SingleOrDefault(d => d.KeywordID == s.ID);
+                        _context.Remove(specToRemove);
+                    }
+                }
+            }
         }
     }
 }

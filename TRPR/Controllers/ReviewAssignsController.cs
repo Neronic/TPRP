@@ -9,6 +9,10 @@ using Microsoft.EntityFrameworkCore.Storage;
 using TRPR.Data;
 using TRPR.Models;
 using TRPR.Utilities;
+using MailKit.Net.Smtp;
+using MailKit;
+using MimeKit;
+
 
 namespace TRPR.Controllers
 {
@@ -22,7 +26,7 @@ namespace TRPR.Controllers
         }
 
         // GET: ReviewAssigns
-        public async Task<IActionResult> Index(int? PaperInfoID, int? ResearcherID, int? RoleID, int? page)
+        public async Task<IActionResult> Index(string SearchRes, string SearchTitle, int? CreatedOn, int? page, string sortDirection, string actionButton, string sortField = "CreatedOn")
         {
             var reviewAssigns = from r in _context.ReviewAssigns
                 .Include(ra => ra.Roles)
@@ -30,7 +34,90 @@ namespace TRPR.Controllers
                 .ThenInclude(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
                 .Include(r => r.PaperInfo)
-                select r;
+                .Where(c => c.Researcher.ResEmail == User.Identity.Name)
+                select r;           
+
+
+            if (User.IsInRole("Editor"))
+            {
+                reviewAssigns = from r in _context.ReviewAssigns
+               .Include(ra => ra.Roles)
+               .Include(ra => ra.Researcher)
+               .ThenInclude(r => r.ResearchExpertises)
+               .ThenInclude(re => re.Expertise)
+               .Include(r => r.PaperInfo)              
+               select r;
+            }
+
+            if (!String.IsNullOrEmpty(SearchRes))
+            {
+                reviewAssigns = reviewAssigns.Where(p => p.Researcher.ResFirst.ToUpper().Contains(SearchRes.ToUpper()) || p.Researcher.ResLast.ToUpper().Contains(SearchRes.ToUpper()));
+                ViewData["Filtering"] = " in";
+            }
+            if (!String.IsNullOrEmpty(SearchTitle))
+            {
+                reviewAssigns = reviewAssigns.Where(p => p.PaperInfo.PaperTitle.ToUpper().Contains(SearchTitle.ToUpper()));
+                ViewData["Filtering"] = " in";
+            }
+
+            //Before we sort, see if we have called for a change of filtering or sorting
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted so lets sort!
+            {
+                page = 1;//Reset page to start
+                if (actionButton != "Filter")//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = String.IsNullOrEmpty(sortDirection) ? "desc" : "";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
+            //Now we know which field and direction to sort by, but a Switch is hard to use for 2 criteria
+            //so we will use an if() structure instead.
+            if (sortField == "Paper Title")//Sorting by Status
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    reviewAssigns = reviewAssigns
+                        .OrderBy(p => p.PaperInfo.PaperTitle);
+                }
+                else
+                {
+                    reviewAssigns = reviewAssigns
+                       .OrderByDescending(p => p.PaperInfo.PaperTitle);
+                }
+            }
+            else if (sortField == "Researcher")//Sorting by Status
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    reviewAssigns = reviewAssigns
+                        .OrderBy(p => p.Researcher.FullName);
+                }
+                else
+                {
+                    reviewAssigns = reviewAssigns
+                       .OrderByDescending(p => p.Researcher.FullName);
+                }
+            }
+            else
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    reviewAssigns = reviewAssigns
+                        .OrderByDescending(p => p.CreatedOn);
+                }
+                else
+                {
+                    reviewAssigns = reviewAssigns
+                       .OrderBy(p => p.CreatedOn);
+                }
+            }
+
+            //Set sort for next time
+            ViewData["sortField"] = sortField;
+            ViewData["sortDirection"] = sortDirection;
 
             int pageSize = 20;//Change as required
             var pagedData = await PaginatedList<ReviewAssign>.CreateAsync(reviewAssigns.AsNoTracking(), page ?? 1, pageSize);
@@ -65,6 +152,7 @@ namespace TRPR.Controllers
             return View(reviewAssign);
         }
 
+
         public PartialViewResult GetViewerPartial(int? id)
         {
             string fileBase64 = "";//For our Byte[] converted to Base64 String
@@ -83,6 +171,7 @@ namespace TRPR.Controllers
             ViewData["downloadLink"] = downLink;
             return PartialView("_pdfViewer");
         }
+
 
         public PartialViewResult ListOfComments(int id)
         {
@@ -105,23 +194,58 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,PaperInfoID,ResearcherID,RoleID,RevContentReview,RevKeywordReview,RevLengthReview,RevFormatReview,RevCitationReview,RecommendID,ReviewAgainID")] ReviewAssign reviewAssign)
+        public async Task<IActionResult> Create([Bind("PaperInfoID,ResearcherID,RoleID,RevContentReview,RevKeywordReview,RevLengthReview,RevFormatReview,RevCitationReview,RecommendID,ReviewAgainID")] ReviewAssign reviewAssign)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    // Email coding
+                    //var researcher = await _context.Researchers
+                    //.SingleOrDefaultAsync(m => m.ID == reviewAssign.ResearcherID);
+
+                    //var resEmail = researcher.ResEmail.ToString();
+                    //var resName = researcher.FullName.ToString();
+
+
+                    //var message = new MimeMessage();
+                    //message.From.Add(new MailboxAddress("TRPR", "TRPRDoNotReply@gmail.com"));
+                    //message.To.Add(new MailboxAddress(resName, "davilee.maitre@gmail.com"));
+                    //message.Subject = "TRPR - New Review";
+
+                    //message.Body = new TextPart("plain")
+                    //{
+                    //    Text = @"You've been assigned to a new review, head to TRPR to check it out!"
+                    //};
+
+                    //using (var client = new SmtpClient())
+                    //{
+                    //    // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
+                    //    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+
+                    //    client.Connect("smtp-relay.gmail.com", 587, false);
+
+                    //    // Note: only needed if the SMTP server requires authentication
+                    //    client.Authenticate("TRPRDoNotReply@gmail.com", "Tq8uwocBDC");
+
+                    //    client.Send(message);
+                    //    client.Disconnect(true);
+                    //}
+
                     _context.Add(reviewAssign);
-                    await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync();                  
                     return RedirectToAction(nameof(Index));
+
+
                 }
             }
-            catch (DbUpdateException)
+            catch (Exception)
             {
                  ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
             PopulateDropDownLists();
-            PopulateExpertiseDropDownList();
+            PopulateExpertiseDropDownList();            
             return View(reviewAssign);
         }
 
@@ -173,6 +297,22 @@ namespace TRPR.Controllers
             {
                 try
                 {
+                    var reviewList = from r in _context.ReviewAssigns
+                       .Include(r => r.PaperInfo)
+                       .Where(c => c.PaperInfoID == reviewToUpdate.PaperInfoID)
+                                        select r;
+                    foreach(var PaperInfoID in reviewList)
+                    {
+                        var count = 0;
+                        while (reviewToUpdate.RecommendID != null && count < 2)
+                        {
+                            count++;
+                        }
+                        if (count == 2)
+                        {
+                            reviewToUpdate.PaperInfo.StatusID = 4;
+                        }
+                   }
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }

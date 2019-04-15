@@ -8,7 +8,7 @@
     <div id="paper">
         <div class="paperDetail">
             <div class="form-group">
-                <label class="control-label">View File:</label>
+               
                 <div class="">
                     @Html.DropDownList("ViewerFileID", null, htmlAttributes: new { @style = "display:none" })
                 </div>
@@ -78,12 +78,14 @@
     </div>
 
     <div style="width:50%;">
-        @{ var p = new TRPR.Models.ReviewAssign();
-            <partial name="_reviewAssignEditor" model="p" />
+       @* @Html.Partial("_Comment", new List<TRPR.Models.Comment>())*@
 
-        }
+        @*@{ var p = new TRPR.Models.ReviewAssign();
+            <partial name="_reviewAssign" model="p" />
+
+        }*@
         @*<a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
-            <a asp-action="Index">Back to List</a>*@
+        <a asp-action="Index">Back to List</a>*@
 
     </div>
 

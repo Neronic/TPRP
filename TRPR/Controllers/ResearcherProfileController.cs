@@ -33,7 +33,6 @@ namespace TRPR.Controllers
         // GET: ResearcherProfile/Details/5
         public async Task<IActionResult> Details()
         {
-
             var researcher = await _context.Researchers
                 .Include(r => r.Institutes)
                 .Include(r => r.ResearchExpertises)
@@ -65,7 +64,7 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,ResTitle,ResFirst,ResLast,ResEmail,ResBio,InstituteID")] Researcher researcher, string[] selectedOptions)
+        public async Task<IActionResult> Create([Bind("ID,TitleID,ResFirst,ResLast,ResEmail,ResBio,InstituteID")] Researcher researcher, string[] selectedOptions)
         {
             researcher.ResEmail = User.Identity.Name;
             try
@@ -75,7 +74,8 @@ namespace TRPR.Controllers
                 {
                     _context.Add(researcher);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    UpdateUserNameCookie(researcher.FullName);
+                    return RedirectToAction(nameof(Details));
                 }
             }
             catch (RetryLimitExceededException /* dex */)
@@ -138,24 +138,15 @@ namespace TRPR.Controllers
             {
                 try
                 {
+                    _context.Update(researcherToUpdate);
                     await _context.SaveChangesAsync();
+                    UpdateUserNameCookie(researcherToUpdate.ResEmail);
                     return RedirectToAction(nameof(Index));
                 }
                 catch (RetryLimitExceededException /* dex */)
                 {
                     ModelState.AddModelError("", "Unable to save changes after multiple attempts. Try again, and if the problem persists, see your system administrator.");
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ResearcherExists(researcherToUpdate.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                } 
                 catch (DbUpdateException)
                 {
                     ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");

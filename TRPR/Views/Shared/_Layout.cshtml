@@ -56,17 +56,8 @@
                             </i>
                         </a>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="far fa-user"></i>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a asp-area="" asp-page="/Home/IndexAdmin">Admin</a></li>
-                            <li><a asp-area="" asp-page="/Home/IndexEditor">Editor</a></li>
-                            <li><a href="#">Account</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Log Out</a></li>
-                        </ul>
+                    <li>
+                        <partial name="_LoginPartial" />
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -108,9 +99,19 @@
                         <span>My Papers</span>
                     </a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li>
-                            <a asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLg">Submitted</a>
-                        </li>
+                        @if (User.IsInRole("Researcher"))
+                        {
+                            <li>
+                                <a asp-area="" asp-controller="ReviewAssigns" asp-action="Index" class="btnLg">Submitted</a>
+                            </li>
+                        }
+
+                        else
+                        {
+                            <li>
+                                <a asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLg">Submitted</a>
+                            </li>
+                        }
                         <li>
                             <a asp-area="" asp-controller="PaperInfo" asp-action="Index" class="btnLg">Drafts</a>
                         </li>
@@ -126,16 +127,25 @@
                 {
                     <li>
 
-                        <a asp-area="" asp-controller="ReviewAssigns" asp-action="Index">
+                        <a asp-area="" asp-controller="UserRoles" asp-action="Index">
                             <i class="fas fa-user-edit"></i>
-                            Editors
+                            Roles
                         </a>
                     </li>
                     <li>
-                        <a asp-area="" asp-controller="Researchers" asp-action="Index" class="navbar-brand">
+
+                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <i class="far fa-user"></i>
-                            Authors
+                            <span>Authors</span>
                         </a>
+                        <ul class="collapse list-unstyled" id="pageSubmenu">
+                            <li>
+                                <a asp-area="" asp-controller="Researchers" asp-action="Index">Existing</a>
+                            </li>
+                            <li>
+                                <a asp-area="Identity" asp-page="/Account/Register">New</a>
+                            </li>
+                        </ul>
                     </li>
                 }
                 else
@@ -163,9 +173,13 @@
                             <span>Call for Papers</span>
                         </a>
                     </li>
+                    <li>
+                        <br />
+                    </li>
                 }
+
                 <li>
-                    <a href="#">
+                    <a href="https://www.trontario.org/education-research/trpr--journal-of-tro/index.html">
                         <i class="fas fa-briefcase"></i>
                         <span>Resources</span>
                     </a>
