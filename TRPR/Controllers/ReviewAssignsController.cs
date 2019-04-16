@@ -34,12 +34,11 @@ namespace TRPR.Controllers
                 .ThenInclude(r => r.ResearchExpertises)
                 .ThenInclude(re => re.Expertise)
                 .Include(r => r.PaperInfo)
-<<<<<<< HEAD
-                                select r;
-=======
                 .Where(c => c.Researcher.ResEmail == User.Identity.Name)
-                select r;           
->>>>>>> master
+                                select r;
+
+
+
 
 
             if (User.IsInRole("Editor"))
@@ -49,14 +48,9 @@ namespace TRPR.Controllers
                .Include(ra => ra.Researcher)
                .ThenInclude(r => r.ResearchExpertises)
                .ThenInclude(re => re.Expertise)
-<<<<<<< HEAD
                .Include(r => r.PaperInfo)
                .Where(c => c.Researcher.ResEmail == User.Identity.Name)
                                 select r;
-=======
-               .Include(r => r.PaperInfo)              
-               select r;
->>>>>>> master
             }
 
             if (!String.IsNullOrEmpty(SearchRes))
@@ -155,14 +149,14 @@ namespace TRPR.Controllers
                 return NotFound();
             }
 
-<<<<<<< HEAD
+
 
             var viewerFiles = _context.Files
                 .Where(f => f.PaperInfoID == id);// && (f.FileContent.MimeType.Contains("pdf")) || (f.FileContent.MimeType.Contains("image")));
-=======
-            var viewerFiles = _context.Files
-                .Where(f => f.ReveiwAssignID == id);// && (f.FileContent.MimeType.Contains("pdf")) || (f.FileContent.MimeType.Contains("image")));
->>>>>>> master
+
+            //var viewerFiles = _context.Files
+            //    .Where(f => f.ReveiwAssignID == id);// && (f.FileContent.MimeType.Contains("pdf")) || (f.FileContent.MimeType.Contains("image")));
+
             ViewData["ViewerFileID"] = new SelectList(viewerFiles, "ID", "FileName");
 
             return View(reviewAssign);
@@ -225,7 +219,7 @@ namespace TRPR.Controllers
             {
                 if (ModelState.IsValid)
                 {
-<<<<<<< HEAD
+
                     _context.Add(reviewAssign);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -239,57 +233,58 @@ namespace TRPR.Controllers
             PopulateExpertiseDropDownList();
 
             ViewBag.ID = id;
+
             // Email coding
             //var researcher = await _context.Researchers
             //        .SingleOrDefaultAsync(m => m.ID == reviewAssign.ResearcherID);
-=======
-                    // Email coding
-                    //var researcher = await _context.Researchers
-                    //.SingleOrDefaultAsync(m => m.ID == reviewAssign.ResearcherID);
 
-                    //var resEmail = researcher.ResEmail.ToString();
-                    //var resName = researcher.FullName.ToString();
+            // Email coding
+            //var researcher = await _context.Researchers
+            //.SingleOrDefaultAsync(m => m.ID == reviewAssign.ResearcherID);
 
->>>>>>> master
-
-                    //var message = new MimeMessage();
-                    //message.From.Add(new MailboxAddress("TRPR", "TRPRDoNotReply@gmail.com"));
-                    //message.To.Add(new MailboxAddress(resName, "davilee.maitre@gmail.com"));
-                    //message.Subject = "TRPR - New Review";
-
-                    //message.Body = new TextPart("plain")
-                    //{
-                    //    Text = @"You've been assigned to a new review, head to TRPR to check it out!"
-                    //};
-
-                    //using (var client = new SmtpClient())
-                    //{
-                    //    // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
-                    //    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+            //var resEmail = researcher.ResEmail.ToString();
+            //var resName = researcher.FullName.ToString();
 
 
-                    //    client.Connect("smtp-relay.gmail.com", 587, false);
 
-                    //    // Note: only needed if the SMTP server requires authentication
-                    //    client.Authenticate("TRPRDoNotReply@gmail.com", "Tq8uwocBDC");
+            //var message = new MimeMessage();
+            //message.From.Add(new MailboxAddress("TRPR", "TRPRDoNotReply@gmail.com"));
+            //message.To.Add(new MailboxAddress(resName, "davilee.maitre@gmail.com"));
+            //message.Subject = "TRPR - New Review";
 
-                    //    client.Send(message);
-                    //    client.Disconnect(true);
-                    //}
+            //message.Body = new TextPart("plain")
+            //{
+            //    Text = @"You've been assigned to a new review, head to TRPR to check it out!"
+            //};
 
-                    _context.Add(reviewAssign);
-                    await _context.SaveChangesAsync();                  
-                    return RedirectToAction(nameof(Index));
+            //using (var client = new SmtpClient())
+            //{
+            //    // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
+            //    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
 
-                }
+            //    client.Connect("smtp-relay.gmail.com", 587, false);
+
+            //    // Note: only needed if the SMTP server requires authentication
+            //    client.Authenticate("TRPRDoNotReply@gmail.com", "Tq8uwocBDC");
+
+            //    client.Send(message);
+            //    client.Disconnect(true);
+            //}
+            try
+            {
+                _context.Add(reviewAssign);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
+
+
             catch (Exception)
             {
-                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
             PopulateDropDownLists();
-            PopulateExpertiseDropDownList();            
+            PopulateExpertiseDropDownList();
             return View(reviewAssign);
         }
 
@@ -358,8 +353,8 @@ namespace TRPR.Controllers
                     var reviewList = from r in _context.ReviewAssigns
                        .Include(r => r.PaperInfo)
                        .Where(c => c.PaperInfoID == reviewToUpdate.PaperInfoID)
-                                        select r;
-                    foreach(var PaperInfoID in reviewList)
+                                     select r;
+                    foreach (var PaperInfoID in reviewList)
                     {
                         var count = 0;
                         while (reviewToUpdate.RecommendID != null && count < 2)
@@ -370,7 +365,7 @@ namespace TRPR.Controllers
                         {
                             reviewToUpdate.PaperInfo.StatusID = 4;
                         }
-                   }
+                    }
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
@@ -397,7 +392,7 @@ namespace TRPR.Controllers
                         ModelState.AddModelError("", "Unable to save changes");
                     }
                 }
-                
+
             }
             //var viewerFiles = _context.Files
             //  .Where(f => f.PaperInfoID == id);// && (f.FileContent.MimeType.Contains("pdf")) || (f.FileContent.MimeType.Contains("image")));

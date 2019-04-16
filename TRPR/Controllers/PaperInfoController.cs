@@ -82,16 +82,11 @@ namespace TRPR.Controllers
                 .Include(p => p.PaperKeywords)
                 .ThenInclude(pk => pk.Keyword)
                 .Where(c => c.CreatedBy == User.Identity.Name)
-<<<<<<< HEAD
                                    .Include(p => p.PaperKeywords)
                 .ThenInclude(p => p.Keyword)
                          select p;
             }
-=======
-                select p;
-            } 
-            
->>>>>>> master
+
 
             PopulateDropDownLists();
             ViewData["KeywordID"] = new SelectList(_context.Keywords.OrderBy(p => p.KeyWord), "ID", "KeyWord");
@@ -272,14 +267,14 @@ namespace TRPR.Controllers
         // GET: PaperInfo/Create
         public IActionResult Create()
         {
-<<<<<<< HEAD
+
             PaperInfo paperInfo = new PaperInfo();
             PopulatePaperKeywordData(paperInfo);
-=======
-            var paperInfo = new PaperInfo();
-            PopulateAssignedKeywordData(paperInfo);
 
->>>>>>> master
+            //var paperInfo = new PaperInfo();
+            //PopulateAssignedKeywordData(paperInfo);
+
+
             PopulateDropDownLists();
             return View();
         }
@@ -290,11 +285,10 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-<<<<<<< HEAD
+
         public async Task<IActionResult> Create([Bind("ID,PaperTitle,PaperAbstract,PaperTypeID,PaperLength, StatusID")] PaperInfo paperInfo, string[] selectedOptions, IEnumerable<IFormFile> theFiles)
-=======
-        public async Task<IActionResult> Create([Bind("ID,PaperTitle,PaperAbstract,PaperTypeID,PaperLength,StatusID")] PaperInfo paperInfo, IEnumerable<IFormFile> theFiles, string[] selectedOptions)
->>>>>>> master
+        //public async Task<IActionResult> Create([Bind("ID,PaperTitle,PaperAbstract,PaperTypeID,PaperLength,StatusID")] PaperInfo paperInfo, IEnumerable<IFormFile> theFiles, string[] selectedOptions)
+
         {
             try
             {
@@ -313,11 +307,11 @@ namespace TRPR.Controllers
                 ModelState.AddModelError("", "Unable to save changes after multiple attempts. Try again, and if the problem persists, see your system administrator.");
             }
             PopulateDropDownLists(paperInfo);
-<<<<<<< HEAD
+
             PopulatePaperKeywordData(paperInfo);
-=======
+
             PopulateAssignedKeywordData(paperInfo);
->>>>>>> master
+
             return View(paperInfo);
         }
 
@@ -516,22 +510,22 @@ namespace TRPR.Controllers
                 {
                     selected.Add(new KeywordVM
                     {
-                        KeywordsID = s.ID,
-                        KeywordName = s.KeyWord
+                        KeywordID = s.ID,
+                        KeyWord = s.KeyWord
                     });
                 }
                 else
                 {
                     available.Add(new KeywordVM
                     {
-                        KeywordsID = s.ID,
-                        KeywordName = s.KeyWord
+                        KeywordID = s.ID,
+                        KeyWord = s.KeyWord
                     });
                 }
             }
 
-            ViewData["selOpts"] = new MultiSelectList(selected.OrderBy(s => s.KeywordName), "KeywordsID", "KeywordName");
-            ViewData["availOpts"] = new MultiSelectList(available.OrderBy(s => s.KeywordName), "KeywordsID", "KeywordName");
+            ViewData["selOpts"] = new MultiSelectList(selected.OrderBy(s => s.KeyWord), "KeywordID", "Keyword");
+            ViewData["availOpts"] = new MultiSelectList(available.OrderBy(s => s.KeyWord), "KeywordID", "Keyword");
         }
 
         private void UpdatePaperKeywords(string[] selectedOptions, PaperInfo paperInfoToUpdate)
@@ -604,38 +598,38 @@ namespace TRPR.Controllers
             ViewData["availOpts"] = new MultiSelectList(available.OrderBy(s => s.KeyWord), "KeywordID", "KeyWord");
         }
 
-        private void UpdatePaperKeywords(string[] selectedOptions, PaperInfo paperToUpdate)
-        {
-            if (selectedOptions == null)
-            {
-                paperToUpdate.PaperKeywords = new List<PaperKeyword>();
-                return;
-            }
+        //private void UpdatePaperKeywords(string[] selectedOptions, PaperInfo paperToUpdate)
+        //{
+        //    if (selectedOptions == null)
+        //    {
+        //        paperToUpdate.PaperKeywords = new List<PaperKeyword>();
+        //        return;
+        //    }
 
-            var selectedOptionsHS = new HashSet<string>(selectedOptions);
-            var papKeywords = new HashSet<int>(paperToUpdate.PaperKeywords.Select(b => b.KeywordID));
-            foreach (var s in _context.Keywords)
-            {
-                if (selectedOptionsHS.Contains(s.ID.ToString()))
-                {
-                    if (!papKeywords.Contains(s.ID))
-                    {
-                        paperToUpdate.PaperKeywords.Add(new PaperKeyword
-                        {
-                            PaperInfoID = paperToUpdate.ID,
-                            KeywordID = s.ID,
-                        });
-                    }
-                }
-                else
-                {
-                    if (papKeywords.Contains(s.ID))
-                    {
-                        PaperKeyword specToRemove = paperToUpdate.PaperKeywords.SingleOrDefault(d => d.KeywordID == s.ID);
-                        _context.Remove(specToRemove);
-                    }
-                }
-            }
-        }
+        //    var selectedOptionsHS = new HashSet<string>(selectedOptions);
+        //    var papKeywords = new HashSet<int>(paperToUpdate.PaperKeywords.Select(b => b.KeywordID));
+        //    foreach (var s in _context.Keywords)
+        //    {
+        //        if (selectedOptionsHS.Contains(s.ID.ToString()))
+        //        {
+        //            if (!papKeywords.Contains(s.ID))
+        //            {
+        //                paperToUpdate.PaperKeywords.Add(new PaperKeyword
+        //                {
+        //                    PaperInfoID = paperToUpdate.ID,
+        //                    KeywordID = s.ID,
+        //                });
+        //            }
+        //        }
+        //        else
+        //        {
+        //            if (papKeywords.Contains(s.ID))
+        //            {
+        //                PaperKeyword specToRemove = paperToUpdate.PaperKeywords.SingleOrDefault(d => d.KeywordID == s.ID);
+        //                _context.Remove(specToRemove);
+        //            }
+        //        }
+        //    }
+        //}
     }
 }
