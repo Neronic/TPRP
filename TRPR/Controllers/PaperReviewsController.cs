@@ -25,9 +25,97 @@ namespace TRPR.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int? PaperInfoID, string SearchRes, string SearchTitle, int? CreatedOn, int? page, string sortDirection, string actionButton, string sortField = "CreatedOn")
         {
-            return View();
+            if (!PaperInfoID.HasValue)
+            {
+                return RedirectToAction("Index", "PaperInfos");
+            }
+
+            PopulateDropDownLists();
+                       ViewData["Filtering"] = "";
+
+            var revs = from a in _context.ReviewAssigns
+                       .Include(a => a.Recommend)
+                       .Include(a => a.PaperInfo)
+                        where a.PaperInfoID == PaperInfoID.GetValueOrDefault()
+                        select a;
+
+            //Before we sort, see if we have called for a change of filtering or sorting
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted so lets sort!
+            {
+                page = 1;//Reset page to start
+                if (actionButton != "Filter")//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = String.IsNullOrEmpty(sortDirection) ? "desc" : "";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
+            //Now we know which field and direction to sort by, but a Switch is hard to use for 2 criteria
+            //so we will use an if () structure instead.
+            if (sortField == "Paper Title")//Sorting by Status
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    revs = revs
+                        .OrderBy(p => p.PaperInfo.PaperTitle);
+                }
+                else
+                {
+                    revs = revs
+                       .OrderByDescending(p => p.PaperInfo.PaperTitle);
+                }
+            }
+            else if (sortField == "Researcher")//Sorting by Status
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    revs = revs
+                        .OrderBy(p => p.Researcher.FullName);
+                }
+                else
+                {
+                    revs = revs
+                       .OrderByDescending(p => p.Researcher.FullName);
+                }
+            }
+            else
+            {
+                if (String.IsNullOrEmpty(sortDirection))
+                {
+                    revs = revs
+                        .OrderByDescending(p => p.CreatedOn);
+                }
+                else
+                {
+                    revs = revs
+                       .OrderBy(p => p.CreatedOn);
+                }
+            }
+
+            //Set sort for next time
+            ViewData["sortField"] = sortField;
+            ViewData["sortDirection"] = sortDirection;
+
+            int pageSize = 20;//Change as required
+            var pagedData = await PaginatedList<ReviewAssign>.CreateAsync(revs.AsNoTracking(), page ?? 1, pageSize);
+
+            //Now get the MASTER record, the patient, so it can be displayed at the top of the screen
+            //PaperInfo paperInfo = _context.PaperInfos
+            //   .Include(p => p.PaperTitle)
+            //    .Include(p => p.PaperAbstract)
+            //.Include(p => p.AuthoredPapers)
+            //.ThenInclude(pc => pc.)
+            //    .Where(p => p.ID == PaperInfoID.GetValueOrDefault()).FirstOrDefault();
+            //ViewBag.PaperInfo = paperInfo;
+
+            return View(pagedData);
+
+           
+
         }
 
         //GET: Reviews/Add

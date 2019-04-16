@@ -4,189 +4,190 @@
     ViewData["Title"] = "Details";
 }
 
-<div class="page" id="detailsPage">
-    <div id="paper">
-        <div class="paperDetail">
-            <div class="form-group">
-                <div class="">
+<div class="page container">
+    <div class="row">
+        <div class="col-lg-7" style="padding-left:0; margin-right:200px;">
+            <div class="paperDetail">
+                <div class="form-group">
+                    <div class="">
                         @Html.DropDownList("ViewerFileID", null, htmlAttributes: new { @style = "display:none" })
                     </div>
-            </div>
-            <div id="header1">
-                <h6 id="status">Pending</h6>
-                <h5 id="reference code">@Html.DisplayFor(model => model.PaperInfo.ID)</h5>
-                <h6 id="date">Due Date: </h6>
-            </div>
-            <div id="header2">
-                @*<button class="btnMed">Save</button>*@
-                <h6>
-                    @Html.DisplayFor(model => model.PaperInfo.PaperTitle)
-                </h6>
-                @*<button class="btnMed">Print</button>*@
-            </div>
-        </div>
-
-        @*--partial view of file/index or paper/index not sure which one shows the pdf*@
-
-    </div>
-    @*<div id="navbar2">
-
-            <partial name="~/Views/Shared/_navbar.cshtml" />
-        </div>*@
-    <hr />
-    <dl class="dl-horizontal">
-        @*<dt>
-                @Html.DisplayNameFor(model => model.PaperInfo)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.PaperInfo.PaperTitle)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Researcher)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Researcher.FullName)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Roles)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Roles.RoleTitle)
-            </dd>*@
-        @Html.DisplayFor(model => model.Roles.RoleTitle)
-        <dt>
-            @Html.DisplayNameFor(model => model.RevContentReview)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.RevContentReview)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.RevKeywordReview)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.RevKeywordReview)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.RevLengthReview)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.RevLengthReview)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.RevFormatReview)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.RevFormatReview)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.RevCitationReview)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.RevCitationReview)
-        </dd>
-        @if (User.IsInRole("Editor"))
-        {
-            <dt>
-                @Html.DisplayNameFor(model => model.EiCComment)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.EiCComment)
-            </dd>
-        }
-        <dt>
-            @Html.DisplayNameFor(model => model.AuthorComment)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.AuthorComment)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Recommend)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Recommend.RecTitle)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ReviewAgain)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ReviewAgain.ReSponse)
-        </dd>
-    </dl>
-
-    @*<div class="form-group">
-            <label asp-for="RevContentReview" class="control-label"></label>
-            <input asp-for="RevContentReview" class="form-control" />
-            <span asp-validation-for="RevContentReview" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="RevKeywordReview" class="control-label"></label>
-            <input asp-for="RevKeywordReview" class="form-control" />
-            <span asp-validation-for="RevKeywordReview" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="RevLengthReview" class="control-label"></label>
-            <input asp-for="RevLengthReview" class="form-control" />
-            <span asp-validation-for="RevLengthReview" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="RevFormatReview" class="control-label"></label>
-            <input asp-for="RevFormatReview" class="form-control" />
-            <span asp-validation-for="RevFormatReview" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="RevCitationReview" class="control-label"></label>
-            <input asp-for="RevCitationReview" class="form-control" />
-            <span asp-validation-for="RevCitationReview" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="RecommendID" class="control-label"></label>
-            <select asp-for="RecommendID" class="form-control" asp-items="ViewBag.RecID">
-                <option value=null>Select an option</option>
-            </select>
-            <span asp-validation-for="RecommendID" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="ReviewAgainID" class="control-label"></label>
-            <select asp-for="ReviewAgainID" class="form-control" asp-items="ViewBag.ReRevID">
-                <option value=null>Select an option</option>
-            </select>
-            <span asp-validation-for="ReviewAgainID" class="text-danger"></span>
-        </div>*@
-
-
-
-
-    @*-- partial view file/create*@
-
-
-
-
-    @*<div class="form-group">
-            <input type="submit" value="Save" class="btn btn-default" />
-        </div>*@
-    @*<div class="dropdown">
-                <a class="btn btnMed dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Save
-                </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="#">Action</a><br />
-                    <a class="dropdown-item" href="#">Another action</a>
                 </div>
+                <div id="header1">
+                    <h6 id="status">Pending</h6>
+                    <h5 id="reference code">@Html.DisplayFor(model => model.PaperInfo.ID)</h5>
+                    <h6 id="date">Due Date: </h6>
+                </div>
+                <div id="header2">
+                    <h6>
+                        @Html.DisplayFor(model => model.PaperInfo.PaperTitle)
+                    </h6>
+
+                </div>
+                <hr />
             </div>
-            <button class="btnMed">Submit</button>
-        </div>*@
+        </div>
+        <div class="col-lg-5">
 
-    @*<div>
-            <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
-            <a asp-action="Index">Back to List</a>
-        </div>*@
+            <h4 style="display: inline;">
+                @Html.DisplayFor(model => model.Researcher.FullName)
+            </h4>
+            <h4 style="display:inline;">
+                @Html.DisplayFor(model => model.Roles.RoleTitle)
+            </h4>
+
+            <dl>
+                @*<dt>
+                        @Html.DisplayNameFor(model => model.PaperInfo)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PaperInfo.PaperTitle)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Researcher)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Researcher.FullName)
+                    </dd>*@
+                @*<dt>
+                        @Html.DisplayNameFor(model => model.Roles)
+                    </dt>*@
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.RevContentReview)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.RevContentReview)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.RevKeywordReview)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.RevKeywordReview)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.RevLengthReview)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.RevLengthReview)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.RevFormatReview)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.RevFormatReview)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.RevCitationReview)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.RevCitationReview)
+                </dd>
+                @if (User.IsInRole("Editor"))
+                {
+                    <dt>
+                        @Html.DisplayNameFor(model => model.EiCComment)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.EiCComment)
+                    </dd>
+                }
+                <dt>
+                    @Html.DisplayNameFor(model => model.AuthorComment)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.AuthorComment)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Recommend)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Recommend.RecTitle)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ReviewAgain)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ReviewAgain.ReSponse)
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+@*<div class="form-group">
+        <label asp-for="RevContentReview" class="control-label"></label>
+        <input asp-for="RevContentReview" class="form-control" />
+        <span asp-validation-for="RevContentReview" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="RevKeywordReview" class="control-label"></label>
+        <input asp-for="RevKeywordReview" class="form-control" />
+        <span asp-validation-for="RevKeywordReview" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="RevLengthReview" class="control-label"></label>
+        <input asp-for="RevLengthReview" class="form-control" />
+        <span asp-validation-for="RevLengthReview" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="RevFormatReview" class="control-label"></label>
+        <input asp-for="RevFormatReview" class="form-control" />
+        <span asp-validation-for="RevFormatReview" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="RevCitationReview" class="control-label"></label>
+        <input asp-for="RevCitationReview" class="form-control" />
+        <span asp-validation-for="RevCitationReview" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="RecommendID" class="control-label"></label>
+        <select asp-for="RecommendID" class="form-control" asp-items="ViewBag.RecID">
+            <option value=null>Select an option</option>
+        </select>
+        <span asp-validation-for="RecommendID" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ReviewAgainID" class="control-label"></label>
+        <select asp-for="ReviewAgainID" class="form-control" asp-items="ViewBag.ReRevID">
+            <option value=null>Select an option</option>
+        </select>
+        <span asp-validation-for="ReviewAgainID" class="text-danger"></span>
+    </div>*@
 
 
-    @section Scripts {
-        <script type="text/javascript">
-            $('#ViewerFileID').ready(function () {
-                var selectedOption = $("#ViewerFileID").val();
-                $('#showViewer').load('/PaperInfo/GetViewerPartial/' + selectedOption);
-            });
-        </script>
-    }
+
+
+@*-- partial view file/create*@
+
+
+
+
+@*<div class="form-group">
+        <input type="submit" value="Save" class="btn btn-default" />
+    </div>*@
+@*<div class="dropdown">
+            <a class="btn btnMed dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Save
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="#">Action</a><br />
+                <a class="dropdown-item" href="#">Another action</a>
+            </div>
+        </div>
+        <button class="btnMed">Submit</button>
+    </div>*@
+
+@*<div>
+        <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>*@
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $('#ViewerFileID').ready(function () {
+            var selectedOption = $("#ViewerFileID").val();
+            $('#showViewer').load('/PaperInfo/GetViewerPartial/' + selectedOption);
+        });
+    </script>
+}
