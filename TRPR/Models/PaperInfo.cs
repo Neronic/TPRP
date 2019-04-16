@@ -45,7 +45,7 @@ namespace TRPR.Models
         
 
         [Display(Name = "Keywords")]
-        public ICollection<PaperKeyword> PaperKeywords { get; set; }
+        public virtual ICollection<PaperKeyword> PaperKeywords { get; set; }
 
         [Display(Name = "Files")]
         public ICollection<File> Files { get; set; }

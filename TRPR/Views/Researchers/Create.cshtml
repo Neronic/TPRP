@@ -34,11 +34,7 @@
                 <input asp-for="ResLast" class="form-control" />
                 <span asp-validation-for="ResLast" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ResEmail" class="control-label"></label>
-                <input asp-for="ResEmail" class="form-control" />
-                <span asp-validation-for="ResEmail" class="text-danger"></span>
-            </div>
+            <input type="hidden" name="ResEmail" value="@User.Identity.Name" />
             <div class="form-group">
                 <label asp-for="ResBio" class="control-label"></label>
                 <input asp-for="ResBio" class="form-control" />

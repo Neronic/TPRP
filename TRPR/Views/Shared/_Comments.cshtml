@@ -1,20 +1,48 @@
 ﻿@model IEnumerable<TRPR.Models.Comment>
 
-@if (Model != null)
+@if(Model != null)
 {
-    if (User.Identity.IsAuthenticated)
+    @if(User.Identity.IsAuthenticated)
     {
-        foreach (Comment comment in Model)
+        @foreach(var item in Model)
         {
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="userCard">
+                        @item.CreatedBy<br />
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="commentDetails">
+                        @item.Comtext
+                    </div>
+                </div>
+                <div class="commentDate">
+                    <time class="timeago" datetime="@item.CreatedOn">@item.CreatedOn</time>
+                </div>
+            </div>
+            <br /><br />
+        }
+            <p>
+                <a asp-action="~Views/Comments/Create">Create New comment</a>
+            </p>
+    }
+}
+
+@*
+@if (Model != null)
+            {
+                foreach (Comment comment in Model)
+                {
             <div class="row" style="width: 100.3%; border-bottom: 1px solid #000000; margin-right: -14px; margin-left: -1px;">
                 <div class="col-md-4" style="width: 21%;">
                     <div class="userCard" style="margin-left: 9px; margin-top: 12px;">
-                        <p style="margin-left: 5px; font-weight: bold; font-size: 13px;"> @comment.CreatedBy <!--add username stuff here--></p>
+                        <p style="margin-left: 5px; font-weight: bold; font-size: 13px;">@Html.DisplayFor(Model => comment.ResearcherID)<!--add username stuff here--></p>
                     </div>
                 </div>
                 <div class="col-md-7" style="width: 60%;">
                     <div class="commentDetails">
-                        <p style="margin-top: 27px; font-size: 13px; color: black;">@comment.Comtext</p>
+                        <p style="margin-top: 27px; font-size: 13px; color: black;">@Html.DisplayFor(Model => comment.Comtext)</p>
                     </div>
                 </div>
                 <div class="col-md-1" style="width: 19%;">
@@ -26,11 +54,10 @@
             </div>
         }
         <p>
-            <a asp-action="Create">Create New comment</a>
+            <a asp-action="~/Comments/Create">Create New comment</a>
         </p>
     }
-}
-
+}*@
 
 <!--<p>
     <a asp-action="Create">Create New</a>

@@ -63,5 +63,11 @@ namespace TRPR.Models
         [Display(Name = "Files")]
         public ICollection<File> Files { get; set; }
 
+        [Display(Name = "Comment")]
+        public string Comment1 { get; set; }
+
+        [Display(Name = "Comment")]
+        public string Comment2 { get; set; }
+
     }
 }
