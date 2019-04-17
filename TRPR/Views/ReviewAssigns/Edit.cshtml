@@ -126,17 +126,17 @@
                     </select>
                     <span asp-validation-for="PaperInfo.StatusID" class="text-danger"></span>
                 }
-                else if (User.IsInRole("Researcher"))
+                @*else if (User.IsInRole("Researcher"))
                 {
                     @Html.DisplayFor(model => model.Comment1)
                     @Html.DisplayFor(model => model.Comment2)
-                }
-                else
+                }*@
+                @*else
                 {
                     <label asp-for="Comment2" class="control-label"></label>
                     <input asp-for="Comment2" class="form-control" />
                     <span asp-validation-for="Comment2" class="text-danger"></span>
-                }
+                }*@
             </div>
             <div id="comments">
                 <a asp-action="_Comments" id="Comments">Comments</a>
@@ -149,7 +149,7 @@
 
                 </div>*@
 
-        </div>*@
+        </div>
 
 
 

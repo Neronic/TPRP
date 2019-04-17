@@ -4,42 +4,6 @@
     ViewData["Title"] = "Details";
 }
 
-
-<div class="page" id="detailsPage">
-    <div id="paper">
-        <div class="paperDetail">
-            <div class="form-group">
-                <div class="">
-                        @Html.DropDownList("ViewerFileID", null, htmlAttributes: new { @style = "display:none" })
-                    </div>
-            </div>
-                <label class="control-label">View File:</label>
-                <div class="">
-                    @Html.DropDownList("ViewerFileID", null, "Select a File", htmlAttributes: new { @class = "form-control" })
-                </div>
-            </div>
-
-            <div id="header1">
-                <h6 id="status">Pending</h6>
-                <h5 id="reference code">@Html.DisplayFor(model => model.PaperInfo.ID)</h5>
-                <h6 id="date">Due Date: </h6>
-            </div>
-            <div id="header2">
-                @*<button class="btnMed">Save</button>*@
-                <h6>
-                    @Html.DisplayFor(model => model.PaperInfo.PaperTitle)
-                </h6>
-                @*<button class="btnMed">Print</button>*@
-            </div>
-        </div>
-<<<<<<< HEAD
-=======
-        <hr />
-        <div id="showViewer" class="form-group">
-
-            @*--partial view of file/index or paper/index not sure which one shows the pdf*@
->>>>>>> master
-=======
 <div class="page container">
     <div class="row">
         <div class="col-lg-7" style="padding-left:0; margin-right:200px;">
@@ -64,7 +28,6 @@
             </div>
         </div>
         <div class="col-lg-5">
->>>>>>> experiments1
 
             <h4 style="display: inline;">
                 @Html.DisplayFor(model => model.Researcher.FullName)
@@ -210,41 +173,6 @@
                 <a class="dropdown-item" href="#">Action</a><br />
                 <a class="dropdown-item" href="#">Another action</a>
             </div>
-<<<<<<< HEAD
-            <button class="btnMed">Submit</button>
-        </div>*@
-
-    @*<div>
-            <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
-            <a asp-action="Index">Back to List</a>
-        </div>*@
-
-
-<<<<<<< HEAD
-    @section Scripts {
-        <script type="text/javascript">
-            $('#ViewerFileID').ready(function () {
-                var selectedOption = $("#ViewerFileID").val();
-                $('#showViewer').load('/PaperInfo/GetViewerPartial/' + selectedOption);
-            });
-        </script>
-    }
-=======
-@section Scripts {
-    <script type="text/javascript">
-        $('#ViewerFileID').change(function () {
-            var selectedOption = $("#ViewerFileID").val();
-            $('#showViewer').load('/ReviewAssigns/GetViewerPartial/' + selectedOption);
-        });
-    </script>
-}
-
-@*<div>
-        <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
-        <a asp-action="Index">Back to List</a>
-    </div>*@
->>>>>>> master
-=======
         </div>
         <button class="btnMed">Submit</button>
     </div>*@
@@ -263,4 +191,3 @@
         });
     </script>
 }
->>>>>>> experiments1
