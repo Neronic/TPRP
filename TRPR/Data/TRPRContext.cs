@@ -53,6 +53,7 @@ namespace TRPR.Data
         public DbSet<PaperKeyword> PaperKeywords { get; set; }
         public DbSet<Title> Titles { get; set; }
         public DbSet<PaperType> PaperTypes { get; set; }
+        public DbSet<Sub> Subs { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
