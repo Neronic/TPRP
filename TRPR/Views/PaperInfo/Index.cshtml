@@ -4,7 +4,7 @@
 @*<p>
     <a asp-action="Create">Create New</a>
 </p>*@
-<form asp-action="Index">
+<form asp-action="Index" style="margin-top:1.5em; margin-right:7em;">
     <input type="hidden" name="sortDirection" value="@ViewData["sortDirection"]" />
     <input type="hidden" name="sortField" value="@ViewData["sortField"]" />
     <div class="form-horizontal">
@@ -64,8 +64,12 @@
                     <input type="submit" name="actionButton" value="Length" class="btn btn-link" style="color:#F5F6FA;" />
                 </th>
                 <th>
+                    <input type="submit" disabled="disabled" value="Keywords" class="btn btn-link" style="color:#F5F6FA;" />
+                </th>
+                <th>
                     <input type="submit" name="actionButton" value="Status" class="btn btn-link" style="color:#F5F6FA;" />
                 </th>
+
                 <th>
                     <input type="submit" disabled="disabled" value="Uploaded Files" class="btn btn-link" style="color:#F5F6FA;" />
                 </th>
@@ -95,6 +99,12 @@
                     @Html.DisplayFor(modelItem => item.PaperLength)
                 </td>
                 <td>
+                    @foreach (var k in item.PaperKeywords)
+                    {
+                        @k.Keyword.KeyWord<br/>
+                    }
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Status.StatName)
                 </td>
                 <td>
@@ -118,8 +128,10 @@
                 <td>
                     @if (User.IsInRole("Editor"))
                     {
-                        <a asp-controller="ReviewAssigns" asp-action="Create" asp-route-id="@item.ID">Assign |</a>
-                        <a asp-action="Details" asp-route-id="@item.ID">Details |</a>
+                        @*<a href="@Url.Action("create", "reviewassigns", new { id = item.ID })">Assign |</a>*@
+                        <a asp-controller="PaperInfo" asp-action="Details" asp-route-id="@item.ID">Details </a>
+                        <a asp-controller="ReviewAssigns" asp-action="Create" asp-route-id="@item.ID">Assign </a>
+                        <a asp-controller="PaperReviews" asp-action="Index" asp-route-PaperInfoID="@item.ID">Reviews </a>
                         <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
                     }
 
@@ -131,7 +143,7 @@
                     else
                     {
                         <a asp-action="Edit" asp-route-id="@item.ID">Edit |</a>
-                        <a asp-action="Details" asp-route-id="@item.ID">Details</a>
+                        <a asp-controller="PaperInfo" asp-action="Details" asp-route-id="@item.ID">Details</a>
                     }
                 </td>
             </tr>

@@ -13,6 +13,7 @@ using TRPR.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using TRPR.Hubs;
 
 namespace TRPR
 {
@@ -64,6 +65,8 @@ namespace TRPR
             services.AddDbContext<TRPRContext>(options =>
                    options.UseSqlServer(Configuration.GetConnectionString("TRPRContext")));
 
+            services.AddSignalR();
+
             //To give access to IHttpContextAccessor for Audit Data with IAuditable
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
@@ -85,6 +88,10 @@ namespace TRPR
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<NotificationHub>("/NotificationHub");
+            });
 
             app.UseAuthentication();
 

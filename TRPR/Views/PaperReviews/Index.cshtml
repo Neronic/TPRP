@@ -1,0 +1,104 @@
+﻿@model IEnumerable<TRPR.Models.ReviewAssign>
+
+@{
+    ViewData["Title"] = "Paper Reviews";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-lg-8">
+                <div class="row" style="margin-top:2em;" id="header1">
+                    <div class="col-lg-4"><h6 style="width:fit-content;" id="status">Pending</h6></div>
+                    <div class="col-lg-4" id="reference code"><h5> @Html.DisplayNameFor(Model => Model.PaperInfo.ID)</h5></div>
+                    <div class="col-lg-4" id="date"><h6> @Html.DisplayNameFor(Model => Model.PaperInfo.CreatedOn)</h6></div>
+                </div>
+                <div class="row" id="header2">
+                    <div class="col-lg-3 col-lg-offset-4">
+                        <h4>
+                            @Html.DisplayNameFor(Model => Model.PaperInfo.PaperTitle)
+                        </h4>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 6em; margin-top:3em;">
+                    <h4>
+                        @Html.DisplayNameFor(dummy => dummy.PaperInfo.PaperAbstract)
+                    </h4>
+                    <h5 style="border: solid 1px rgba(112,112,112,.5);background-color:#fff; padding:10px; " >
+                        We interrupt this program to annoy you and make things generally irritating. If we took the bones out, it wouldn't be crunchy, would it? I'm Brian, and so's my wife! Look at them, bloody Catholics, filling the bloody world up with bloody people they can't afford to bloody feed. You don't frighten us, English pig dogs. Go and boil your bottoms, you sons of a silly person. I blow my nose at you, so-called "Arthur King," you and all your silly English K-nig-hts.
+                    </h5>
+                    @*<h3>
+                @Html.DisplayFor(dummy => dummy.PaperInfo.PaperAbstract)
+            </h3>*@
+                </div>
+            </div>
+            <form asp-action="Index">
+                <table class="table table-striped">
+                    <thead class="thead">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(Model => Model.Roles.RoleTitle)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(Model => Model.CreatedOn)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(Model => Model.Recommend)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(Model => Model.ReviewAgain)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Roles.RoleTitle)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedOn)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Recommend.RecTitle)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ReviewAgain)
+                                </td>
+
+
+                                @*<td>
+                                    <a asp-action="Edit" asp-route-id="@item.ID">Review</a> |
+                                    <a asp-action="Details" asp-route-id="@item.ID">Details |</a>
+                                    <a asp-controller="PaperReviews" asp-action="Index" asp-route-PaperInfoID="@item.ID">Details |</a>
+                                    @*<a asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
+                                @*</td>*@
+                                <td>
+                                    <a asp-action="Delete" asp-route-id="@item.ID">Delete | </a>
+                                    <a asp-action="Details" asp-controller="reviewassigns" asp-route-id="@item.ID">Full Review</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </form>
+            <div>
+                @*<a asp-action="Edit" asp-controller="PaperInfos" asp-route-id="@paperInfo.ID">Edit</a> |*@
+                <a asp-action="Index" asp-controller="PaperInfos">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            $('[data-toggle="popover"]').popover();
+        });
+        //Helps PWA avoid prompting to resubmit data if user clicks "BACK" button and returns here.
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
+}

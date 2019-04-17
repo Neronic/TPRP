@@ -12,17 +12,23 @@ using TRPR.Utilities;
 using MailKit.Net.Smtp;
 using MailKit;
 using MimeKit;
-
+using TRPR.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace TRPR.Controllers
 {
     public class ReviewAssignsController : Controller
     {
         private readonly TRPRContext _context;
+        private readonly ApplicationDbContext _dbcontext;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public ReviewAssignsController(TRPRContext context)
+        public ReviewAssignsController(ApplicationDbContext dbcontext, UserManager<IdentityUser> userManager, TRPRContext context)
         {
             _context = context;
+            _dbcontext = dbcontext;
+            _userManager = userManager;// serviceProvider.GetRequiredService<UserManager<IdentityRole>>();
         }
 
         // GET: ReviewAssigns
@@ -35,7 +41,10 @@ namespace TRPR.Controllers
                 .ThenInclude(re => re.Expertise)
                 .Include(r => r.PaperInfo)
                 .Where(c => c.Researcher.ResEmail == User.Identity.Name)
-                select r;           
+                                select r;
+
+
+
 
 
             if (User.IsInRole("Editor"))
@@ -45,8 +54,9 @@ namespace TRPR.Controllers
                .Include(ra => ra.Researcher)
                .ThenInclude(r => r.ResearchExpertises)
                .ThenInclude(re => re.Expertise)
-               .Include(r => r.PaperInfo)              
-               select r;
+               .Include(r => r.PaperInfo)
+               .Where(c => c.Researcher.ResEmail == User.Identity.Name)
+                                select r;
             }
 
             if (!String.IsNullOrEmpty(SearchRes))
@@ -145,8 +155,14 @@ namespace TRPR.Controllers
                 return NotFound();
             }
 
+
+
             var viewerFiles = _context.Files
-                .Where(f => f.ReveiwAssignID == id);// && (f.FileContent.MimeType.Contains("pdf")) || (f.FileContent.MimeType.Contains("image")));
+                .Where(f => f.PaperInfoID == id);// && (f.FileContent.MimeType.Contains("pdf")) || (f.FileContent.MimeType.Contains("image")));
+
+            //var viewerFiles = _context.Files
+            //    .Where(f => f.ReveiwAssignID == id);// && (f.FileContent.MimeType.Contains("pdf")) || (f.FileContent.MimeType.Contains("image")));
+
             ViewData["ViewerFileID"] = new SelectList(viewerFiles, "ID", "FileName");
 
             return View(reviewAssign);
@@ -182,8 +198,14 @@ namespace TRPR.Controllers
         }
 
         // GET: ReviewAssigns/Create
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
+
+            var reviewAssigns = from r in _context.ReviewAssigns
+                .Include(r => r.PaperInfo)
+               .ThenInclude(r => r.PaperTitle)
+                                select r;
+
             PopulateDropDownLists();
             PopulateExpertiseDropDownList();
             return View();
@@ -194,58 +216,82 @@ namespace TRPR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PaperInfoID,ResearcherID,RoleID,RevContentReview,RevKeywordReview,RevLengthReview,RevFormatReview,RevCitationReview,RecommendID,ReviewAgainID")] ReviewAssign reviewAssign)
+        public async Task<IActionResult> Create(int id, [Bind("PaperInfoID, ResearcherID,RoleID,RevContentReview,RevKeywordReview,RevLengthReview,RevFormatReview,RevCitationReview, EiCComment, AuthorComment, RecommendID,ReviewAgainID")] ReviewAssign reviewAssign)
         {
+            var reviewAssigns = from r in _context.ReviewAssigns
+               .Include(r => r.PaperInfo)
+               .ThenInclude(r => r.ID)
+                                select r;
             try
             {
                 if (ModelState.IsValid)
                 {
-                    // Email coding
-                    //var researcher = await _context.Researchers
-                    //.SingleOrDefaultAsync(m => m.ID == reviewAssign.ResearcherID);
-
-                    //var resEmail = researcher.ResEmail.ToString();
-                    //var resName = researcher.FullName.ToString();
-
-
-                    //var message = new MimeMessage();
-                    //message.From.Add(new MailboxAddress("TRPR", "TRPRDoNotReply@gmail.com"));
-                    //message.To.Add(new MailboxAddress(resName, "davilee.maitre@gmail.com"));
-                    //message.Subject = "TRPR - New Review";
-
-                    //message.Body = new TextPart("plain")
-                    //{
-                    //    Text = @"You've been assigned to a new review, head to TRPR to check it out!"
-                    //};
-
-                    //using (var client = new SmtpClient())
-                    //{
-                    //    // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
-                    //    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-
-
-                    //    client.Connect("smtp-relay.gmail.com", 587, false);
-
-                    //    // Note: only needed if the SMTP server requires authentication
-                    //    client.Authenticate("TRPRDoNotReply@gmail.com", "Tq8uwocBDC");
-
-                    //    client.Send(message);
-                    //    client.Disconnect(true);
-                    //}
 
                     _context.Add(reviewAssign);
-                    await _context.SaveChangesAsync();                  
+                    await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
-
-
                 }
             }
             catch (Exception)
             {
-                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
             PopulateDropDownLists();
-            PopulateExpertiseDropDownList();            
+            PopulateExpertiseDropDownList();
+
+            ViewBag.ID = id;
+
+            // Email coding
+            //var researcher = await _context.Researchers
+            //        .SingleOrDefaultAsync(m => m.ID == reviewAssign.ResearcherID);
+
+            // Email coding
+            //var researcher = await _context.Researchers
+            //.SingleOrDefaultAsync(m => m.ID == reviewAssign.ResearcherID);
+
+            //var resEmail = researcher.ResEmail.ToString();
+            //var resName = researcher.FullName.ToString();
+
+
+
+            //var message = new MimeMessage();
+            //message.From.Add(new MailboxAddress("TRPR", "TRPRDoNotReply@gmail.com"));
+            //message.To.Add(new MailboxAddress(resName, "davilee.maitre@gmail.com"));
+            //message.Subject = "TRPR - New Review";
+
+            //message.Body = new TextPart("plain")
+            //{
+            //    Text = @"You've been assigned to a new review, head to TRPR to check it out!"
+            //};
+
+            //using (var client = new SmtpClient())
+            //{
+            //    // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
+            //    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+
+            //    client.Connect("smtp-relay.gmail.com", 587, false);
+
+            //    // Note: only needed if the SMTP server requires authentication
+            //    client.Authenticate("TRPRDoNotReply@gmail.com", "Tq8uwocBDC");
+
+            //    client.Send(message);
+            //    client.Disconnect(true);
+            //}
+            try
+            {
+                _context.Add(reviewAssign);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+            }
+            PopulateDropDownLists();
+            PopulateExpertiseDropDownList();
             return View(reviewAssign);
         }
 
@@ -257,51 +303,65 @@ namespace TRPR.Controllers
                 return NotFound();
             }
 
-            var reviewAssign = await _context.ReviewAssigns
-                .Include(r => r.Roles)
-                .Include(ra => ra.Researcher)
-                .ThenInclude(r => r.ResearchExpertises)
-                .ThenInclude(re => re.Expertise)
-                .Include(r => r.PaperInfo)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (reviewAssign == null)
+            var reviewassign = await _context.ReviewAssigns.FindAsync(id);
+            if (reviewassign == null)
             {
                 return NotFound();
             }
-            PopulateDropDownLists();
-            return View(reviewAssign);
+
+            var viewerFiles = _context.Files
+              .Where(f => f.PaperInfoID == id);// && (f.FileContent.MimeType.Contains("pdf")) || (f.FileContent.MimeType.Contains("image")));
+            ViewData["ViewerFileID"] = new SelectList(viewerFiles, "ID", "FileName");
+
+            PopulateDropDownLists(reviewassign);
+            return View(reviewassign);
         }
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var reviewAssign = await  _context.ReviewAssigns
+        //        .Include(r => r.Roles)
+        //        .Include(ra => ra.Researcher)
+        //        .ThenInclude(r => r.ResearchExpertises)
+        //        .ThenInclude(re => re.Expertise)
+        //        .Include(r => r.PaperInfo)
+        //        .Include(r => r.Recommend)
+        //        .FirstOrDefaultAsync(m => m.ID == id);
+        //    if (reviewAssign == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    PopulateDropDownLists();
+        //    return View(reviewAssign);
+        //}
 
         // POST: ReviewAssigns/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id)//, [Bind("ID,PaperInfoID,ResearcherID,RoleID,RevContentReview,RevKeywordReview,RevLengthReview,RevFormatReview,RevCitationReview,RecommendID,ReviewAgainID")] ReviewAssign reviewAssign)
+        public async Task<IActionResult> Edit(int id)
         {
-            var reviewToUpdate = await _context.ReviewAssigns
-                .Include(r => r.Roles)
-                .Include(ra => ra.Researcher)
-                .ThenInclude(r => r.ResearchExpertises)
-                .ThenInclude(re => re.Expertise)
-                .Include(r => r.PaperInfo)
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var reviewToUpdate = await _context.ReviewAssigns.SingleOrDefaultAsync(p => p.ID == id);
             if (reviewToUpdate == null)
             {
                 return NotFound();
             }
 
             if (await TryUpdateModelAsync<ReviewAssign>(reviewToUpdate, "",
-                s => s.PaperInfoID, s => s.ResearcherID, s => s.RoleID, s => s.RevContentReview, s => s.RevKeywordReview, s => s.RevLengthReview, 
-                s => s.RevFormatReview, s => s.RevCitationReview, s => s.RecommendID, s => s.ReviewAgainID))
+             s => s.PaperInfoID, s => s.ResearcherID, s => s.RoleID, s => s.RevContentReview, s => s.RevKeywordReview, s => s.RevLengthReview,
+                s => s.RevFormatReview, s => s.RevCitationReview, s=> s.EiCComment, s=> s.AuthorComment, s => s.RecommendID, s => s.ReviewAgainID))
             {
                 try
                 {
                     var reviewList = from r in _context.ReviewAssigns
                        .Include(r => r.PaperInfo)
                        .Where(c => c.PaperInfoID == reviewToUpdate.PaperInfoID)
-                                        select r;
-                    foreach(var PaperInfoID in reviewList)
+                                     select r;
+                    foreach (var PaperInfoID in reviewList)
                     {
                         var count = 0;
                         while (reviewToUpdate.RecommendID != null && count < 2)
@@ -312,14 +372,11 @@ namespace TRPR.Controllers
                         {
                             reviewToUpdate.PaperInfo.StatusID = 4;
                         }
-                   }
+                    }
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
-                catch (RetryLimitExceededException /* dex */)
-                {
-                    ModelState.AddModelError("", "Unable to save changes after multiple attempts. Try again, and if the problem persists, see your system administrator.");
-                }
+
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!ReviewAssignExists(reviewToUpdate.ID))
@@ -331,14 +388,72 @@ namespace TRPR.Controllers
                         throw;
                     }
                 }
-                catch (DbUpdateException)
+                catch (DbUpdateException dex)
                 {
-                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                    if (dex.InnerException.Message.Contains("IX_ReviewAssigns_ID"))
+                    {
+                        ModelState.AddModelError("ID", "Unable to save changes");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Unable to save changes");
+                    }
                 }
+
             }
-            PopulateDropDownLists();
+            //var viewerFiles = _context.Files
+            //  .Where(f => f.PaperInfoID == id);// && (f.FileContent.MimeType.Contains("pdf")) || (f.FileContent.MimeType.Contains("image")));
+            //ViewData["ViewerFileID"] = new SelectList(viewerFiles, "ID", "FileName");
+
+            PopulateDropDownLists(reviewToUpdate);
             return View(reviewToUpdate);
         }
+
+        //var reviewToUpdate = await _context.ReviewAssigns
+        //    .Include(r => r.Roles)
+        //    .Include(ra => ra.Researcher)
+        //    .ThenInclude(r => r.ResearchExpertises)
+        //    .ThenInclude(re => re.Expertise)
+        //    .Include(r => r.PaperInfo)
+        //    .FirstOrDefaultAsync(m => m.ID == id);
+        //if (reviewToUpdate == null)
+        //{
+        //    return NotFound();
+        //}
+
+        //if (await TryUpdateModelAsync<ReviewAssign>(reviewToUpdate, "",
+        //    s => s.PaperInfoID, s => s.ResearcherID, s => s.RoleID, s => s.RevContentReview, s => s.RevKeywordReview, s => s.RevLengthReview,
+        //    s => s.RevFormatReview, s => s.RevCitationReview, s => s.RecommendID, s => s.ReviewAgainID))
+        //{
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch (RetryLimitExceededException /* dex */)
+        //    {
+        //        ModelState.AddModelError("", "Unable to save changes after multiple attempts. Try again, and if the problem persists, see your system administrator.");
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!ReviewAssignExists(reviewToUpdate.ID))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+        //    catch (DbUpdateException)
+        //    {
+        //        ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+        //    }
+        //}
+        //PopulateDropDownLists();
+        //return View(reviewToUpdate);
+
+
 
         // GET: ReviewAssigns/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -403,9 +518,28 @@ namespace TRPR.Controllers
 
         private SelectList ResearcherSelectList(int? id)
         {
-            var dQuery = from d in _context.Researchers
-                         orderby d.ResLast, d.ResFirst
-                         select d;
+            //users in "Admin role
+            var uInRole = (from u in _dbcontext.Users
+                           join ur in _dbcontext.UserRoles on u.Id equals ur.UserId
+                           join r in _dbcontext.Roles on ur.RoleId equals r.Id
+                           where r.Name == "Researcher"
+                           select u.UserName).ToList(); 
+
+
+            var dQuery = (from d in _context.Researchers
+                          orderby d.ResLast, d.ResFirst
+
+
+                          select d).ToList();
+
+           dQuery = dQuery.Where(d => uInRole.Contains(d.ResEmail)).ToList();
+
+
+
+          
+                         //select d;
+              
+
             return new SelectList(dQuery, "ID", "FullName", id);
         }
 

@@ -1,0 +1,11 @@
+﻿ - ReviewAssigns/Create ddl isnt filtering for for researchers only (Solution attempted - Git Stash)
+
+- Some reviewassigns/details views are not working
+	Checkbox visible on details page???
+
+- status and recommend isnt updating properly - how do we do this when there are two responses. Status should be dependent on where it is in the system. EiC needs to have the ability to create a final decision.
+
+- notifications
+
+- emails
+

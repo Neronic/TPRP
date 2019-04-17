@@ -9,5 +9,6 @@ namespace TRPR.ViewModels
     {
         public int KeywordID { get; set; }
         public string KeyWord { get; set; }
+
     }
 }

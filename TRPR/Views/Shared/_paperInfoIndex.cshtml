@@ -1,53 +1,104 @@
-﻿@model IEnumerable<TRPR.Models.PaperInfo>
+﻿@model TRPR.Models.PaperInfo
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.PaperTitle)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PaperAbstract)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PaperType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PaperLength)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PaperTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PaperAbstract)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PaperType.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PaperLength)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status.StatName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
+@{
+    ViewData["Title"] = "Details";
 }
-    </tbody>
-</table>
+
+<div class="page" id="reviewPage">
+    <div id="paper">
+        <div class="paperDetail">
+            <div class="form-group">
+
+                <div class="">
+                    @Html.DropDownList("ViewerFileID", null, htmlAttributes: new { @style = "display:none" })
+                </div>
+            </div>
+
+            <div id="header1">
+                <h6 id="status">Pending</h6>
+                <h5 id="reference code">@Html.DisplayFor(model => model.ID)</h5>
+                <h6 id="date">Due Date: </h6>
+            </div>
+            <div id="header2">
+                <button class="btnMedP">Save</button>
+                <h6>
+                    @Html.DisplayFor(model => model.PaperTitle)
+                </h6>
+                <button class="btnMedP">Print</button>
+            </div>
+        </div>
+        <hr />
+        <div id="showViewer" class="form-group">
+
+            @*---------------------------------------- pdf view here ------------------------------------------------------------*@
+
+        </div>
+    </div>
+
+    @*<div class="page" id="details">
+        <div class="paperDetail">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.PaperTitle)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.PaperTitle)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.PaperAbstract)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.PaperAbstract)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.PaperTypeID)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.PaperType.Name)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.PaperLength)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.PaperLength)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.StatusID)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.StatusID)
+                </dd>
+            </dl>
+
+        </div>*@
+    <div id="navbar2">
+
+        @*<partial name="~/Views/Shared/_navbar.cshtml" />
+            <partial name="/Views/Shared/_navbar.cshtml" />*@
+    </div>
+
+    <div style="width:50%;">
+        @{var c = new List<Comment>();
+
+        }
+
+        @*@{ var p = new TRPR.Models.ReviewAssign();
+                <partial name="_reviewAssign" model="p" />
+
+            }*@
+        @*<a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+            <a asp-action="Index">Back to List</a>*@
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $('#ViewerFileID').ready(function () {
+            var selectedOption = $("#ViewerFileID").val();
+            $('#showViewer').load('/PaperInfo/GetViewerPartial/' + selectedOption);
+        });
+    </script>
+}

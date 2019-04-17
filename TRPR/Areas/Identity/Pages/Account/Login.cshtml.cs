@@ -84,7 +84,7 @@ namespace TRPR.Areas.Identity.Pages.Account
                     var res = _context.Researchers.Where(e => e.ResEmail == Input.Email).FirstOrDefault();
                     if (res != null)
                     {
-                        CookieHelper.CookieSet(HttpContext, "userName", res.ResEmail, 3200);
+                        CookieHelper.CookieSet(HttpContext, "userName", res.FullName, 3200);
                     }
                     else
                     {
