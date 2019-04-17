@@ -16,7 +16,7 @@ namespace TRPR.Data.TRPRMigrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("TRPR")
-                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
+                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -413,6 +413,33 @@ namespace TRPR.Data.TRPRMigrations
                     b.ToTable("Statuses");
                 });
 
+            modelBuilder.Entity("TRPR.Models.Sub", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(127);
+
+                    b.Property<string>("PushAuth")
+                        .HasMaxLength(512);
+
+                    b.Property<string>("PushEndpoint")
+                        .HasMaxLength(512);
+
+                    b.Property<string>("PushP256DH")
+                        .HasMaxLength(512);
+
+                    b.Property<int?>("ResearcherID");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ResearcherID");
+
+                    b.ToTable("Subs");
+                });
+
             modelBuilder.Entity("TRPR.Models.Title", b =>
                 {
                     b.Property<int>("ID")
@@ -539,6 +566,13 @@ namespace TRPR.Data.TRPRMigrations
                         .WithMany()
                         .HasForeignKey("RoleID")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TRPR.Models.Sub", b =>
+                {
+                    b.HasOne("TRPR.Models.Researcher", "researcher")
+                        .WithMany("Subs")
+                        .HasForeignKey("ResearcherID");
                 });
 #pragma warning restore 612, 618
         }
