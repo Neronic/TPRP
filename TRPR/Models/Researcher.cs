@@ -13,6 +13,7 @@ namespace TRPR.Models
             this.ResearchExpertises = new HashSet<ResearchExpertise>();
             this.AuthoredPapers = new HashSet<AuthoredPaper>();
             this.ReviewAssigns = new HashSet<ReviewAssign>();
+            Subs = new HashSet<Sub>();
             Active = true;
         }
 
@@ -81,6 +82,8 @@ namespace TRPR.Models
 
         [Display(Name = "Reviews")]
         public virtual ICollection<ReviewAssign> ReviewAssigns { get; set; }
+
+        public ICollection<Sub> Subs { get; set; }
 
         public bool Active { get; set; }
     }
