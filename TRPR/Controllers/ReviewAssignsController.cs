@@ -54,8 +54,7 @@ namespace TRPR.Controllers
                .Include(ra => ra.Researcher)
                .ThenInclude(r => r.ResearchExpertises)
                .ThenInclude(re => re.Expertise)
-               .Include(r => r.PaperInfo)
-               .Where(c => c.Researcher.ResEmail == User.Identity.Name)
+               .Include(r => r.PaperInfo)              
                                 select r;
             }
 
