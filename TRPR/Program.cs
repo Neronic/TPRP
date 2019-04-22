@@ -25,12 +25,13 @@ namespace TRPR
 
                 try
                 {
-                    var context = services.GetRequiredService<TRPRContext>();
-                    context.Database.Migrate();
-                    TRPRSeedData.Initialize(services);
+                    
                     var identityContext = services.GetRequiredService<ApplicationDbContext>();
                     identityContext.Database.Migrate();
                     ApplicationSeedData.SeedAsync(identityContext, services).Wait();
+                    var context = services.GetRequiredService<TRPRContext>();
+                    context.Database.Migrate();
+                    TRPRSeedData.Initialize(services);
                 }
                 catch (Exception ex)
                 {
