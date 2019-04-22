@@ -366,12 +366,13 @@ namespace TRPR.Controllers
                         while (reviewToUpdate.RecommendID != null && count < 2)
                         {
                             count++;
-                            if (count == 2)
-                            {
-                                reviewToUpdate.PaperInfo.StatusID = 4;
-                            }
+                            
                         }
-                        
+                        if (count == 2)
+                        {
+                            reviewToUpdate.PaperInfo.StatusID = 4;
+                            break;
+                        }
                     }
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
