@@ -16,7 +16,7 @@ namespace TRPR.Controllers
     public class CommentsController : Controller
     {
 
-        private readonly UserManager<IdentityUser> _userManager; //added by Jacob
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly TRPRContext _context;
 
         public CommentsController(TRPRContext context, UserManager<IdentityUser> userManager)
@@ -62,10 +62,11 @@ namespace TRPR.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,ResearcherID,RevID,ComAccess,Comtext")] Comment comment)
         {
-            int userID = Convert.ToInt32(_userManager.GetUserId(User)); //Added by Jacob
+            int userID = Convert.ToInt32(_userManager.GetUserId(User));
+            var user = await _userManager.GetUserAsync(User);
                 if (ModelState.IsValid)
                 {
-                    comment.ResearcherID = userID; //Added by Jacob
+                    comment.ResearcherID = Convert.ToInt32(user.Id);
                     _context.Add(comment);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));

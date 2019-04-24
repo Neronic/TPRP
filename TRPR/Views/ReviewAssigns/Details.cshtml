@@ -113,6 +113,15 @@
             </dl>
         </div>
     </div>
+
+    <ul class="nav nav-tabs" id="myTabs" role="tablist">
+        <li role="presentation" class="active"><a href="#Comments" aria-controls="Comments" role="tab" class="nav_link" name="Comments" data-toggle="tab">Comments</a></li>
+    </ul>
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade in active" id="Comments">
+            <br />
+        </div>
+    </div>
 </div>
 @*<div class="form-group">
         <label asp-for="RevContentReview" class="control-label"></label>
@@ -189,5 +198,14 @@
             var selectedOption = $("#ViewerFileID").val();
             $('#showViewer').load('/ReviewAssign/GetViewerPartial/' + selectedOption);
         });
+
+        $('.nav_link').click(function () {
+            var activeTab = $(this).attr("name");
+            switch (activeTab) {
+                case 'Comments': $('#Comments').load('/ReviewAssign/ListOfComments/@Model.ID');
+                    break;
+                default: break;
+            };
+        })
     </script>
 }
